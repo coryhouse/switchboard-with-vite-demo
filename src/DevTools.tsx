@@ -18,7 +18,7 @@ export default function DevTools({
 
   return (
     <section className="devtools">
-      <button onClick={(isCurrentlyOpen) => setIsOpen(!isCurrentlyOpen)}>
+      <button onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? "Close" : "Open"}
       </button>
       {isOpen ? (
