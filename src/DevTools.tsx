@@ -1,9 +1,23 @@
 import { useState } from "react";
 import "./DevTools.css";
 
+interface DevToolsSetting {
+  /** Setting label */
+  label: string;
+
+  /** Setting default value */
+  defaultValue: string | Array<string>;
+
+  /** Input type */
+  inputType: "text" | "radio" | "checkbox" | "select";
+}
+
 interface DevToolsProps {
   /** Specify where this component should be positioned on the page */
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+
+  /** Array of devtools settings */
+  settings: Array<DevToolsSetting>;
 
   /** Content and settings to render inside the devtools */
   children: React.ReactNode;
