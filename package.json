@@ -37,6 +37,7 @@
     "@vitest/ui": "^0.18.1",
     "autoprefixer": "^10.4.7",
     "jsdom": "^20.0.0",
+    "msw": "^0.44.2",
     "postcss": "^8.4.14",
     "rollup": "^2.77.0",
     "rollup-plugin-visualizer": "^5.7.1",
