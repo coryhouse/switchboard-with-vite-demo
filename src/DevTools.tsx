@@ -17,7 +17,7 @@ interface DevToolsProps {
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
   /** Array of devtools settings */
-  settings: Array<DevToolsSetting>;
+  // settings: Array<DevToolsSetting>;
 
   /** Content and settings to render inside the devtools */
   children: React.ReactNode;
