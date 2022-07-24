@@ -14,7 +14,7 @@ export type MockUser = {
   todos: Todo[];
 };
 
-export type DevToolsOptions = {
+export type DevToolsConfig = {
   user: MockUser;
   httpDelay: number;
   apiResponse: {
