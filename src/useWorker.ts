@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { setupWorker, rest } from "msw";
 import { SetupWorkerApi } from "msw/lib/types/setupWorker/glossary";
 import { DevToolsOptions } from "./DevToolsOptions.types";
+import { Todo } from "./demo-app/types";
 
 export const useWorker = (persona: DevToolsOptions | null) => {
   const savedPersona = useRef(persona);
@@ -14,7 +15,21 @@ export const useWorker = (persona: DevToolsOptions | null) => {
 
   useEffect(() => {
     const worker = setupWorker(
-      rest.get("/todos", (_req, res, ctx) => {
+      rest.get("/todos", (_req: any, res: any, ctx: any) => {
+        const mockResp: Todo[] = [
+          {
+            id: 1,
+            completed: false,
+            todo: "Eat lunch",
+          },
+        ];
+        res(ctx.data(mockResp));
+
+        //   savedPersona.current?.todoResponse === "success"
+        //   ? res(ctx.status(201))
+        //   : res(ctx.status(500, "Mocked error"));
+      }),
+      rest.post("/todos", (_req, res, ctx) => {
         return savedPersona.current?.todoResponse === "success"
           ? res(ctx.status(201))
           : res(ctx.status(500, "Mocked error"));
