@@ -15,19 +15,15 @@ export const useWorker = (persona: DevToolsOptions | null) => {
 
   useEffect(() => {
     const worker = setupWorker(
-      rest.get("/todos", (_req: any, res: any, ctx: any) => {
-        const mockResp: Todo[] = [
+      rest.get("/todos", (_req, res, ctx) => {
+        const resp: Todo[] = [
           {
             id: 1,
             completed: false,
             todo: "Eat lunch",
           },
         ];
-        res(ctx.data(mockResp));
-
-        //   savedPersona.current?.todoResponse === "success"
-        //   ? res(ctx.status(201))
-        //   : res(ctx.status(500, "Mocked error"));
+        res(ctx.json(resp));
       }),
       rest.post("/todos", (_req, res, ctx) => {
         return savedPersona.current?.todoResponse === "success"
