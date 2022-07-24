@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { setupWorker, rest } from "msw";
-import { SetupWorkerApi } from "msw/lib/types/setupWorker/glossary";
-import { DevToolsOptions } from "./DevToolsOptions.types";
-import { Todo } from "./demo-app/types";
+import { setupWorker, rest, SetupWorkerApi } from "msw";
+import { DevToolsConfig, Todo } from "./demo-app/types";
 
-export const useWorker = (persona: DevToolsOptions | null) => {
+export const useWorker = (persona: DevToolsConfig | null) => {
   const savedPersona = useRef(persona);
 
   useEffect(() => {
