@@ -4,10 +4,8 @@ import { Todo } from "../demo-app/types";
 // So, for simplicity, the real endpoints don't exist.
 // Mock Service Worker "captures" the call made in the browser
 // and returns a mock response instead.
-export async function getTodos(todo: string): Promise<Todo[]> {
-  const resp = await fetch("/todos", {
-    body: JSON.stringify(todo),
-  });
+export async function getTodos(): Promise<Todo[]> {
+  const resp = await fetch("/todos");
   if (!resp.ok) throw resp;
   return resp.json() as Promise<Todo[]>;
 }
