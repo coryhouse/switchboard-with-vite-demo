@@ -1,10 +1,16 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./demo-app/App";
-import AppWithDevTools from "./demo-app/AppWithDevTools";
 import "./index.css";
 
-// This is set in the dev npm script.
-const useDevTools = import.meta.env.USE_DEV_TOOLS === "Y";
+// Lazy load so it's not part of the prod bundle.
+const AppWithDevTools = React.lazy(
+  () => import(/* webpackChunkName: "devtools" */ "./demo-app/AppWithDevTools")
+);
+
+// This is set in .env.local.
+// If using create - react - app, it you'd say process.env.REACT_APP_USE_DEV_TOOLS instead.
+const useDevTools = import.meta.env.VITE_USE_DEV_TOOLS === "Y";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   useDevTools ? <AppWithDevTools /> : <App />
