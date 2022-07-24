@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getDevToolsSettingsFromUrlQuerystring } from "./utils/urlUtils";
 
 /**
  * This hook makes it easy to declare state for devtools.
@@ -21,24 +22,30 @@ import { useEffect, useState } from "react";
  * 1. The URL's querystring
  * 2. localStorage
  * 3. local state variable  */
-export function useDevToolsState(key: string, defaultValue: string) {
-  const [state, setState] = useState();
+
+function getDefault<T>(key: string, defaultValue: T) {
+  return defaultValue;
+}
+
+export function useDevToolsState<T extends string | Array<string>>(
+  key: string,
+  defaultValue: T
+) {
+  const [state, setState] = useState<T>(() => getDefault<T>(key, defaultValue));
 
   useEffect(() => {
+    // Check URL on first load
     function updateLocalStateAndLocalStorageWhenQueryStringChanges() {
-      const settingsFromUrl = getSettingsFromUrl();
-      setState(settingsFromUrl);
+      const settingsFromUrl = getDevToolsSettingsFromUrlQuerystring(
+        window.location.search
+      );
+      if (settingsFromUrl) {
+        setState(settingsFromUrl);
+        localStorage.setItem("devtools", settingsFromUrl);
+      }
     }
-  });
-
-  function getSettingsFromUrl() {
-    // via https://stackoverflow.com/a/901144/26180
-    const params = new Proxy(new URLSearchParams(window.location.search), {
-      get: (searchParams, key) => searchParams.get(key.toString()),
-    });
-    const devToolsSettingsInUrl = params.get("devtools");
-    return devToolsSettingsInUrl;
-  }
+    updateLocalStateAndLocalStorageWhenQueryStringChanges;
+  }, []);
 
   function getSettingsFromLocalStorage() {
     return localStorage.getItem("devtools");
@@ -48,15 +55,23 @@ export function useDevToolsState(key: string, defaultValue: string) {
    * 1. The URL's querystring
    * 2. localStorage
    * 3. local state variable
+   *
+   * Yes, typically a single system of record for a given piece of state is recommended.
+   * But for devtools, it's best to keep these 3 in sync. Keeping the URL updated is useful
+   * so it can be copied and shared with others at any point. Local state is necessary
+   * so that any consumers of this hook receive the new state. And localStorage is useful
+   * so the settings persist if the tab is reloaded or closed.
    */
-  function setStateInUrlAndLocalStorageAndLocally(newState: any) {
-    setState(newState);
+  function setAllState(newState: any) {
     localStorage.setItem("devtools", newState);
+    setState(newState);
   }
 
-  const settingsInUrl = getSettingsFromUrl();
+  const settingsInUrl = getDevToolsSettingsFromUrlQuerystring(
+    window.location.search
+  );
   if (settingsInUrl) setState(settingsInUrl);
 
   // Return an array that mirrors the API for plain useState
-  return [state, setStateInUrlAndLocalStorageAndLocally];
+  return [state, setAllState];
 }
