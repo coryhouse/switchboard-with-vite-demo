@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import AppWithDevTools from "./AppWithDevTools";
+import App from "./demo-app/App";
+import AppWithDevTools from "./demo-app/AppWithDevTools";
 import "./index.css";
 
 // This is set in the dev npm script.
