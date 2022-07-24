@@ -23,7 +23,7 @@ export default function App() {
     setTodo("");
   }
 
-  if (loading) return "Loading...";
+  if (loading) return <p>Loading...</p>;
 
   return (
     <React.StrictMode>
