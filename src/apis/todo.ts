@@ -1,8 +1,7 @@
 import { Todo } from "../demo-app/types";
 
-// NOTE: These functions aren't called when mocking is enabled.
-// So, for simplicity, the real endpoints don't exist.
-// Mock Service Worker "captures" the call made in the browser
+// NOTE: These fetch calls are intercepted by msw when mocking is enabled.
+// Mock Service Worker intercepts the call made in the browser
 // and returns a mock response instead.
 export async function getTodos(): Promise<Todo[]> {
   const resp = await fetch("/todos");
