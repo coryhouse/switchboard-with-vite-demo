@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./demo-app/App";
 import "./index.css";
@@ -12,6 +12,16 @@ const AppWithDevTools = React.lazy(
 // If using create - react - app, it you'd say process.env.REACT_APP_USE_DEV_TOOLS instead.
 const useDevTools = import.meta.env.VITE_USE_DEV_TOOLS === "Y";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  useDevTools ? <AppWithDevTools /> : <App />
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+root.render(
+  useDevTools ? (
+    <Suspense fallback="Loading with devtools...">
+      <AppWithDevTools />
+    </Suspense>
+  ) : (
+    <App />
+  )
 );
