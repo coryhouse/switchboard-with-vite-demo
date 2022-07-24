@@ -1,16 +1,11 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
-import DevTools from "./DevTools";
+import App from "./App";
+import AppWithDevTools from "./AppWithDevTools";
 import "./index.css";
 
+// This is set in the dev npm script.
+const showDevTools = import.meta.env.REACT_APP_SHOW_DEV_TOOLS === "Y";
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <p className="text-3xl">
-      This file merely exists to display the components. It's not bundled in the
-      library.
-    </p>
-    <DevTools>
-      <input type="checkbox" />
-    </DevTools>
-  </React.StrictMode>
+  showDevTools ? <AppWithDevTools /> : <App />
 );
