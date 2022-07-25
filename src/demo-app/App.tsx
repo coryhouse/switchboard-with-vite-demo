@@ -33,7 +33,7 @@ export default function App() {
       <form onSubmit={onSubmit}>
         <Input
           id="todo"
-          label="To do"
+          label="What do you need to do?"
           type="text"
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
