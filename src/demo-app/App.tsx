@@ -46,7 +46,7 @@ export default function App() {
           <h2 className="text-2xl pt-4">To dos</h2>
           <ul>
             {todos.map((t) => (
-              <li>
+              <li key={t.id}>
                 <input
                   type="checkbox"
                   onChange={() => markTodoComplete(t.id)}
