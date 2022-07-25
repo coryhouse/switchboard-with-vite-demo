@@ -34,7 +34,6 @@ export default function App() {
         <Input
           id="todo"
           label="To do"
-          className="border-slate-400 border-solid border p-1"
           type="text"
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
