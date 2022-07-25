@@ -39,7 +39,9 @@ export default function App() {
             value={todo}
             onChange={(e) => setTodo(e.target.value)}
           />
-          <Button type="submit">Add</Button>
+          <Button type="submit" className="ml-1">
+            Add
+          </Button>
         </form>
 
         {todos.length > 0 && (
