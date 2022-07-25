@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { setupWorker, rest, SetupWorkerApi } from "msw";
 import { DevToolsConfig, Todo } from "./demo-app/types";
+import { getRandomNumberBelow } from "./utils/numberUtils";
 
 export const useWorker = (persona: DevToolsConfig | null) => {
   const savedPersona = useRef(persona);
@@ -23,10 +24,15 @@ export const useWorker = (persona: DevToolsConfig | null) => {
         ];
         return res(ctx.json(resp));
       }),
-      rest.post("/todos", (_req, res, ctx) => {
-        return savedPersona.current?.todoResponse === "success"
-          ? res(ctx.status(201))
-          : res(ctx.status(500, "Mocked error"));
+      rest.post("/todo", (req, res, ctx) => {
+        const { todo } = req.params;
+        const resp: Todo = {
+          // TODO: Perhaps use max todo id + 1
+          id: getRandomNumberBelow(100000),
+          completed: false,
+          todo: todo as string,
+        };
+        return res(ctx.json(resp));
       })
     );
 
