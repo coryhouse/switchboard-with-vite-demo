@@ -46,7 +46,7 @@ export default function App() {
 
         {todos.length > 0 && (
           <>
-            <h2 className="text-2xl pt-4">To dos</h2>
+            <h2 className="text-2xl pt-4">Stuff to do</h2>
             <ul>
               {todos.map((t) => (
                 <li key={t.id}>
