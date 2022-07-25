@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { addTodo, getTodos, markTodoComplete } from "../apis/todo";
+import Button from "./Button";
+import Input from "./Input";
 import { Todo } from "./types";
 
 export default function App() {
@@ -29,21 +31,15 @@ export default function App() {
     <React.StrictMode>
       <h1 className="text-3xl pb-4">Demo Todo App</h1>
       <form onSubmit={onSubmit}>
-        <label className="block" htmlFor="todo">
-          To do
-        </label>
-        <input
+        <Input
           id="todo"
+          label="To do"
           className="border-slate-400 border-solid border p-1"
           type="text"
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
         />
-        <input
-          className="border-slate-400 border-solid border p-1"
-          type="submit"
-          value="Add"
-        />
+        <Button type="submit">Add</Button>
       </form>
 
       {todos.length > 0 && (
