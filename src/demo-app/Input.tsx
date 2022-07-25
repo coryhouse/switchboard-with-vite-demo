@@ -10,7 +10,7 @@ export default function Input(props: InputProps) {
         {props.label}
       </label>
       <input
-        className="border-slate-400 border-solid border p-1"
+        className="border-slate-400 border-solid border p-1 rounded"
         type="text"
         value={props.value}
         onChange={props.onChange}
