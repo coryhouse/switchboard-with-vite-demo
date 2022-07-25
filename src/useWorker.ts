@@ -21,7 +21,7 @@ export const useWorker = (persona: DevToolsConfig | null) => {
             todo: "Eat lunch",
           },
         ];
-        res(ctx.json(resp));
+        return res(ctx.json(resp));
       }),
       rest.post("/todos", (_req, res, ctx) => {
         return savedPersona.current?.todoResponse === "success"
