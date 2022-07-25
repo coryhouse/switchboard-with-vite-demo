@@ -33,6 +33,9 @@ export const useWorker = (persona: DevToolsConfig | null) => {
           todo: todo as string,
         };
         return res(ctx.json(resp));
+      }),
+      rest.post("/todo/:id", async (req, res, ctx) => {
+        return res(ctx.status(200));
       })
     );
 
