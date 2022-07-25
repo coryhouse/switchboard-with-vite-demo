@@ -24,8 +24,8 @@ export const useWorker = (persona: DevToolsConfig | null) => {
         ];
         return res(ctx.json(resp));
       }),
-      rest.post("/todo", (req, res, ctx) => {
-        const { todo } = req.params;
+      rest.post("/todo", async (req, res, ctx) => {
+        const { todo } = await req.json();
         const resp: Todo = {
           // TODO: Perhaps use max todo id + 1
           id: getRandomNumberBelow(100000),
