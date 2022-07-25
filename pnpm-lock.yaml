@@ -11,6 +11,7 @@ specifiers:
   '@vitejs/plugin-react': ^2.0.0
   '@vitest/ui': ^0.18.1
   autoprefixer: ^10.4.7
+  clsx: ^1.2.1
   cypress: ^10.3.1
   jsdom: ^20.0.0
   msw: ^0.44.2
@@ -41,6 +42,7 @@ devDependencies:
   '@vitejs/plugin-react': 2.0.0_vite@3.0.2
   '@vitest/ui': 0.18.1
   autoprefixer: 10.4.7_postcss@8.4.14
+  clsx: 1.2.1
   cypress: 10.3.1
   jsdom: 20.0.0
   msw: 0.44.2_typescript@4.7.4
@@ -1104,6 +1106,11 @@ packages:
   /clone/1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+    dev: true
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
     dev: true
 
   /color-convert/1.9.3:
