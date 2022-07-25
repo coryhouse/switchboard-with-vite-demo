@@ -20,7 +20,9 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "cy:open": "cypress open",
+    "cy": "start-server-and-test dev 5173 cy:open"
   },
   "dependencies": {
     "react": "^18.2.0",
