@@ -16,7 +16,7 @@ export async function addTodo(todo: string): Promise<Todo> {
     headers: {
       "Content-Type": "application/json",
     },
-    body: todo,
+    body: JSON.stringify({ todo }),
   });
   if (!resp.ok) throw resp;
   return resp.json() as Promise<Todo>;
