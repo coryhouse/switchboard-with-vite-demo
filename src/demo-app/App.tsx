@@ -29,34 +29,37 @@ export default function App() {
 
   return (
     <React.StrictMode>
-      <h1 className="text-3xl pb-4">Demo Todo App</h1>
-      <form onSubmit={onSubmit}>
-        <Input
-          id="todo"
-          label="What do you need to do?"
-          type="text"
-          value={todo}
-          onChange={(e) => setTodo(e.target.value)}
-        />
-        <Button type="submit">Add</Button>
-      </form>
+      <main className="grid h-screen place-content-center">
+        <h1 className="text-3xl pb-4">Demo App</h1>
+        <form onSubmit={onSubmit}>
+          <Input
+            id="todo"
+            label="What do you need to do?"
+            type="text"
+            value={todo}
+            onChange={(e) => setTodo(e.target.value)}
+          />
+          <Button type="submit">Add</Button>
+        </form>
 
-      {todos.length > 0 && (
-        <>
-          <h2 className="text-2xl pt-4">To dos</h2>
-          <ul>
-            {todos.map((t) => (
-              <li key={t.id}>
-                <input
-                  type="checkbox"
-                  onChange={() => markTodoComplete(t.id)}
-                />
-                {t.todo}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+        {todos.length > 0 && (
+          <>
+            <h2 className="text-2xl pt-4">To dos</h2>
+            <ul>
+              {todos.map((t) => (
+                <li key={t.id}>
+                  <input
+                    type="checkbox"
+                    className="mr-1"
+                    onChange={() => markTodoComplete(t.id)}
+                  />
+                  {t.todo}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </main>
     </React.StrictMode>
   );
 }
