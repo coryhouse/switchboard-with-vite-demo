@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./demo-app/Button";
 import "./DevTools.css";
 
 interface DevToolsSetting {
@@ -31,10 +32,10 @@ export default function DevTools({
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <section className="devtools">
-      <button onClick={() => setIsOpen(!isOpen)}>
+    <section className="devtools fixed bottom-0 right-0 border p-4">
+      <Button onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? "Close" : "Open"}
-      </button>
+      </Button>
       {isOpen ? (
         <>
           <h1>Dev Tools</h1>
