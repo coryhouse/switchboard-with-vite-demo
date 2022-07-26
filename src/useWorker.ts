@@ -3,13 +3,7 @@ import { setupWorker, rest, SetupWorkerApi } from "msw";
 import { DevToolsConfig, Todo } from "./demo-app/types";
 import { getRandomNumberBelow } from "./utils/numberUtils";
 
-export const useWorker = (persona: DevToolsConfig | null) => {
-  const savedPersona = useRef(persona);
-
-  useEffect(() => {
-    savedPersona.current = persona;
-  }, [persona]);
-
+export const useWorker = (config: DevToolsConfig | null) => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
