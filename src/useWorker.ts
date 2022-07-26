@@ -9,14 +9,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
   useEffect(() => {
     const worker = setupWorker(
       rest.get("/todos", (_req, res, ctx) => {
-        const resp: Todo[] = [
-          {
-            id: 1,
-            completed: false,
-            todo: "Eat lunch",
-          },
-        ];
-        return res(ctx.delay(config?.httpDelay), ctx.json(resp));
+        return res(ctx.delay(config?.httpDelay), ctx.json(config?.user));
       }),
       rest.post("/todo", async (req, res, ctx) => {
         const { todo } = await req.json();
