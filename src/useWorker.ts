@@ -22,7 +22,7 @@ export const useWorker = (persona: DevToolsConfig | null) => {
             todo: "Eat lunch",
           },
         ];
-        return res(ctx.json(resp));
+        return res(ctx.delay(config?.httpDelay), ctx.json(resp));
       }),
       rest.post("/todo", async (req, res, ctx) => {
         const { todo } = await req.json();
@@ -32,10 +32,10 @@ export const useWorker = (persona: DevToolsConfig | null) => {
           completed: false,
           todo: todo as string,
         };
-        return res(ctx.json(resp));
+        return res(ctx.delay(config?.httpDelay), ctx.json(resp));
       }),
       rest.post("/todo/:id", async (req, res, ctx) => {
-        return res(ctx.status(200));
+        return res(ctx.delay(config?.httpDelay), ctx.status(200));
       })
     );
 
