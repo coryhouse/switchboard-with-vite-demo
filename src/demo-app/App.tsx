@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { addTodo, getTodos, markTodoComplete } from "../apis/todo-apis";
+import { addTodo, getTodos, markTodoComplete } from "./apis/todo-apis";
 import Button from "./Button";
 import Input from "./Input";
-import { Todo } from "./types";
+import { Todo, User } from "./types";
 import cx from "clsx";
 
 type Status = "idle" | "loading" | "adding";
 
-export default function App() {
+type AppProps = {
+  user: User;
+};
+
+export default function App({ user }: AppProps) {
   const [status, setStatus] = useState<Status>("loading");
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -15,7 +19,7 @@ export default function App() {
 
   useEffect(() => {
     async function fetchTodos() {
-      const todosResp = await getTodos();
+      const todosResp = await getTodos(user.id);
       setTodos(todosResp);
       setStatus("idle");
     }
