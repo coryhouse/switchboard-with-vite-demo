@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { setupWorker, rest, SetupWorkerApi } from "msw";
 import { DevToolsConfig, Todo } from "./demo-app/types";
 import { getRandomNumberBelow } from "./utils/numberUtils";
