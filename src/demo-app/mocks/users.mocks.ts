@@ -8,7 +8,7 @@ export const mockUsers: MockUser[] = [
     todos: [],
   },
   {
-    id: 1,
+    id: 2,
     description: "Some todos",
     name: "Tom",
     todos: [
@@ -20,7 +20,7 @@ export const mockUsers: MockUser[] = [
     ],
   },
   {
-    id: 1,
+    id: 3,
     description: "Many todos",
     name: "Elon",
     todos: [
