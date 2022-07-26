@@ -26,13 +26,6 @@ export default function AppWithDevTools() {
     <>
       <App />
       <DevTools>
-        <Input
-          type="number"
-          label="HTTP Delay"
-          value={delay}
-          onChange={(e) => setDelay(parseInt(e.target.value))}
-        />{" "}
-        ms
         <Select
           id="user"
           label="User"
@@ -50,6 +43,13 @@ export default function AppWithDevTools() {
             </option>
           ))}
         </Select>
+        <Input
+          type="number"
+          label="HTTP Delay"
+          value={delay}
+          onChange={(e) => setDelay(parseInt(e.target.value))}
+        />{" "}
+        ms
       </DevTools>
     </>
   ) : (
