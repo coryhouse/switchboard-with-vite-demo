@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "./demo-app/Button";
+import cx from "clsx";
 import "./DevTools.css";
 
 interface DevToolsSetting {
@@ -26,22 +27,25 @@ interface DevToolsProps {
 
 /** This component is useful to display custom devtools settings for your project */
 export default function DevTools({
-  position = "bottom-right",
+  position = "top-left",
   children,
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <section className="devtools fixed bottom-0 right-0 border p-4">
+    <section
+      // TODO: Support drag and drop position.
+      className={cx("devtools fixed p-4 border", {
+        "bottom-0": position.includes("bottom"),
+        "top-0": position.includes("top"),
+        "right-0": position.includes("right"),
+        "left-0": position.includes("left"),
+      })}
+    >
       <Button onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? "Close" : "Open"}
       </Button>
-      {isOpen ? (
-        <>
-          <h1>Dev Tools</h1>
-          {children}
-        </>
-      ) : null}
+      {isOpen && <>{children}</>}
     </section>
   );
 }
