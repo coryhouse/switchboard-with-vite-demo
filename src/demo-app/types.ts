@@ -14,7 +14,7 @@ export interface User {
   todos: Todo[];
 }
 
-interface MockUser extends User {
+export interface MockUser extends User {
   description: string;
 }
 
