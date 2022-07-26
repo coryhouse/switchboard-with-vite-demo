@@ -35,7 +35,7 @@ export default function DevTools({
   return (
     <section
       // TODO: Support drag and drop position.
-      className={cx("devtools fixed p-4 border", {
+      className={cx("devtools fixed p-4 border shadow-lg", {
         "bottom-0": position.includes("bottom"),
         "top-0": position.includes("top"),
         "right-0": position.includes("right"),
