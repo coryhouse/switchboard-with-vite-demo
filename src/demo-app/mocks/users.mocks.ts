@@ -3,13 +3,13 @@ import { MockUser } from "../types";
 export const mockUsers: MockUser[] = [
   {
     id: 1,
-    description: "A new user that has no todos yet.",
+    description: "No todos",
     name: "Cory",
     todos: [],
   },
   {
     id: 1,
-    description: "A user with a few todos.",
+    description: "Some todos",
     name: "Tom",
     todos: [
       {
@@ -21,7 +21,7 @@ export const mockUsers: MockUser[] = [
   },
   {
     id: 1,
-    description: "A power user with many todos.",
+    description: "Many todos",
     name: "Elon",
     todos: [
       {
