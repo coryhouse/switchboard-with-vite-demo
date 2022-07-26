@@ -10,6 +10,7 @@ export type Todo = {
 
 export type MockUser = {
   id: number;
+  description: string;
   name: string;
   todos: Todo[];
 };
