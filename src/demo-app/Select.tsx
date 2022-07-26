@@ -6,7 +6,7 @@ interface SelectProps extends React.ComponentPropsWithoutRef<"select"> {
 export default function Select(props: SelectProps) {
   const { id, onChange, value, ...rest } = props;
   return (
-    <div className="mt-4">
+    <>
       <label className="block" htmlFor={id}>
         {props.label}
       </label>
@@ -17,6 +17,6 @@ export default function Select(props: SelectProps) {
         onChange={onChange}
         {...rest}
       />
-    </div>
+    </>
   );
 }
