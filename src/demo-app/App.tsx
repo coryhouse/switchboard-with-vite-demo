@@ -80,6 +80,7 @@ export default function App({ user }: AppProps) {
                     <li key={t.id}>
                       <input
                         type="checkbox"
+                        checked={t.completed}
                         className="mr-1"
                         onChange={() => markTodoComplete(t.id)}
                       />
