@@ -24,7 +24,7 @@ export default function App({ user }: AppProps) {
       setStatus("idle");
     }
     fetchTodos();
-  }, []);
+  }, [user.id]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
