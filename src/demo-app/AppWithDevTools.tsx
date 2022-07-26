@@ -26,29 +26,34 @@ export default function AppWithDevTools() {
     <>
       <App user={user} />
       <DevTools>
-        <Select
-          id="user"
-          label="User"
-          value={user.id}
-          onChange={(e) => {
-            const newUser = mockUsers.find(
-              (u) => u.id === parseInt(e.target.value)
-            ) as MockUser;
-            setUser(newUser);
-          }}
-        >
-          {mockUsers.map((u) => (
-            <option value={u.id} key={u.id}>
-              {u.name} ({u.description})
-            </option>
-          ))}
-        </Select>
-        <Input
-          type="number"
-          label="HTTP Delay (ms)"
-          value={delay}
-          onChange={(e) => setDelay(parseInt(e.target.value))}
-        />
+        <div className="mt-4">
+          <Select
+            id="user"
+            label="User"
+            value={user.id}
+            onChange={(e) => {
+              const newUser = mockUsers.find(
+                (u) => u.id === parseInt(e.target.value)
+              ) as MockUser;
+              setUser(newUser);
+            }}
+          >
+            {mockUsers.map((u) => (
+              <option value={u.id} key={u.id}>
+                {u.name} ({u.description})
+              </option>
+            ))}
+          </Select>
+        </div>
+
+        <div className="mt-4">
+          <Input
+            type="number"
+            label="HTTP Delay (ms)"
+            value={delay}
+            onChange={(e) => setDelay(parseInt(e.target.value))}
+          />
+        </div>
       </DevTools>
     </>
   ) : (
