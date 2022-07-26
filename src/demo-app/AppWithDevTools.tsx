@@ -37,11 +37,18 @@ export default function AppWithDevTools() {
           id="user"
           label="User"
           value={user.id}
-          onChange={(e) => setUser(parseInt(e.target.value))}
+          onChange={(e) => {
+            const newUser = mockUsers.find(
+              (u) => u.id === parseInt(e.target.value)
+            ) as MockUser;
+            setUser(newUser);
+          }}
         >
-          <option value={1}>Cory (New)</option>
-          <option value={2}>Tammy (A few todos)</option>
-          <option value={3}>Bob (Many todos)</option>
+          {mockUsers.map((u) => (
+            <option value={u.id}>
+              {u.name} ({u.description})
+            </option>
+          ))}
         </Select>
       </DevTools>
     </>
