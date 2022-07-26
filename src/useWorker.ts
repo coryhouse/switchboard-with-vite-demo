@@ -18,7 +18,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
     const worker = setupWorker(
       rest.get("/todos/:userId", (_req, res, ctx) => {
         return res(
-          ctx.delay(configRef.current?.httpDelay),
+          ctx.delay(configRef.current?.delay),
           ctx.json(configRef.current?.user.todos)
         );
       }),
@@ -30,10 +30,10 @@ export const useWorker = (config: DevToolsConfig | null) => {
           completed: false,
           todo: todo as string,
         };
-        return res(ctx.delay(configRef.current?.httpDelay), ctx.json(resp));
+        return res(ctx.delay(configRef.current?.delay), ctx.json(resp));
       }),
       rest.post("/todo/:id", async (req, res, ctx) => {
-        return res(ctx.delay(configRef.current?.httpDelay), ctx.status(200));
+        return res(ctx.delay(configRef.current?.delay), ctx.status(200));
       })
     );
 
