@@ -47,6 +47,9 @@ export default function App({ user }: AppProps) {
     <React.StrictMode>
       <main className="grid h-screen place-content-center">
         <h1 className="text-3xl pb-4">Hi {user.name} 👋</h1>
+
+        {todos.length === 0 && <p>Welcome! Start entering your todos below.</p>}
+
         <form onSubmit={onSubmit}>
           <Input
             id="todo"
