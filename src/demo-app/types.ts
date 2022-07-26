@@ -8,12 +8,15 @@ export type Todo = {
   completed: boolean;
 };
 
-export type MockUser = {
+export interface User {
   id: number;
-  description: string;
   name: string;
   todos: Todo[];
-};
+}
+
+interface MockUser extends User {
+  description: string;
+}
 
 export type DevToolsConfig = {
   user: MockUser;
