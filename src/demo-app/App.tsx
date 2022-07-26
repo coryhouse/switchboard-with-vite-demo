@@ -15,14 +15,20 @@ export default function App({ user }: AppProps) {
   const [status, setStatus] = useState<Status>("loading");
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [getTodosError, setGetTodosError] = useState<Error | null>(null);
   const [submitError, setSubmitError] = useState<Error | null>(null);
 
   useEffect(() => {
     async function fetchTodos() {
       setStatus("loading");
-      const todosResp = await getTodos(user.id);
-      setTodos(todosResp);
-      setStatus("idle");
+      try {
+        const todosResp = await getTodos(user.id);
+        setTodos(todosResp);
+      } catch (err) {
+        setGetTodosError(err as Error);
+      } finally {
+        setStatus("idle");
+      }
     }
     fetchTodos();
   }, [user.id]);
@@ -41,6 +47,7 @@ export default function App({ user }: AppProps) {
     }
   }
 
+  if (getTodosError) throw getTodosError;
   if (submitError) throw submitError;
 
   return (
