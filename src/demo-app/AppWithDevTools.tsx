@@ -8,7 +8,7 @@ import Select from "./Select";
 import { mockUsers } from "./mocks/users.mocks";
 
 const devToolsDefaults: DevToolsConfig = {
-  user: mockUsers[0],
+  user: mockUsers[1],
   apiResponse: {
     addTodo: "success",
     getTodos: "many",
@@ -24,7 +24,7 @@ export default function AppWithDevTools() {
 
   return isReady ? (
     <>
-      <App />
+      <App user={user} />
       <DevTools>
         <Select
           id="user"
