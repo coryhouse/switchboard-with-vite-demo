@@ -16,6 +16,14 @@ export interface User {
   name: string;
 }
 
+export type MockHttpResponse = {
+  /** HTTP delay for this call */
+  delay: number;
+
+  /** HTTP status code to return for this call */
+  status: number;
+};
+
 export interface MockUser extends User {
   /** Describes why this mock user exists and what makes the user unique. */
   description: string;
@@ -26,10 +34,11 @@ export interface MockUser extends User {
 
 export type DevToolsConfig = {
   user: MockUser;
-  httpDelay: number;
+  /** Global HTTP delay */
+  delay: number;
   apiResponse: {
-    getTodos: "none" | "many" | "error";
-    addTodo: "success" | "error";
-    markTodoCompleted: "success" | "error";
+    getTodos: MockHttpResponse;
+    addTodo: MockHttpResponse;
+    markTodoCompleted: MockHttpResponse;
   };
 };
