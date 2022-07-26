@@ -19,7 +19,8 @@ export const useWorker = (config: DevToolsConfig | null) => {
       rest.get("/todos/:userId", (_req, res, ctx) => {
         return res(
           ctx.delay(configRef.current?.delay),
-          ctx.json(configRef.current?.user.todos)
+          ctx.json(configRef.current?.user.todos),
+          ctx.status(configRef.current?.apiResponse.getTodos.status || 200)
         );
       }),
       rest.post("/todo", async (req, res, ctx) => {
