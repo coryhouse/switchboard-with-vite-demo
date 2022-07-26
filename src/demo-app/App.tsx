@@ -8,6 +8,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [submitError, setSubmitError] = useState<Error | null>(null);
 
   useEffect(() => {
     async function fetchTodos() {
@@ -20,12 +21,17 @@ export default function App() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const savedTodo = await addTodo(todo);
-    setTodos((currentTodos) => [...currentTodos, savedTodo]);
-    setTodo("");
+    try {
+      const savedTodo = await addTodo(todo);
+      setTodos((currentTodos) => [...currentTodos, savedTodo]);
+      setTodo("");
+    } catch (err) {
+      setSubmitError(err as Error);
+    }
   }
 
   if (loading) return <p>Loading...</p>;
+  if (submitError) throw submitError;
 
   return (
     <React.StrictMode>
