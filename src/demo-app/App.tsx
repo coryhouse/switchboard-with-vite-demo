@@ -3,9 +3,12 @@ import { addTodo, getTodos, markTodoComplete } from "../apis/todo-apis";
 import Button from "./Button";
 import Input from "./Input";
 import { Todo } from "./types";
+import cx from "clsx";
+
+type Status = "idle" | "loading" | "adding";
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState<Status>("loading");
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [submitError, setSubmitError] = useState<Error | null>(null);
@@ -14,7 +17,7 @@ export default function App() {
     async function fetchTodos() {
       const todosResp = await getTodos();
       setTodos(todosResp);
-      setLoading(false);
+      setStatus("idle");
     }
     fetchTodos();
   }, []);
@@ -22,15 +25,18 @@ export default function App() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
+      setStatus("adding");
       const savedTodo = await addTodo(todo);
       setTodos((currentTodos) => [...currentTodos, savedTodo]);
       setTodo("");
     } catch (err) {
       setSubmitError(err as Error);
+    } finally {
+      setStatus("idle");
     }
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (status === "loading") return <p>Loading...</p>;
   if (submitError) throw submitError;
 
   return (
@@ -45,8 +51,11 @@ export default function App() {
             value={todo}
             onChange={(e) => setTodo(e.target.value)}
           />
-          <Button type="submit" className="ml-1">
-            Add
+          <Button
+            type="submit"
+            className={cx("ml-1", { "bg-slate-300": status === "adding" })}
+          >
+            Add{status === "adding" && "ing..."}
           </Button>
         </form>
 
