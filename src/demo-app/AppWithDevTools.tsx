@@ -2,8 +2,10 @@ import App from "./App";
 import DevTools from "../DevTools";
 import { useWorker } from "../useWorker";
 import { DevToolsConfig } from "./types";
+import Input from "./Input";
+import { useState } from "react";
 
-const devToolsConfig: DevToolsConfig = {
+const devToolsConfigDefaults: DevToolsConfig = {
   apiResponse: {
     addTodo: "success",
     getTodos: "many",
@@ -24,13 +26,20 @@ const devToolsConfig: DevToolsConfig = {
 };
 
 export default function AppWithDevTools() {
-  const isReady = useWorker(devToolsConfig);
+  const [delay, setDelay] = useState(0);
+  const isReady = useWorker({ ...devToolsConfigDefaults, httpDelay: delay });
 
   return isReady ? (
     <>
       <App />
       <DevTools>
-        <input type="checkbox" />
+        <Input
+          type="number"
+          label="HTTP Delay"
+          value={delay}
+          onChange={(e) => setDelay(parseInt(e.target.value))}
+        />{" "}
+        ms
       </DevTools>
     </>
   ) : (
