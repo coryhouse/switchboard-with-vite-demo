@@ -52,6 +52,6 @@ export default function AppWithDevTools() {
       </DevTools>
     </>
   ) : (
-    <p>Initializing mock service worker</p>
+    <p>Initializing Mock Service Worker...</p>
   );
 }
