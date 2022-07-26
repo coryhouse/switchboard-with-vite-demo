@@ -20,7 +20,7 @@ const devToolsDefaults: DevToolsConfig = {
 export default function AppWithDevTools() {
   const [delay, setDelay] = useState(0);
   const [user, setUser] = useState<MockUser>(devToolsDefaults.user);
-  const isReady = useWorker({ ...devToolsDefaults, httpDelay: delay });
+  const isReady = useWorker({ ...devToolsDefaults, httpDelay: delay, user });
 
   return isReady ? (
     <>
@@ -45,7 +45,7 @@ export default function AppWithDevTools() {
           }}
         >
           {mockUsers.map((u) => (
-            <option value={u.id}>
+            <option value={u.id} key={u.id}>
               {u.name} ({u.description})
             </option>
           ))}
