@@ -46,7 +46,7 @@ export default function App({ user }: AppProps) {
   return (
     <React.StrictMode>
       <main className="grid h-screen place-content-center">
-        <h1 className="text-3xl pb-4">Demo App</h1>
+        <h1 className="text-3xl pb-4">Hi {user.name} 👋</h1>
         <form onSubmit={onSubmit}>
           <Input
             id="todo"
