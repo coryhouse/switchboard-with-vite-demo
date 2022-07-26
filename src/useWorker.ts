@@ -9,7 +9,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
   useEffect(() => {
     const worker = setupWorker(
       rest.get("/todos/:userId", (_req, res, ctx) => {
-        return res(ctx.delay(config?.httpDelay), ctx.json(config?.user));
+        return res(ctx.delay(config?.httpDelay), ctx.json(config?.user.todos));
       }),
       rest.post("/todo", async (req, res, ctx) => {
         const { todo } = await req.json();
