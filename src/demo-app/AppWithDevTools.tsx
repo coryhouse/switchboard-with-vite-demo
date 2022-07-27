@@ -6,6 +6,7 @@ import Input from "./Input";
 import Select from "./Select";
 import { mockUsers } from "./mocks/users.mocks";
 import useLocalStorageState from "use-local-storage-state";
+import ErrorBoundary from "./ErrorBoundary";
 
 const devToolsConfigDefaults: DevToolsConfig = {
   user: mockUsers[0],
@@ -36,7 +37,10 @@ export default function AppWithDevTools() {
 
   return (
     <>
-      <App user={devToolsConfig.user} />
+      {/* Wrap app in ErrorBoundary so devtools continue to display upon error */}
+      <ErrorBoundary>
+        <App user={devToolsConfig.user} />
+      </ErrorBoundary>
       <DevTools>
         <div className="mt-4">
           <Select
