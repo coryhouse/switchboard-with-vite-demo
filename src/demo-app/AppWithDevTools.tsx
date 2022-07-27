@@ -3,9 +3,9 @@ import DevTools from "../DevTools";
 import { useWorker } from "../useWorker";
 import { DevToolsConfig, MockUser } from "./types";
 import Input from "./Input";
-import { useState } from "react";
 import Select from "./Select";
 import { mockUsers } from "./mocks/users.mocks";
+import useLocalStorageState from "use-local-storage-state";
 
 const devToolsConfigDefaults: DevToolsConfig = {
   user: mockUsers[1],
@@ -27,7 +27,9 @@ const devToolsConfigDefaults: DevToolsConfig = {
 };
 
 export default function AppWithDevTools() {
-  const [devToolsConfig, setDevToolsConfig] = useState(devToolsConfigDefaults);
+  const [devToolsConfig, setDevToolsConfig] = useLocalStorageState("devtools", {
+    defaultValue: devToolsConfigDefaults,
+  });
   const isReady = useWorker(devToolsConfig);
 
   if (!isReady) return <p>Initializing Mock Service Worker...</p>;
