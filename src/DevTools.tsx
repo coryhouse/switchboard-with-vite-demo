@@ -34,6 +34,8 @@ export default function DevTools({
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(true);
 
+  const toggleOpen = () => setIsOpen(!isOpen);
+
   return (
     <section
       // TODO: Support drag and drop position.
@@ -46,13 +48,11 @@ export default function DevTools({
     >
       {isOpen ? (
         <>
-          <Button onClick={() => setIsOpen(!isOpen)}>
-            <CloseButton />
-          </Button>
+          <CloseButton onClick={toggleOpen} />
           {children}
         </>
       ) : (
-        <OpenButton onClick={() => setIsOpen(!isOpen)} />
+        <OpenButton onClick={toggleOpen} />
       )}
     </section>
   );
