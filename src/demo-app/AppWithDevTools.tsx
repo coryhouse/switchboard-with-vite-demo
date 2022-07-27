@@ -80,10 +80,11 @@ export default function AppWithDevTools() {
 
         <fieldset className="mt-4 border p-4">
           <legend>getTodos</legend>
-          <div>
+          <div className="flex flex-row">
             <Input
               type="number"
-              label="Delay (ms)"
+              label="Delay"
+              className="w-20"
               value={devToolsConfig.apiResponse.getTodos.delay}
               onChange={(e) => {
                 setDevToolsConfig({
@@ -101,7 +102,8 @@ export default function AppWithDevTools() {
 
             <Input
               type="number"
-              label="Status Code"
+              label="Status"
+              className="w-20"
               value={devToolsConfig.apiResponse.getTodos.status}
               onChange={(e) => {
                 setDevToolsConfig({
