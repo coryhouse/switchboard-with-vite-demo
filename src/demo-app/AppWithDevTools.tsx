@@ -8,7 +8,7 @@ import { mockUsers } from "./mocks/users.mocks";
 import useLocalStorageState from "use-local-storage-state";
 
 const devToolsConfigDefaults: DevToolsConfig = {
-  user: mockUsers[1],
+  user: mockUsers[0],
   apiResponse: {
     addTodo: {
       delay: 0,
