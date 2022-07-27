@@ -2,6 +2,8 @@ import { useState } from "react";
 import Button from "./demo-app/Button";
 import cx from "clsx";
 import "./DevTools.css";
+import CloseButton from "./demo-app/CloseButton";
+import OpenButton from "./demo-app/OpenButton";
 
 interface DevToolsSetting {
   /** Setting label */
@@ -42,10 +44,16 @@ export default function DevTools({
         "left-0": position.includes("left"),
       })}
     >
-      <Button onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? "Close" : "Open"}
-      </Button>
-      {isOpen && <>{children}</>}
+      {isOpen ? (
+        <>
+          <Button onClick={() => setIsOpen(!isOpen)}>
+            <CloseButton />
+          </Button>
+          {children}
+        </>
+      ) : (
+        <OpenButton onClick={() => setIsOpen(!isOpen)} />
+      )}
     </section>
   );
 }
