@@ -8,7 +8,7 @@ interface InputProps extends React.ComponentPropsWithoutRef<"input"> {
 export default function Input(props: InputProps) {
   const { id, onChange, value, className, ...rest } = props;
   return (
-    <>
+    <div>
       <label className="block" htmlFor={id}>
         {props.label}
       </label>
@@ -23,6 +23,6 @@ export default function Input(props: InputProps) {
         onChange={onChange}
         {...rest}
       />
-    </>
+    </div>
   );
 }
