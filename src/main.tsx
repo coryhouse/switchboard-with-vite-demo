@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./demo-app/App";
+import ErrorBoundary from "./demo-app/ErrorBoundary";
 import "./index.css";
 
 // Lazy load so it's not part of the prod bundle.
@@ -17,11 +18,15 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  useDevTools ? (
-    <Suspense fallback="Loading with devtools...">
-      <AppWithDevTools />
-    </Suspense>
-  ) : (
-    <App />
-  )
+  <React.StrictMode>
+    <ErrorBoundary>
+      {useDevTools ? (
+        <Suspense fallback="Loading with devtools...">
+          <AppWithDevTools />
+        </Suspense>
+      ) : (
+        <App />
+      )}
+    </ErrorBoundary>
+  </React.StrictMode>
 );

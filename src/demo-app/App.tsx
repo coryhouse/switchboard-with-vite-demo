@@ -52,59 +52,55 @@ export default function App({ user }: AppProps) {
   if (submitError) throw submitError;
 
   return (
-    <React.StrictMode>
-      <ErrorBoundary>
-        <main className="grid h-screen place-content-center">
-          {status === "loading" ? (
-            <p>Loading...</p>
-          ) : (
+    <main className="grid h-screen place-content-center">
+      {status === "loading" ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <h1 className="text-3xl pb-4">Hi {user.name} 👋</h1>
+
+          {todos.length === 0 && (
+            <p>Welcome! Start entering your todos below.</p>
+          )}
+
+          <form onSubmit={onSubmit}>
+            <Input
+              id="todo"
+              label="What do you need to do?"
+              type="text"
+              value={todo}
+              onChange={(e) => setTodo(e.target.value)}
+            />
+            <Button
+              type="submit"
+              className={cx("ml-1", {
+                "bg-slate-300": status === "adding",
+              })}
+            >
+              Add{status === "adding" && "ing..."}
+            </Button>
+          </form>
+
+          {todos.length > 0 && (
             <>
-              <h1 className="text-3xl pb-4">Hi {user.name} 👋</h1>
-
-              {todos.length === 0 && (
-                <p>Welcome! Start entering your todos below.</p>
-              )}
-
-              <form onSubmit={onSubmit}>
-                <Input
-                  id="todo"
-                  label="What do you need to do?"
-                  type="text"
-                  value={todo}
-                  onChange={(e) => setTodo(e.target.value)}
-                />
-                <Button
-                  type="submit"
-                  className={cx("ml-1", {
-                    "bg-slate-300": status === "adding",
-                  })}
-                >
-                  Add{status === "adding" && "ing..."}
-                </Button>
-              </form>
-
-              {todos.length > 0 && (
-                <>
-                  <h2 className="text-2xl pt-4">Stuff to do</h2>
-                  <ul>
-                    {todos.map((t) => (
-                      <li key={t.id}>
-                        <input
-                          type="checkbox"
-                          checked={t.completed}
-                          className="mr-1"
-                          onChange={() => markTodoComplete(t.id)}
-                        />
-                        {t.todo}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
+              <h2 className="text-2xl pt-4">Stuff to do</h2>
+              <ul>
+                {todos.map((t) => (
+                  <li key={t.id}>
+                    <input
+                      type="checkbox"
+                      checked={t.completed}
+                      className="mr-1"
+                      onChange={() => markTodoComplete(t.id)}
+                    />
+                    {t.todo}
+                  </li>
+                ))}
+              </ul>
             </>
           )}
-        </main>
-      </ErrorBoundary>
-    </React.StrictMode>
+        </>
+      )}
+    </main>
   );
 }
