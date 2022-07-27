@@ -76,7 +76,7 @@ export default function AppWithDevTools() {
           />
         </div>
 
-        <h2 className="mt-4">HTTP responses</h2>
+        <h2 className="mt-4 font-bold">HTTP responses</h2>
 
         <fieldset className="mt-4 border p-4">
           <legend>getTodos</legend>
@@ -84,7 +84,7 @@ export default function AppWithDevTools() {
             <Input
               type="number"
               label="Delay"
-              className="w-20"
+              className="w-20 mr-4"
               value={devToolsConfig.apiResponse.getTodos.delay}
               onChange={(e) => {
                 setDevToolsConfig({
