@@ -48,7 +48,16 @@ export const useWorker = (config: DevToolsConfig | null) => {
     );
 
     const startWorker = async (worker: SetupWorkerApi) => {
-      await worker.start();
+      await worker.start({
+        onUnhandledRequest: ({ method, url }) => {
+          if (
+            url.pathname !== "/src/demo-app/CloseButton.tsx" &&
+            url.pathname !== "/src/index.css"
+          ) {
+            throw new Error(`Unhandled ${method} request to ${url}`);
+          }
+        },
+      });
       setIsReady(true);
     };
 
