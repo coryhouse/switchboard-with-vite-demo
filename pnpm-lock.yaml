@@ -18,12 +18,14 @@ specifiers:
   postcss: ^8.4.14
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-error-boundary: ^3.1.4
   rollup: ^2.77.0
   rollup-plugin-visualizer: ^5.7.1
   sass: ^1.53.0
   start-server-and-test: ^1.14.0
   tailwindcss: ^3.1.6
   typescript: ^4.7.4
+  use-local-storage-state: ^18.1.0
   vite: ^3.0.2
   vitest: ^0.18.1
 
@@ -47,12 +49,14 @@ devDependencies:
   jsdom: 20.0.0
   msw: 0.44.2_typescript@4.7.4
   postcss: 8.4.14
+  react-error-boundary: 3.1.4_react@18.2.0
   rollup: 2.77.0
   rollup-plugin-visualizer: 5.7.1_rollup@2.77.0
   sass: 1.53.0
   start-server-and-test: 1.14.0
   tailwindcss: 3.1.6
   typescript: 4.7.4
+  use-local-storage-state: 18.1.0_biqbaboplfbrettd7655fr4n2y
   vite: 3.0.2_sass@1.53.0
   vitest: 0.18.1_47i6n42ezgimh3k3rwuxy2ww6u
 
@@ -3098,6 +3102,16 @@ packages:
       react: 18.2.0
       scheduler: 0.23.0
 
+  /react-error-boundary/3.1.4_react@18.2.0:
+    resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
+    engines: {node: '>=10', npm: '>=6'}
+    peerDependencies:
+      react: '>=16.13.1'
+    dependencies:
+      '@babel/runtime': 7.18.9
+      react: 18.2.0
+    dev: true
+
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: true
@@ -3690,6 +3704,17 @@ packages:
       browserslist: 4.21.2
       escalade: 3.1.1
       picocolors: 1.0.0
+    dev: true
+
+  /use-local-storage-state/18.1.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-UY86uFHeQyh0oVMjKdco+lzDWok+rx2Fz4uBXVvLM1kfjd71tDmiOPtZY48SsAP3UAGndjUAS9tslQCxSQ4L7Q==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: true
 
   /util-deprecate/1.0.2:
