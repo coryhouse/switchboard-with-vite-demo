@@ -2,8 +2,8 @@ import { useState } from "react";
 import Button from "./demo-app/Button";
 import cx from "clsx";
 import "./DevTools.css";
-import CloseButton from "./demo-app/CloseButton";
-import OpenButton from "./demo-app/OpenButton";
+import CloseButton from "./CloseButton";
+import OpenButton from "./OpenButton";
 
 interface DevToolsSetting {
   /** Setting label */
