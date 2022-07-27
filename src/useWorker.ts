@@ -25,7 +25,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
 
   useEffect(() => {
     const worker = setupWorker(
-      rest.get("/todos/:userId", (_req, res, ctx) => {
+      rest.get("/todos/:userId", async (_req, res, ctx) => {
         return res(
           ctx.delay(getDelay(configRef.current?.apiResponse.getTodos.delay)),
           ctx.json(configRef.current?.user.todos),
