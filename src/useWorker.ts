@@ -32,6 +32,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
           ctx.status(configRef.current?.apiResponse.getTodos.status || 200)
         );
       }),
+
       rest.post("/todo", async (req, res, ctx) => {
         const { todo } = await req.json();
         const resp: Todo = {
@@ -42,6 +43,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
         };
         return res(ctx.delay(configRef.current?.delay), ctx.json(resp));
       }),
+
       rest.post("/todo/:id", async (req, res, ctx) => {
         return res(ctx.delay(configRef.current?.delay), ctx.status(200));
       })
