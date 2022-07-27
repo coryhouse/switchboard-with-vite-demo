@@ -4,7 +4,7 @@ import Button from "./Button";
 import Input from "./Input";
 import { Todo, User } from "./types";
 import cx from "clsx";
-import ErrorBoundary from "./ErrorBoundary";
+import Spinner from "./Spinner";
 
 type Status = "idle" | "loading" | "adding";
 
@@ -54,7 +54,7 @@ export default function App({ user }: AppProps) {
   return (
     <main className="grid h-screen place-content-center">
       {status === "loading" ? (
-        <p>Loading...</p>
+        <Spinner />
       ) : (
         <>
           <h1 className="text-3xl pb-4">Hi {user.name} 👋</h1>
