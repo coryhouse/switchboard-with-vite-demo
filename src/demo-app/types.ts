@@ -22,6 +22,9 @@ export type MockHttpResponse = {
 
   /** HTTP status code to return for this call */
   status: number;
+
+  /** Optional response message. Useful when errors are thrown. */
+  response?: string;
 };
 
 export interface MockUser extends User {
