@@ -1,5 +1,5 @@
 import cx from "clsx";
-interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {}
+export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {}
 
 export default function Button({ className, ...rest }: ButtonProps) {
   return (
