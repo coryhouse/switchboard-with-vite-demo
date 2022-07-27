@@ -14,11 +14,20 @@ export const useWorker = (config: DevToolsConfig | null) => {
     configRef.current = config;
   }, [config]);
 
+  // Returns the endpoints delay if one is specified
+  // Falls back to global delay if one is specified.
+  // Returns 0 otherwise.
+  function getDelay(endpointDelay: number | undefined) {
+    if (endpointDelay) return endpointDelay;
+    if (configRef.current?.delay) return configRef.current?.delay;
+    return 0;
+  }
+
   useEffect(() => {
     const worker = setupWorker(
       rest.get("/todos/:userId", (_req, res, ctx) => {
         return res(
-          ctx.delay(configRef.current?.delay),
+          ctx.delay(getDelay(configRef.current?.apiResponse.getTodos.delay)),
           ctx.json(configRef.current?.user.todos),
           ctx.status(configRef.current?.apiResponse.getTodos.status || 200)
         );
