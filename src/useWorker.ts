@@ -62,10 +62,6 @@ export const useWorker = (config: DevToolsConfig | null) => {
     };
 
     startWorker(worker);
-
-    return () => {
-      worker.stop();
-    };
   }, []);
 
   return isReady;
