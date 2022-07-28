@@ -2,14 +2,14 @@ import Input from "./Input";
 import { DevToolsConfig } from "./types";
 
 type HttpSettingProps = {
-  legend: string;
+  label: string;
   delay: number;
   status: number;
   setDevToolsConfig: React.Dispatch<React.SetStateAction<DevToolsConfig>>;
 };
 
 export default function HttpSetting({
-  legend,
+  label,
   delay,
   status,
   setDevToolsConfig,
@@ -31,7 +31,7 @@ export default function HttpSetting({
 
   return (
     <fieldset className="mt-4 border p-4">
-      <legend>{legend}</legend>
+      <legend>{label}</legend>
       <div className="flex flex-row">
         <Input
           type="number"
