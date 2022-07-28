@@ -36,8 +36,10 @@ export interface MockUser extends User {
 }
 
 export type DevToolsConfig = {
+  /** The current user */
   user: MockUser;
-  /** Global HTTP delay */
+
+  /** A global delay to apply to all mock API responses */
   delay: number;
   apiResponse: {
     getTodos: MockHttpResponse;
