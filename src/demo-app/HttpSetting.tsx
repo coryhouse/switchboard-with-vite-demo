@@ -14,23 +14,6 @@ export default function HttpSetting({
   status,
   setDevToolsConfig,
 }: HttpSettingProps) {
-  function onChange(key: string, value: string) {
-    setDevToolsConfig((devToolsConfig) => {
-      const r: DevToolsConfig = {
-        ...devToolsConfig,
-        mockApis: [
-          ...devToolsConfig.mockApis.filter((a) => a.label === label),
-          {
-            label,
-            delay,
-            status,
-          },
-        ],
-      };
-      return r;
-    });
-  }
-
   return (
     <fieldset className="mt-4 border p-4">
       <legend>{label}</legend>
@@ -40,7 +23,21 @@ export default function HttpSetting({
           label="Delay"
           className="w-20 mr-4"
           value={delay}
-          onChange={(e) => onChange("delay", e.target.value)}
+          onChange={(e) =>
+            setDevToolsConfig((devToolsConfig) => {
+              return {
+                ...devToolsConfig,
+                mockApis: [
+                  ...devToolsConfig.mockApis.filter((a) => a.label !== label),
+                  {
+                    label,
+                    delay: parseInt(e.target.value),
+                    status,
+                  },
+                ],
+              };
+            })
+          }
         />
 
         <Input
@@ -48,7 +45,21 @@ export default function HttpSetting({
           label="Status"
           className="w-20"
           value={status}
-          onChange={(e) => onChange("status", e.target.value)}
+          onChange={(e) =>
+            setDevToolsConfig((devToolsConfig) => {
+              return {
+                ...devToolsConfig,
+                mockApis: [
+                  ...devToolsConfig.mockApis.filter((a) => a.label !== label),
+                  {
+                    label,
+                    delay,
+                    status: parseInt(e.target.value),
+                  },
+                ],
+              };
+            })
+          }
         />
       </div>
     </fieldset>
