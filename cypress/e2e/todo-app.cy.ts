@@ -26,4 +26,6 @@ describe("Todo App", () => {
 
     //
   });
+
+  it("shows a loading status while the todo add is in progress", () => {});
 });
