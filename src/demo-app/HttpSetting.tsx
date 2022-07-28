@@ -18,12 +18,14 @@ export default function HttpSetting({
     setDevToolsConfig((devToolsConfig) => {
       const r: DevToolsConfig = {
         ...devToolsConfig,
-        apiResponse: {
-          ...devToolsConfig.apiResponse,
-          [legend]: {
-            [key]: parseInt(value),
+        mockApis: [
+          ...devToolsConfig.mockApis.filter((a) => a.label === label),
+          {
+            label,
+            delay,
+            status,
           },
-        },
+        ],
       };
       return r;
     });
