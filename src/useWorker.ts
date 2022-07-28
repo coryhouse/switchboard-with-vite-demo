@@ -23,13 +23,20 @@ export const useWorker = (config: DevToolsConfig | null) => {
     return 0;
   }
 
+  function getResponseByLabel(label: string) {
+    const resp = configRef.current?.mockApis.find((a) => a.label === label);
+    if (!resp) throw new Error("Could not find getTodos config");
+    return resp;
+  }
+
   useEffect(() => {
     const worker = setupWorker(
       rest.get("/todos/:userId", async (_req, res, ctx) => {
+        const { delay, status } = getResponseByLabel("getTodos");
         return res(
-          ctx.delay(getDelay(configRef.current?.apiResponse.getTodos.delay)),
+          ctx.delay(getDelay(delay)),
           ctx.json(configRef.current?.user.todos),
-          ctx.status(configRef.current?.apiResponse.getTodos.status || 200)
+          ctx.status(status)
         );
       }),
 
