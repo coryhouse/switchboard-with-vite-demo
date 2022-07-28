@@ -46,6 +46,6 @@ export type DevToolsConfig = {
   /** A global delay to apply to all mock API responses */
   delay: number;
 
-  /** An array of APIs to mock */
+  /** APIs to mock */
   mockApis: MockApi[];
 };
