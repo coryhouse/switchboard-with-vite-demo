@@ -16,12 +16,16 @@ export interface User {
   name: string;
 }
 
-export type MockHttpResponse = {
-  /** HTTP delay for this call */
+export type MockApi = {
+  /** Label to display in the devtools to describe the endpoint being mocked */
+  label: string;
+
+  /** Delay the response by a specified number of milliseconds. */
   delay: number;
 
   /** HTTP status code to return for this call */
   status: number;
+};
 
   /** Optional response message. Useful when errors are thrown. */
   response?: string;
