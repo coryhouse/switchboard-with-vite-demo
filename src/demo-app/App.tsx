@@ -16,8 +16,7 @@ export default function App({ user }: AppProps) {
   const [status, setStatus] = useState<Status>("loading");
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [getTodosError, setGetTodosError] = useState<Error | null>(null);
-  const [submitError, setSubmitError] = useState<Error | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     async function fetchTodos() {
@@ -26,7 +25,7 @@ export default function App({ user }: AppProps) {
         const todosResp = await getTodos(user.id);
         setTodos(todosResp);
       } catch (err) {
-        setGetTodosError(err as Error);
+        setError(err as Error);
       } finally {
         setStatus("idle");
       }
@@ -42,14 +41,27 @@ export default function App({ user }: AppProps) {
       setTodos((currentTodos) => [...currentTodos, savedTodo]);
       setTodo("");
     } catch (err) {
-      setSubmitError(err as Error);
+      setError(err as Error);
     } finally {
       setStatus("idle");
     }
   }
 
-  if (getTodosError) throw getTodosError;
-  if (submitError) throw submitError;
+  async function markComplete(todoId: number) {
+    try {
+      // Optimistically mark completed. Don't wait for HTTP call
+      setTodos(
+        todos.map((todo) => {
+          return todo.id === todoId ? { ...todo, completed: true } : todo;
+        })
+      );
+      await markTodoComplete(todoId);
+    } catch (err) {
+      setError(err as Error);
+    }
+  }
+
+  if (error) throw error;
 
   return (
     <main className="grid h-screen place-content-center">
@@ -91,7 +103,7 @@ export default function App({ user }: AppProps) {
                       type="checkbox"
                       checked={t.completed}
                       className="mr-1"
-                      onChange={() => markTodoComplete(t.id)}
+                      onChange={() => markComplete(t.id)}
                     />
                     {t.todo}
                   </li>
