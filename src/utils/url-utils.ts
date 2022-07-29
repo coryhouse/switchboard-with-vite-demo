@@ -1,10 +1,14 @@
 import { DevToolsConfig } from "../demo-app/types";
 
 /** Return the devtools entry from the provided URL's querystring as an object */
-export function getDevToolsSettingsFromUrlQuerystring(url: string) {
+export function getDevToolsSettingsFromUrlQuerystring(
+  url: string
+): DevToolsConfig | null {
   const urlParams = new URLSearchParams(url);
   const devToolsQuery = urlParams.get("devtools");
-  return devToolsQuery ? JSON.parse(devToolsQuery) : null;
+  return devToolsQuery
+    ? (JSON.parse(decodeURI(devToolsQuery)) as DevToolsConfig)
+    : null;
 }
 
 /** Returns a string that contains the current URL with devtools settings included in the querystring */
