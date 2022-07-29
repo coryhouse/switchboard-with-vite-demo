@@ -51,7 +51,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
         return res(ctx.delay(configRef.current?.delay), ctx.json(resp));
       }),
 
-      rest.post("/todo/:id", async (req, res, ctx) => {
+      rest.put("/todo/:id", async (req, res, ctx) => {
         return res(ctx.delay(configRef.current?.delay), ctx.status(200));
       })
     );
