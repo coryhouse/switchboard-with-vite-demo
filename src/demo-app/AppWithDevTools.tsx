@@ -51,10 +51,6 @@ export default function AppWithDevTools() {
 
   if (!isReady) return <p>Initializing Mock Service Worker...</p>;
 
-  const sortedMockApis = devToolsConfig.mockApis.sort(
-    (a, b) => a.label.length - b.label.length
-  );
-
   return (
     <>
       {/* Wrap app in ErrorBoundary so devtools continue to display upon error */}
@@ -100,7 +96,7 @@ export default function AppWithDevTools() {
             </div>
 
             {/** Sort array so the order doesn't change when values are set */}
-            {sortedMockApis.map(({ label, delay, status }) => (
+            {devToolsConfig.mockApis.map(({ label, delay, status }) => (
               <HttpSetting
                 key={label}
                 label={label}
