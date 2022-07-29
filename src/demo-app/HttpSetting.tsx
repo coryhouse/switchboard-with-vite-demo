@@ -15,7 +15,7 @@ export default function HttpSetting({
   setDevToolsConfig,
 }: HttpSettingProps) {
   return (
-    <fieldset className="mt-4 border p-4">
+    <fieldset className="mt-4 border p-2">
       <legend>{label}</legend>
       <div className="flex flex-row">
         <Input
