@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { addTodo, getTodos, markTodoComplete } from "./apis/todo-apis";
+import { addTodo, getTodos, updateTodo } from "./apis/todo-apis";
 import Button from "./Button";
 import Input from "./Input";
 import { Todo, User } from "./types";
@@ -47,15 +47,17 @@ export default function App({ user }: AppProps) {
     }
   }
 
-  async function markComplete(todoId: number) {
+  async function toggleComplete(todo: Todo) {
     try {
       // Optimistically mark completed. Don't wait for HTTP call
       setTodos(
         todos.map((todo) => {
-          return todo.id === todoId ? { ...todo, completed: true } : todo;
+          return todo.id === todo.id
+            ? { ...todo, completed: !todo.completed }
+            : todo;
         })
       );
-      await markTodoComplete(todoId);
+      await updateTodo(todo);
     } catch (err) {
       setError(err as Error);
     }
@@ -103,7 +105,7 @@ export default function App({ user }: AppProps) {
                       type="checkbox"
                       checked={t.completed}
                       className="mr-1"
-                      onChange={() => markComplete(t.id)}
+                      onChange={() => toggleComplete(t)}
                     />
                     {t.todo}
                   </li>
