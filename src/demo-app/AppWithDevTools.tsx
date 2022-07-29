@@ -83,31 +83,33 @@ export default function AppWithDevTools() {
             </Select>
           </div>
 
-          <div className="mt-4">
-            <Input
-              type="number"
-              label="Global Delay (ms)"
-              value={devToolsConfig.delay}
-              onChange={(e) =>
-                setDevToolsConfig({
-                  ...devToolsConfig,
-                  delay: parseInt(e.target.value),
-                })
-              }
-            />
-          </div>
+          <details>
+            <summary className="mt-4 font-bold">HTTP responses</summary>
+            <div className="mt-4">
+              <Input
+                type="number"
+                label="Global Delay (ms)"
+                value={devToolsConfig.delay}
+                onChange={(e) =>
+                  setDevToolsConfig({
+                    ...devToolsConfig,
+                    delay: parseInt(e.target.value),
+                  })
+                }
+              />
+            </div>
 
-          <h2 className="mt-4 font-bold">HTTP responses</h2>
-          {/** Sort array so the order doesn't change when values are set */}
-          {sortedMockApis.map(({ label, delay, status }) => (
-            <HttpSetting
-              key={label}
-              label={label}
-              setDevToolsConfig={setDevToolsConfig}
-              delay={delay}
-              status={status}
-            />
-          ))}
+            {/** Sort array so the order doesn't change when values are set */}
+            {sortedMockApis.map(({ label, delay, status }) => (
+              <HttpSetting
+                key={label}
+                label={label}
+                setDevToolsConfig={setDevToolsConfig}
+                delay={delay}
+                status={status}
+              />
+            ))}
+          </details>
         </>
       </DevTools>
     </>
