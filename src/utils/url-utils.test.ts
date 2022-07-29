@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getDevToolsSettingsFromUrlQuerystring } from "./urlUtils";
+import { getDevToolsSettingsFromUrlQuerystring } from "./url-utils";
 
 describe("urlUtils", () => {
   describe("getDevToolsSettingsFromUrlQuerystring", () => {
