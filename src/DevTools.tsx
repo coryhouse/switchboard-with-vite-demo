@@ -3,6 +3,8 @@ import Button from "./demo-app/Button";
 import cx from "clsx";
 import CloseButton from "./CloseButton";
 import OpenButton from "./OpenButton";
+import useKeypress from "react-use-keypress";
+import useOutsideClick from "./useOutsideClick";
 
 interface DevToolsSetting {
   /** Setting label */
