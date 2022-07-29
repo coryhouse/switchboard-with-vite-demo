@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Button from "./demo-app/Button";
 import cx from "clsx";
-import "./DevTools.css";
 import CloseButton from "./CloseButton";
 import OpenButton from "./OpenButton";
 
