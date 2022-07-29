@@ -27,14 +27,15 @@ export default function HttpSetting({
             setDevToolsConfig((devToolsConfig) => {
               return {
                 ...devToolsConfig,
-                mockApis: [
-                  ...devToolsConfig.mockApis.filter((a) => a.label !== label),
-                  {
-                    label,
-                    delay: parseInt(e.target.value),
-                    status,
-                  },
-                ],
+                mockApis: devToolsConfig.mockApis.map((a) =>
+                  a.label === label
+                    ? {
+                        label,
+                        delay: parseInt(e.target.value),
+                        status,
+                      }
+                    : a
+                ),
               };
             })
           }
@@ -49,14 +50,15 @@ export default function HttpSetting({
             setDevToolsConfig((devToolsConfig) => {
               return {
                 ...devToolsConfig,
-                mockApis: [
-                  ...devToolsConfig.mockApis.filter((a) => a.label !== label),
-                  {
-                    label,
-                    delay,
-                    status: parseInt(e.target.value),
-                  },
-                ],
+                mockApis: devToolsConfig.mockApis.map((a) =>
+                  a.label === label
+                    ? {
+                        label,
+                        delay,
+                        status: parseInt(e.target.value),
+                      }
+                    : a
+                ),
               };
             })
           }
