@@ -10,7 +10,14 @@ import ErrorBoundary from "./ErrorBoundary";
 import HttpSetting from "./HttpSetting";
 import { getDevToolsSettingsFromUrlQuerystring } from "../utils/url-utils";
 
-function getDevToolsConfigDefaults() {
+// Returns optional URL settings if specified. Falls back to defaults otherwise.
+function getDevToolsConfigDefaults(): DevToolsConfig {
+  const urlSettings = getDevToolsSettingsFromUrlQuerystring(
+    window.location.search
+  );
+
+  if (urlSettings) return urlSettings;
+
   const defaults: DevToolsConfig = {
     user: mockUsers[0],
     delay: 0,
