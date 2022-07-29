@@ -61,7 +61,8 @@ export const useWorker = (config: DevToolsConfig | null) => {
         onUnhandledRequest: ({ method, url }) => {
           if (
             url.pathname !== "/src/demo-app/CloseButton.tsx" &&
-            url.pathname !== "/src/index.css"
+            url.pathname !== "/src/index.css" &&
+            !url.pathname.startsWith("chrome-extension:")
           ) {
             throw new Error(`Unhandled ${method} request to ${url}`);
           }
