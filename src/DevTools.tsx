@@ -6,6 +6,8 @@ import OpenButton from "./OpenButton";
 import useKeypress from "react-use-keypress";
 import useOutsideClick from "./useOutsideClick";
 import LinkButton from "./LinkButton";
+import { writeToClipboard } from "./utils/clipboard-utils";
+import { buildUrlWithDevtoolsSettings } from "./utils/url-utils";
 
 interface DevToolsSetting {
   /** Setting label */
@@ -59,26 +61,14 @@ export default function DevTools({
 
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  // Build a URL with devtools
-  function buildUrlWithDevtoolsSettings() {
-    const urlWithoutQuerystring = window.location.href.split("?")[0];
-    const params = new URLSearchParams(window.location.search);
-    params.append("devtools", encodeURI(JSON.stringify(devToolsConfig)));
-    return urlWithoutQuerystring + params.toString();
-  }
-
-  // Write the provided string to the clipboard
-  function writeToClipboard(content: string) {
-    const type = "text/plain";
-    const blob = new Blob([content], {
-      type,
-    });
-    const data = [new ClipboardItem({ [type]: blob })];
-
-    navigator.clipboard.write(data).then(
-      () => alert("Settings URL copied to clipboard"),
-      () => alert("Failed to copy settings URL to clipboard")
-    );
+  async function copyDevToolsSettingsUrlToClipboard() {
+    const url = buildUrlWithDevtoolsSettings(window.location, devToolsConfig);
+    try {
+      await writeToClipboard(url);
+      alert("Settings URL copied to clipboard");
+    } catch (err) {
+      () => alert("Failed to copy settings URL to clipboard");
+    }
   }
 
   return (
@@ -98,12 +88,7 @@ export default function DevTools({
             onClick={toggleOpen}
             className="absolute top-1 right-1"
           />
-          <LinkButton
-            onClick={() => {
-              const url = buildUrlWithDevtoolsSettings();
-              writeToClipboard(url);
-            }}
-          />
+          <LinkButton onClick={copyDevToolsSettingsUrlToClipboard} />
           {children}
         </>
       ) : (
