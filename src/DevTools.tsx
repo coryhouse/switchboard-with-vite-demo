@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import Button from "./demo-app/Button";
 import cx from "clsx";
 import CloseButton from "./CloseButton";
