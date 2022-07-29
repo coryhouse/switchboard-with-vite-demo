@@ -15,5 +15,5 @@ export function buildUrlWithDevtoolsSettings(
   const urlWithoutQuerystring = location.href.split("?")[0];
   const params = new URLSearchParams(location.search);
   params.append("devtools", encodeURI(JSON.stringify(devToolsConfig)));
-  return urlWithoutQuerystring + params.toString();
+  return urlWithoutQuerystring + "?" + params.toString();
 }
