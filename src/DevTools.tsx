@@ -71,6 +71,12 @@ export default function DevTools({
             onClick={toggleOpen}
             className="absolute top-1 right-1"
           />
+          <LinkButton
+            onClick={() => {
+              const url = buildUrlWithDevtoolsSettings();
+              writeToClipboard(url);
+            }}
+          />
           {children}
         </>
       ) : (
