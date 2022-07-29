@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { setupWorker, rest, SetupWorkerApi } from "msw";
 import { DevToolsConfig, Todo } from "./demo-app/types";
-import { getRandomNumberBelow } from "./utils/numberUtils";
+import { getRandomNumberBelow } from "./utils/number-utils";
 
 export const useWorker = (config: DevToolsConfig | null) => {
   const configRef = useRef(config);
