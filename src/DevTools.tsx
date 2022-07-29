@@ -5,6 +5,7 @@ import CloseButton from "./CloseButton";
 import OpenButton from "./OpenButton";
 import useKeypress from "react-use-keypress";
 import useOutsideClick from "./useOutsideClick";
+import LinkButton from "./LinkButton";
 
 interface DevToolsSetting {
   /** Setting label */
@@ -24,6 +25,9 @@ interface DevToolsProps {
   /** When true, close the devtools window when the escape key is pressed */
   closeViaEscapeKey?: boolean;
 
+  /** Dev tools config settings */
+  devToolsConfig: any;
+
   /** Specify where this component should be positioned on the page */
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
@@ -40,6 +44,7 @@ export default function DevTools({
   children,
   closeOnOutsideClick = false,
   closeViaEscapeKey = false,
+  devToolsConfig,
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(true);
   const ref = useRef<HTMLDivElement>(null);
@@ -53,6 +58,28 @@ export default function DevTools({
   });
 
   const toggleOpen = () => setIsOpen(!isOpen);
+
+  // Build a URL with devtools
+  function buildUrlWithDevtoolsSettings() {
+    const urlWithoutQuerystring = window.location.href.split("?")[0];
+    const params = new URLSearchParams(window.location.search);
+    params.append("devtools", encodeURI(JSON.stringify(devToolsConfig)));
+    return urlWithoutQuerystring + params.toString();
+  }
+
+  // Write the provided string to the clipboard
+  function writeToClipboard(content: string) {
+    const type = "text/plain";
+    const blob = new Blob([content], {
+      type,
+    });
+    const data = [new ClipboardItem({ [type]: blob })];
+
+    navigator.clipboard.write(data).then(
+      () => alert("Settings URL copied to clipboard"),
+      () => alert("Failed to copy settings URL to clipboard")
+    );
+  }
 
   return (
     <section
