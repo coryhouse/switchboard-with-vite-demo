@@ -85,8 +85,9 @@ export default function DevTools({
       {isOpen ? (
         <>
           <CloseButton
+            aria-label="Close devtools"
             onClick={toggleOpen}
-            className="absolute top-1 right-1"
+            className="absolute top-2 right-2"
           />
           <LinkButton onClick={copyDevToolsSettingsUrlToClipboard} />
           {children}
