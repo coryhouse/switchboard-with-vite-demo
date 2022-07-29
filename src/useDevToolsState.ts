@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDevToolsSettingsFromUrlQuerystring } from "./utils/urlUtils";
+import { getDevToolsSettingsFromUrlQuerystring } from "./utils/url-utils";
 
 /**
  * This hook makes it easy to declare state for devtools.
