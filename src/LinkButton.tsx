@@ -1,10 +1,15 @@
 import Button, { ButtonProps } from "./demo-app/Button";
+import cx from "clsx";
 
 export default function CloseButton(props: ButtonProps) {
+  const { className, ...rest } = props;
   return (
     <Button
-      {...props}
-      className="bg-white border-none p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+      className={cx(
+        "bg-white border-none p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100",
+        className
+      )}
+      {...rest}
     >
       <span className="sr-only">Copy settings to URL</span>
       <svg
