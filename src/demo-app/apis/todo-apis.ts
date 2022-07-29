@@ -22,9 +22,13 @@ export async function addTodo(todo: string): Promise<Todo> {
   return resp.json() as Promise<Todo>;
 }
 
-export async function markTodoComplete(id: number): Promise<void> {
-  const resp = await fetch(`/todo/${id}`, {
+export async function updateTodo(todo: Todo): Promise<void> {
+  const resp = await fetch(`/todo/${todo.id}`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ todo }),
   });
   if (!resp.ok) throw resp;
 }
