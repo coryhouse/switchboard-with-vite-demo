@@ -67,7 +67,10 @@ export default function DevTools({
     >
       {isOpen ? (
         <>
-          <CloseButton onClick={toggleOpen} />
+          <CloseButton
+            onClick={toggleOpen}
+            className="absolute top-1 right-1"
+          />
           {children}
         </>
       ) : (
