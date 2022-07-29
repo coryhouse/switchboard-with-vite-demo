@@ -56,6 +56,7 @@ export default function DevTools({
 
   return (
     <section
+      ref={ref}
       // TODO: Support drag and drop position.
       className={cx("fixed p-4 border shadow-lg max-h-screen overflow-auto", {
         "bottom-0": position.includes("bottom"),
