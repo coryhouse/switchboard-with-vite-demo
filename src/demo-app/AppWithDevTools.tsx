@@ -8,6 +8,7 @@ import { mockUsers } from "./mocks/users.mocks";
 import useLocalStorageState from "use-local-storage-state";
 import ErrorBoundary from "./ErrorBoundary";
 import HttpSetting from "./HttpSetting";
+import { getDevToolsSettingsFromUrlQuerystring } from "../utils/url-utils";
 
 function getDevToolsConfigDefaults() {
   const defaults: DevToolsConfig = {
