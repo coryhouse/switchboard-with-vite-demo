@@ -16,6 +16,12 @@ interface DevToolsSetting {
 }
 
 interface DevToolsProps {
+  /** When true, the devtools window closes automatically when any content outside the window is clicked. */
+  closeOnOutsideClick?: boolean;
+
+  /** When true, close the devtools window when the escape key is pressed */
+  closeViaEscapeKey?: boolean;
+
   /** Specify where this component should be positioned on the page */
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
@@ -30,8 +36,19 @@ interface DevToolsProps {
 export default function DevTools({
   position = "top-left",
   children,
+  closeOnOutsideClick = false,
+  closeViaEscapeKey = false,
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(true);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useKeypress("Escape", () => {
+    if (closeViaEscapeKey) setIsOpen(false);
+  });
+
+  useOutsideClick(ref, () => {
+    if (closeOnOutsideClick) setIsOpen(false);
+  });
 
   const toggleOpen = () => setIsOpen(!isOpen);
 
