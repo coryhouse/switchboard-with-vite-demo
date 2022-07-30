@@ -107,7 +107,14 @@ export default function App({ user }: AppProps) {
                       className="mr-1"
                       onChange={() => toggleComplete(t)}
                     />
-                    {t.todo}
+                    <span
+                      className={cx({
+                        "text-decoration-line line-through text-slate-400":
+                          t.completed,
+                      })}
+                    >
+                      {t.todo}
+                    </span>
                   </li>
                 ))}
               </ul>
