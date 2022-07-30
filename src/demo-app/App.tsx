@@ -51,10 +51,8 @@ export default function App({ user }: AppProps) {
     try {
       // Optimistically mark completed. Don't wait for HTTP call
       setTodos(
-        todos.map((todo) => {
-          return todo.id === todo.id
-            ? { ...todo, completed: !todo.completed }
-            : todo;
+        todos.map((t) => {
+          return t.id === todo.id ? { ...todo, completed: !todo.completed } : t;
         })
       );
       await updateTodo(todo);
