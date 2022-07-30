@@ -6,9 +6,16 @@ export function getDevToolsSettingsFromUrlQuerystring(
 ): DevToolsConfig | null {
   const urlParams = new URLSearchParams(url);
   const devToolsQuery = urlParams.get("devtools");
-  return devToolsQuery
-    ? (JSON.parse(decodeURI(devToolsQuery)) as DevToolsConfig)
-    : null;
+  if (!devToolsQuery) return null;
+  try {
+    const settings = JSON.parse(decodeURI(devToolsQuery)) as DevToolsConfig;
+    return settings;
+  } catch (err) {
+    console.error(err);
+    throw new Error(
+      "Parsing the querystring's devtools setting failed. The querystring is likely malformed."
+    );
+  }
 }
 
 /** Returns a string that contains the current URL with devtools settings included in the querystring */
