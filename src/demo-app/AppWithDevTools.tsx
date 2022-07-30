@@ -60,7 +60,7 @@ export default function AppWithDevTools() {
 
       <DevTools devToolsConfig={devToolsConfig} closeViaEscapeKey>
         <>
-          <div className="mt-4">
+          <div>
             <Select
               id="user"
               label="User"
