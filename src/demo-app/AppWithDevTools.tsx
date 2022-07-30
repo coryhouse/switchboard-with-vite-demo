@@ -57,6 +57,7 @@ export default function AppWithDevTools() {
       <ErrorBoundary>
         <App user={devToolsConfig.user} />
       </ErrorBoundary>
+
       <DevTools devToolsConfig={devToolsConfig} closeViaEscapeKey>
         <>
           <div className="mt-4">
