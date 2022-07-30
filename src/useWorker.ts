@@ -59,6 +59,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
     const startWorker = async (worker: SetupWorkerApi) => {
       await worker.start({
         onUnhandledRequest: ({ method, url }) => {
+          // Ignore these requests that need not be mocked
           if (
             url.pathname !== "/src/demo-app/CloseButton.tsx" &&
             url.pathname !== "/src/index.css" &&
