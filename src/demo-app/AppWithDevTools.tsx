@@ -20,6 +20,7 @@ function getDevToolsConfigDefaults(): DevToolsConfig {
 
   const defaults: DevToolsConfig = {
     user: mockUsers[0],
+    autoReload: true,
     delay: 0,
     mockApis: [
       {
@@ -58,7 +59,11 @@ export default function AppWithDevTools() {
         <App user={devToolsConfig.user} />
       </ErrorBoundary>
 
-      <DevTools devToolsConfig={devToolsConfig} closeViaEscapeKey>
+      <DevTools
+        devToolsConfig={devToolsConfig}
+        setDevToolsConfig={setDevToolsConfig}
+        closeViaEscapeKey
+      >
         <>
           <div>
             <Select
