@@ -11,6 +11,7 @@ import { buildUrlWithDevtoolsSettings } from "./utils/url-utils";
 import Checkbox from "./demo-app/Checkbox";
 import { DevToolsConfig } from "./demo-app/types";
 import Select from "./demo-app/Select";
+import Field from "./Field";
 
 interface DevToolsSetting {
   /** Setting label */
@@ -102,27 +103,24 @@ export default function DevTools({
           {children}
 
           <details className="mt-4">
-            <summary>Meta</summary>
+            <summary className="mt-4 font-bold">Meta</summary>
 
-            <Button
-              className="block"
-              onClick={copyDevToolsSettingsUrlToClipboard}
-            >
-              Copy settings URL
-            </Button>
+            <Field>
+              <Select
+                label="Position"
+                value={position}
+                onChange={(e) =>
+                  setPosition(e.target.value as DevToolsPosition)
+                }
+              >
+                <option value="top-left">Top left</option>
+                <option value="top-right">Top Right</option>
+                <option value="bottom-left">Bottom left</option>
+                <option value="bottom-right">Bottom right</option>
+              </Select>
+            </Field>
 
-            <Select
-              label="Position"
-              value={position}
-              onChange={(e) => setPosition(e.target.value as DevToolsPosition)}
-            >
-              <option value="top-left">Top left</option>
-              <option value="top-right">Top Right</option>
-              <option value="bottom-left">Bottom left</option>
-              <option value="bottom-right">Bottom right</option>
-            </Select>
-
-            <div>
+            <Field>
               <Checkbox
                 label="Auto Reload"
                 onChange={(e) => {
@@ -132,15 +130,22 @@ export default function DevTools({
                 }}
                 checked={devToolsConfig.autoReload}
               />
-            </div>
+            </Field>
 
-            <Button
-              className="block mt-4"
-              type="submit"
-              onClick={() => window.location.reload()}
-            >
-              Reload
-            </Button>
+            <Field>
+              <Button
+                className="block"
+                onClick={copyDevToolsSettingsUrlToClipboard}
+              >
+                Copy settings URL
+              </Button>
+            </Field>
+
+            <Field>
+              <Button type="submit" onClick={() => window.location.reload()}>
+                Reload
+              </Button>
+            </Field>
           </details>
         </>
       ) : (
