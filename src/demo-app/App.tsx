@@ -100,19 +100,21 @@ export default function App({ user }: AppProps) {
                 {todos.map((t) => (
                   <li key={t.id}>
                     <input
+                      id={t.id.toString()}
                       type="checkbox"
                       checked={t.completed}
                       className="mr-1"
                       onChange={() => toggleComplete(t)}
                     />
-                    <span
+                    <label
+                      htmlFor={t.id.toString()}
                       className={cx({
                         "text-decoration-line line-through text-slate-400":
                           t.completed,
                       })}
                     >
                       {t.todo}
-                    </span>
+                    </label>
                   </li>
                 ))}
               </ul>
