@@ -8,6 +8,9 @@ import useOutsideClick from "./useOutsideClick";
 import LinkButton from "./LinkButton";
 import { writeToClipboard } from "./utils/clipboard-utils";
 import { buildUrlWithDevtoolsSettings } from "./utils/url-utils";
+import Checkbox from "./demo-app/Checkbox";
+import { DevToolsConfig } from "./demo-app/types";
+import Select from "./demo-app/Select";
 
 interface DevToolsSetting {
   /** Setting label */
@@ -20,6 +23,12 @@ interface DevToolsSetting {
   inputType: "text" | "radio" | "checkbox" | "select";
 }
 
+export type DevToolsPosition =
+  | "top-left"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-right";
+
 interface DevToolsProps {
   /** When true, the devtools window closes automatically when any content outside the window is clicked. */
   closeOnOutsideClick?: boolean;
@@ -28,10 +37,10 @@ interface DevToolsProps {
   closeViaEscapeKey?: boolean;
 
   /** Dev tools config settings */
-  devToolsConfig: any;
+  devToolsConfig: DevToolsConfig;
 
-  /** Specify where this component should be positioned on the page */
-  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  /** Set Dev tools config settings */
+  setDevToolsConfig: React.Dispatch<React.SetStateAction<DevToolsConfig>>;
 
   /** Array of devtools settings */
   // settings: Array<DevToolsSetting>;
@@ -42,13 +51,14 @@ interface DevToolsProps {
 
 /** This component is useful to display custom devtools settings for your project */
 export default function DevTools({
-  position = "top-left",
   children,
   closeOnOutsideClick = false,
   closeViaEscapeKey = false,
   devToolsConfig,
+  setDevToolsConfig,
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(true);
+  const [position, setPosition] = useState<DevToolsPosition>("top-left");
   const ref = useRef<HTMLDivElement>(null);
 
   useKeypress("Escape", () => {
@@ -89,11 +99,46 @@ export default function DevTools({
             onClick={toggleOpen}
             className="absolute top-4 right-4"
           />
-          <LinkButton
-            aria-label="Copy settings URL to clipboard"
-            onClick={copyDevToolsSettingsUrlToClipboard}
-          />
           {children}
+
+          <details className="mt-4">
+            <summary>Meta</summary>
+
+            <Button
+              className="block"
+              onClick={copyDevToolsSettingsUrlToClipboard}
+            >
+              Copy settings URL
+            </Button>
+
+            <Select
+              label="Position"
+              value={devToolsConfig.position}
+              onChange={(e) => setPosition(e.target.value as DevToolsPosition)}
+            >
+              <option value="top-left">Top left</option>
+              <option value="top-right">Top Right</option>
+              <option value="bottom-left">Bottom left</option>
+              <option value="bottom-right">Bottom right</option>
+            </Select>
+
+            <Checkbox
+              label="Auto Reload"
+              onChange={(e) => {
+                setDevToolsConfig((config) => {
+                  return { ...config, autoReload: e.target.checked };
+                });
+              }}
+              checked={devToolsConfig.autoReload}
+            />
+            <Button
+              className="block mt-4"
+              type="submit"
+              onClick={() => window.location.reload()}
+            >
+              Reload
+            </Button>
+          </details>
         </>
       ) : (
         <OpenButton onClick={toggleOpen} />
