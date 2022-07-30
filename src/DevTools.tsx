@@ -113,7 +113,7 @@ export default function DevTools({
 
             <Select
               label="Position"
-              value={devToolsConfig.position}
+              value={position}
               onChange={(e) => setPosition(e.target.value as DevToolsPosition)}
             >
               <option value="top-left">Top left</option>
@@ -131,6 +131,7 @@ export default function DevTools({
               }}
               checked={devToolsConfig.autoReload}
             />
+
             <Button
               className="block mt-4"
               type="submit"
