@@ -122,15 +122,17 @@ export default function DevTools({
               <option value="bottom-right">Bottom right</option>
             </Select>
 
-            <Checkbox
-              label="Auto Reload"
-              onChange={(e) => {
-                setDevToolsConfig((config) => {
-                  return { ...config, autoReload: e.target.checked };
-                });
-              }}
-              checked={devToolsConfig.autoReload}
-            />
+            <div>
+              <Checkbox
+                label="Auto Reload"
+                onChange={(e) => {
+                  setDevToolsConfig((config) => {
+                    return { ...config, autoReload: e.target.checked };
+                  });
+                }}
+                checked={devToolsConfig.autoReload}
+              />
+            </div>
 
             <Button
               className="block mt-4"
