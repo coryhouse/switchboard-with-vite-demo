@@ -95,11 +95,9 @@ export default function DevTools({
     >
       {isOpen ? (
         <>
-          <CloseButton
-            aria-label="Close devtools"
-            onClick={toggleOpen}
-            className="absolute top-4 right-4"
-          />
+          <div className="flex flex-row-reverse">
+            <CloseButton aria-label="Close devtools" onClick={toggleOpen} />
+          </div>
           {children}
 
           <details className="mt-4">
