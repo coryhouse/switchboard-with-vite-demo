@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { getDevToolsSettingsFromUrlQuerystring } from "./utils/url-utils";
 
 /**
  * This hook makes it easy to declare state for devtools.
+ * It's a fork of https://usehooks.com/useLocalStorage/,
+ * but enhanced to read the URL as a way to override the specified default.
  * Since devtools often benefit from being initialized via the URL,
  * it reads the default value from the URL. And since it's handy
- * for the devtools to "remember" settings between hard refreshes,
+ * for the DevTools to "remember" settings between hard refreshes,
  * it writes settings to localStorage onChange.
  *
  * Finally, if neither the URL or localStorage is set, it falls back
@@ -18,60 +19,66 @@ import { getDevToolsSettingsFromUrlQuerystring } from "./utils/url-utils";
  * So, in other words, if the URL isn't provided, it falls back to localStorage.
  * If localStorage isn't set, it falls back to the specified default.
  *
- * This hook writes each state change to 3 spots:
- * 1. The URL's querystring
- * 2. localStorage
- * 3. local state variable  */
-
-function getDefault<T>(key: string, defaultValue: T) {
-  return defaultValue;
-}
-
-export function useDevToolsState<T extends string | Array<string>>(
-  key: string,
-  defaultValue: T
-) {
-  const [state, setState] = useState<T>(() => getDefault<T>(key, defaultValue));
-
-  useEffect(() => {
-    // Check URL on first load
-    function updateLocalStateAndLocalStorageWhenQueryStringChanges() {
-      const settingsFromUrl = getDevToolsSettingsFromUrlQuerystring(
-        window.location.search
-      );
-      if (settingsFromUrl) {
-        setState(settingsFromUrl);
-        localStorage.setItem("devtools", settingsFromUrl);
-      }
+ * This hook writes each state change to 2 spots:
+ * 1. localStorage
+ * 2. local state variable
+ *
+ * Note that the URL is NOT updated as state values change. The URL is merely read to specify a default on initial load.
+ *
+ * @param key The URL param to check for the default, as well as the key used to write the value to localStorage
+ * @param initialValue The default value to use if the URL and localStorage both don't have a matching value for the provided key.
+ * */
+export function useDevToolsState<T>(key: string, initialValue: T) {
+  // State to store our value
+  // Pass initial state function to useState so logic is only executed once
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    if (typeof window === "undefined") {
+      return initialValue;
     }
-    updateLocalStateAndLocalStorageWhenQueryStringChanges;
-  }, []);
 
-  function getSettingsFromLocalStorage() {
-    return localStorage.getItem("devtools");
-  }
+    // First, check the URL for a value and use it for the default if found
+    // Convert the params to lowercase to avoid casing issues.
+    const params = new URLSearchParams(window.location.search);
+    const lowercaseParams = new URLSearchParams();
+    for (const [name, value] of params) {
+      lowercaseParams.append(name.toLowerCase(), value);
+    }
+    // Convert key to lowercase when comparing to avoid casing issues.
+    const urlValue = lowercaseParams.get(key.toLowerCase());
+    if (urlValue) {
+      if (Number(urlValue)) return parseInt(urlValue);
+      return urlValue;
+    }
 
-  /** Where the magic happens. This sets state in 3 spots:
-   * 1. The URL's querystring
-   * 2. localStorage
-   * 3. local state variable
-   *
-   * Yes, typically a single system of record for a given piece of state is recommended.
-   * But for devtools, it's best to keep these 3 in sync. Keeping the URL updated is useful
-   * so it can be copied and shared with others at any point. Local state is necessary
-   * so that any consumers of this hook receive the new state. And localStorage is useful
-   * so the settings persist if the tab is reloaded or closed.
-   */
-  function setAllState(newState: any) {
-    localStorage.setItem("devtools", newState);
-    setState(newState);
-  }
-
-  const settingsInUrl = getDevToolsSettingsFromUrlQuerystring(
-    window.location.search
-  );
-  if (settingsInUrl) setState(settingsInUrl);
-
-  // Return an array that mirrors the API for plain useState
-  return [state, setAllState];
+    // If URL doesn't contain the key, then fallback to checking localStorage for a default value
+    try {
+      // Get from local storage by key
+      const item = window.localStorage.getItem(key);
+      // Parse stored json or if none return initialValue
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      // If error also return initialValue
+      console.log(error);
+      return initialValue;
+    }
+  });
+  // Return a wrapped version of useState's setter function that ...
+  // ... persists the new value to localStorage.
+  const setValue = (value: T | ((val: T) => T)) => {
+    try {
+      // Allow value to be a function so we have same API as useState
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
+      // Save state
+      setStoredValue(valueToStore);
+      // Save to local storage
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      }
+    } catch (error) {
+      // A more advanced implementation would handle the error case
+      console.log(error);
+    }
+  };
+  return [storedValue, setValue] as const;
 }
