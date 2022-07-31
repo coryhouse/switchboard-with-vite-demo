@@ -7,7 +7,7 @@ function isInSection(heading: string, text: string) {
     });
 }
 
-// Returns a URL with the provided devtools config included in the querystring.
+// Returns a URL with the provided DevTools config included in the querystring.
 function buildUrl(config: Partial<DevToolsConfig>) {
   const params = new URLSearchParams(location.search);
   Object.keys(config).forEach((key) => {
