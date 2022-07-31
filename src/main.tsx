@@ -1,8 +1,9 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./demo-app/App";
-import ErrorBoundary from "./demo-app/ErrorBoundary";
+import { ErrorBoundary } from "react-error-boundary";
 import "./index.css";
+import ErrorFallback from "./demo-app/ErrorFallback";
 
 // Lazy load so it's not part of the prod bundle.
 const AppWithDevTools = React.lazy(
@@ -19,7 +20,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
       {useDevTools ? (
         <Suspense fallback="Loading with devtools...">
           <AppWithDevTools />
