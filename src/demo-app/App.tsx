@@ -6,7 +6,7 @@ import { Todo, User } from "./types";
 import cx from "clsx";
 import Spinner from "./Spinner";
 
-type Status = "idle" | "loading" | "adding";
+type Status = "idle" | "loading" | "adding" | "toggling-complete";
 
 type AppProps = {
   user: User;
@@ -55,7 +55,24 @@ export default function App({ user }: AppProps) {
           return t.id === todo.id ? { ...todo, completed: !todo.completed } : t;
         })
       );
-      await updateTodo(todo);
+
+      const callTimedOut = "Call timed out";
+
+      // Use this to timeout the call below after 3 seconds.
+      const timeoutPromise = new Promise((resolve) => {
+        setTimeout(resolve, 3000, callTimedOut);
+      });
+
+      setStatus("toggling-complete");
+      const result = await Promise.race([timeoutPromise, updateTodo(todo)]);
+
+      if (result === callTimedOut) {
+        throw new Error(
+          "Oops! Updating the todo failed. Please reload and try again."
+        );
+      }
+
+      setStatus("idle");
     } catch (err) {
       setError(err as Error);
     }
@@ -118,6 +135,15 @@ export default function App({ user }: AppProps) {
                   </li>
                 ))}
               </ul>
+
+              {status === "toggling-complete" && (
+                <div aria-live="polite" className="absolute bottom-2 right-2">
+                  <span className="flex">
+                    Saving...
+                    <Spinner className="ml-4" />
+                  </span>
+                </div>
+              )}
             </>
           )}
         </>
