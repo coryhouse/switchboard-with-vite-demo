@@ -25,7 +25,13 @@ root.render(
           <AppWithDevTools />
         </Suspense>
       ) : (
-        <App />
+        <App
+          // Stubbing in fake user here since this demo app includes no real implementation, just mocks */}
+          user={{
+            id: 1,
+            name: "bob",
+          }}
+        />
       )}
     </ErrorBoundary>
   </React.StrictMode>
