@@ -67,9 +67,7 @@ export default function App({ user }: AppProps) {
       const result = await Promise.race([timeoutPromise, updateTodo(todo)]);
 
       if (result === callTimedOut) {
-        throw new Error(
-          "Oops! Updating the todo failed. Please reload and try again."
-        );
+        throw new Error("Oops! Updating the todo failed.");
       }
 
       setStatus("idle");
