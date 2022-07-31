@@ -18,7 +18,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
   // Falls back to global delay if one is specified.
   // Returns 0 otherwise.
   function getDelay(endpointDelay: number | undefined) {
-    if (endpointDelay) return endpointDelay;
+    if (endpointDelay !== undefined) return endpointDelay;
     if (configRef.current?.delay) return configRef.current?.delay;
     return 0;
   }
