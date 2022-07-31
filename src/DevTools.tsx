@@ -76,7 +76,7 @@ export default function DevTools({
     const url = buildUrlWithDevtoolsSettings(window.location, devToolsConfig);
     try {
       await writeToClipboard(url);
-      alert("Settings URL copied to clipboard");
+      alert("URL copied to clipboard");
     } catch (err) {
       () => alert("Failed to copy settings URL to clipboard");
     }
