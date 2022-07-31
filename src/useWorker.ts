@@ -48,11 +48,17 @@ export const useWorker = (config: DevToolsConfig | null) => {
           completed: false,
           todo: todo as string,
         };
-        return res(ctx.delay(configRef.current?.delay), ctx.json(resp));
+        const { delay, status } = getResponseByLabel("addTodo");
+        return res(
+          ctx.delay(getDelay(delay)),
+          ctx.json(resp),
+          ctx.status(status)
+        );
       }),
 
       rest.put("/todo/:id", async (req, res, ctx) => {
-        return res(ctx.delay(configRef.current?.delay), ctx.status(200));
+        const { delay, status } = getResponseByLabel("toggleTodoCompleted");
+        return res(ctx.delay(getDelay(delay)), ctx.status(status));
       })
     );
 
