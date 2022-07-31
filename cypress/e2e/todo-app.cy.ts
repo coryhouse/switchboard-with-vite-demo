@@ -30,11 +30,11 @@ describe("Todo App", () => {
     // Input should be cleared after submission
     cy.findByLabelText("What do you need to do?").should("be.empty");
 
-    // Now mark as complete and assure it's marked with a line through
+    // Mark as complete and assure it's marked with a line through
     cy.findByLabelText("Write more tests").click();
     cy.findByText("Write more tests").should("have.class", "line-through");
 
-    // Now mark as incomplete and assure the line-through is removed.
+    // Mark as incomplete and assure line-through is removed.
     cy.findByLabelText("Write more tests").click();
     cy.findByText("Write more tests").should("not.have.class", "line-through");
   });
