@@ -6,9 +6,10 @@ import Input from "./Input";
 import Select from "./Select";
 import { mockUsers } from "./mocks/users.mocks";
 import useLocalStorageState from "use-local-storage-state";
-import ErrorBoundary from "./ErrorBoundary";
+import { ErrorBoundary } from "react-error-boundary";
 import HttpSetting from "./HttpSetting";
 import { getDevToolsSettingsFromUrlQuerystring } from "../utils/url-utils";
+import ErrorFallback from "./ErrorFallback";
 
 // Returns optional URL settings if specified. Falls back to defaults otherwise.
 function getDevToolsConfigDefaults(): DevToolsConfig {
@@ -55,7 +56,7 @@ export default function AppWithDevTools() {
   return (
     <>
       {/* Wrap app in ErrorBoundary so devtools continue to display upon error */}
-      <ErrorBoundary>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
         <App user={devToolsConfig.user} />
       </ErrorBoundary>
 
