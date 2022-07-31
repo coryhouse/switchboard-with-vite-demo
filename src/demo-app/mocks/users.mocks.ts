@@ -8,7 +8,7 @@ export const noTodos: MockUser = {
 };
 
 export const manyTodos: MockUser = {
-  id: 3,
+  id: 2,
   description: "Many todos",
   name: "Elon",
   todos: [
