@@ -34,7 +34,7 @@ function getDevToolsConfigDefaults(): DevToolsConfig {
         status: 200,
       },
       {
-        label: "markTodoCompleted",
+        label: "toggleTodoCompleted",
         delay: 0,
         status: 200,
       },
