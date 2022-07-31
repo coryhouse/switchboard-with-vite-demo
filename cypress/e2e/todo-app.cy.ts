@@ -33,6 +33,10 @@ describe("Todo App", () => {
     // Now mark as complete and assure it's marked with a line through
     cy.findByLabelText("Write more tests").click();
     cy.findByText("Write more tests").should("have.class", "line-through");
+
+    // Now mark as incomplete and assure the line-through is removed.
+    cy.findByLabelText("Write more tests").click();
+    cy.findByText("Write more tests").should("not.have.class", "line-through");
   });
 
   it("shows a loading status while the todo add is in progress", () => {
