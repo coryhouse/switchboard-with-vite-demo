@@ -1,5 +1,5 @@
 type SpinnerProps = {
-  className: string;
+  className?: string;
 };
 
 export default function Spinner(props: SpinnerProps) {
