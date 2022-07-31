@@ -46,8 +46,16 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
     // Convert key to lowercase when comparing to avoid casing issues.
     const urlValue = lowercaseParams.get(key.toLowerCase());
     if (urlValue) {
-      if (Number(urlValue)) return parseInt(urlValue);
-      return urlValue;
+      if (Number(urlValue)) {
+        const intVal = parseInt(urlValue);
+        // Update localStorage with URL value too
+        window.localStorage.setItem(key, urlValue);
+        return intVal;
+      } else {
+        // Update localStorage with URL value too
+        window.localStorage.setItem(key, urlValue);
+        return urlValue;
+      }
     }
 
     // If URL doesn't contain the key, then fallback to checking localStorage for a default value
