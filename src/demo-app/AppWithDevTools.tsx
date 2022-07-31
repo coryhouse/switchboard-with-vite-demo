@@ -87,7 +87,7 @@ export default function AppWithDevTools() {
           </div>
 
           <details>
-            <summary className="mt-4 font-bold">HTTP responses</summary>
+            <summary className="mt-4 font-bold">HTTP</summary>
             <div className="mt-4">
               <Input
                 type="number"
