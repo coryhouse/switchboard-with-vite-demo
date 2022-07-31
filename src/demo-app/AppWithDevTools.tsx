@@ -102,7 +102,6 @@ export default function AppWithDevTools() {
               />
             </div>
 
-            {/** Sort array so the order doesn't change when values are set */}
             {devToolsConfig.mockApis.map(({ label, delay, status }) => (
               <HttpSetting
                 key={label}
