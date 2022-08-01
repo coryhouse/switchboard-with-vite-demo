@@ -1,3 +1,6 @@
+import { DevToolsConfig } from "../../src/demo-app/types";
+import * as mockUsers from "../../src/demo-app/mocks/users.mocks";
+
 // Use parent to search within the heading's <section>
 function isInSection(heading: string, text: string) {
   cy.findByRole("heading", { name: heading })
