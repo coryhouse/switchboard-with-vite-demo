@@ -1,18 +1,18 @@
 import Input from "./Input";
-import { HttpSetting } from "./types";
+import { DevToolsConfig } from "./types";
 
 type HttpSettingFormProps = {
   label: string;
   delay: number;
   status: number;
-  setHttpSettings: React.Dispatch<React.SetStateAction<HttpSetting[]>>;
+  setConfig: React.Dispatch<React.SetStateAction<DevToolsConfig>>;
 };
 
 export default function HttpSettingForm({
   label,
   delay,
   status,
-  setHttpSettings,
+  setConfig,
 }: HttpSettingFormProps) {
   return (
     <fieldset className="mt-4 border p-2">
@@ -24,17 +24,18 @@ export default function HttpSettingForm({
           className="w-20 mr-4"
           value={delay}
           onChange={(e) =>
-            setHttpSettings((httpSettings) => {
-              return httpSettings.map((a) =>
-                a.label === label
+            setConfig((config) => ({
+              ...config,
+              http: config.http.map((s) =>
+                s.label === label
                   ? {
                       label,
                       delay: parseInt(e.target.value),
                       status,
                     }
-                  : a
-              );
-            })
+                  : s
+              ),
+            }))
           }
         />
 
@@ -44,17 +45,18 @@ export default function HttpSettingForm({
           className="w-20"
           value={status}
           onChange={(e) =>
-            setHttpSettings((httpSettings) => {
-              return httpSettings.map((a) =>
-                a.label === label
+            setConfig((config) => ({
+              ...config,
+              http: config.http.map((s) =>
+                s.label === label
                   ? {
                       label,
                       delay,
                       status: parseInt(e.target.value),
                     }
-                  : a
-              );
-            })
+                  : s
+              ),
+            }))
           }
         />
       </div>
