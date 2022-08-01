@@ -49,6 +49,12 @@ export interface MockUser extends User {
   todos: Todo[];
 }
 
+export type DevToolsPosition =
+  | "top-left"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-right";
+
 /** The DevTools configuration */
 export type DevToolsConfig = {
   /** The current user and their todos */
