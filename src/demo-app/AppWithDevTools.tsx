@@ -31,6 +31,11 @@ export default function AppWithDevTools() {
         delay: 0,
         status: 200,
       },
+      {
+        label: "deleteTodo",
+        delay: 0,
+        status: 200,
+      },
     ]
   );
 
