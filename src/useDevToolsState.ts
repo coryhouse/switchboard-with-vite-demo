@@ -47,13 +47,13 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
     const urlValue = lowercaseParams.get(key.toLowerCase());
     if (urlValue) {
       if (Number(urlValue)) {
-        const intVal = parseInt(urlValue);
+        const int = parseInt(urlValue);
         // Update localStorage with URL value too
-        window.localStorage.setItem(key, urlValue);
-        return intVal;
+        window.localStorage.setItem(key, JSON.stringify(int));
+        return int;
       } else {
         // Update localStorage with URL value too
-        window.localStorage.setItem(key, urlValue);
+        window.localStorage.setItem(key, JSON.stringify(urlValue));
         return urlValue;
       }
     }
