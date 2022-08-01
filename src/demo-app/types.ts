@@ -34,8 +34,16 @@ export type HttpSetting = {
 };
 
 export interface MockUser extends User {
-  /** Describes why this mock user exists and what makes the user unique. */
-  description: string;
+  /** Describes why this mock user exists and what makes the user unique.
+   * NOTE: This is deliberately an object for 2 reasons:
+   * 1. Assures new users are described clearly and consistently
+   * 2. Helps avoid people changing a user without understanding why it exists as is
+   * 3. Helps avoid creating multiple users with the same config.
+   */
+  description: {
+    todos: string;
+    role: string;
+  };
 
   /** Array of todos */
   todos: Todo[];
