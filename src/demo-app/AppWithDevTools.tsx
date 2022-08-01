@@ -57,14 +57,10 @@ export default function AppWithDevTools() {
     <>
       {/* Wrap app in ErrorBoundary so devtools continue to display upon error */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <App user={devToolsConfig.user} />
+        <App user={user} />
       </ErrorBoundary>
 
-      <DevTools
-        devToolsConfig={devToolsConfig}
-        setDevToolsConfig={setDevToolsConfig}
-        closeViaEscapeKey
-      >
+      <DevTools devToolsConfig={devToolsConfig} closeViaEscapeKey>
         <>
           <div>
             <Select
