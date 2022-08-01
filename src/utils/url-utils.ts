@@ -20,13 +20,12 @@ export function getDevToolsSettingsFromUrlQuerystring(
   }
 }
 
-/** Returns a string that contains the current URL with devtools settings included in the querystring */
-export function buildUrlWithDevtoolsSettings(
-  location: Location,
-  devToolsConfig: DevToolsConfig
-) {
-  const urlWithoutQuerystring = location.href.split("?")[0];
-  const params = new URLSearchParams(location.search);
-  params.append("devtools", encodeURIComponent(JSON.stringify(devToolsConfig)));
+/** Returns a string that contains the current URL with DevTools settings included in the querystring */
+export function getDevToolsUrl(url: URL, config: any) {
+  const urlWithoutQuerystring = url.href.split("?")[0];
+  const params = new URLSearchParams(url.search);
+  // Remove existing querystring if it exists. This assures the newly generated URL only contains the devtools querystring once.
+  params.delete("devtools");
+  params.append("devtools", encodeURIComponent(JSON.stringify(config)));
   return urlWithoutQuerystring + "?" + params.toString();
 }
