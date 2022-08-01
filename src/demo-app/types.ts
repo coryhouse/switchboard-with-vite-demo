@@ -29,7 +29,7 @@ export type HttpSetting = {
   /** HTTP status code to return for this call */
   status: number;
 
-  /** Optional response message. Useful when errors are thrown. */
+  /** Optional response. */
   response?: string;
 };
 
