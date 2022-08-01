@@ -35,7 +35,11 @@ export default function AppWithDevTools() {
         <App user={config.user} />
       </ErrorBoundary>
 
-      <DevTools closeViaEscapeKey>
+      <DevTools
+        position={config.position}
+        setConfig={setConfig}
+        closeViaEscapeKey
+      >
         <>
           <div>
             <Select
