@@ -35,6 +35,7 @@ function toggleComplete(todo: string) {
 }
 
 // Returns a URL with the provided DevTools config included in the querystring.
+// TODO: Move to url utils?
 function buildUrl(config: Partial<UrlConfig>) {
   const params = new URLSearchParams(location.search);
   Object.keys(config).forEach((key) => {
@@ -44,18 +45,25 @@ function buildUrl(config: Partial<UrlConfig>) {
 }
 
 describe("new user", () => {
-  it("shows a welcome message", () => {
+  it("shows a welcome message, supports adding a todo, and hides the delete feature", () => {
     const url = buildUrl({
       userId: mockUsers.noTodos.id,
+      delay: 50,
     });
     cy.visit(url);
     cy.findByText("Welcome! Start entering your todos below.");
+
+    addTodo("Write more tests");
+    toggleComplete("Write more tests");
+
+    // The delete button shouldn't display because this
+    cy.findByLabelText("Delete Write more tests").should("not.exist");
   });
 });
 
 describe("existing admin user", () => {
   it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting the todo", () => {
-    // Visit Elon with 50ms delay on getTodos
+    // Visit Elon with 50ms delay
     const url = buildUrl({
       userId: mockUsers.manyTodos.id,
       delay: 50,
@@ -74,7 +82,8 @@ describe("existing admin user", () => {
   });
 });
 
-  it("shows a loading status while the todo add is in progress", () => {
+describe("when adding a todo", () => {
+  it("shows a loading status while the todo toggle is in progress, and hides the loading status when done before the timeout", () => {
     // Note that this visits a URL with a short loading delay set via the URL
   });
 });
