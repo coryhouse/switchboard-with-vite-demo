@@ -8,6 +8,7 @@ import useOutsideClick from "./useOutsideClick";
 import Checkbox from "./demo-app/Checkbox";
 import Select from "./demo-app/Select";
 import Field from "./Field";
+import { DevToolsPosition } from "./demo-app/types";
 
 interface DevToolsSetting {
   /** Setting label */
@@ -19,12 +20,6 @@ interface DevToolsSetting {
   /** Input type */
   inputType: "text" | "radio" | "checkbox" | "select";
 }
-
-export type DevToolsPosition =
-  | "top-left"
-  | "top-right"
-  | "bottom-left"
-  | "bottom-right";
 
 interface DevToolsProps {
   /** When true, the devtools window closes automatically when any content outside the window is clicked. */
