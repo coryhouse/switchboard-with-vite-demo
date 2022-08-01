@@ -14,28 +14,7 @@ import ErrorFallback from "./ErrorFallback";
 export const defaultConfig: DevToolsConfig = {
   user: noTodos,
   delay: 0,
-  http: [
-    {
-      label: "addTodo",
-      delay: 0,
-      status: 200,
-    },
-    {
-      label: "getTodos",
-      delay: 0,
-      status: 200,
-    },
-    {
-      label: "toggleTodoCompleted",
-      delay: 0,
-      status: 200,
-    },
-    {
-      label: "deleteTodo",
-      delay: 0,
-      status: 200,
-    },
-  ],
+  http: [],
   position: "top-left",
 };
 
