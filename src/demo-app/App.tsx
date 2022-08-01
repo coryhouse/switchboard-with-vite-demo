@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { addTodo, getTodos, updateTodo } from "./apis/todo-apis";
+import { addTodo, deleteTodo, getTodos, updateTodo } from "./apis/todo-apis";
 import Button from "./Button";
 import Input from "./Input";
 import { Todo, User } from "./types";
@@ -115,7 +115,14 @@ export default function App({ user }: AppProps) {
               <ul>
                 {todos.map((t) => (
                   <li key={t.id} className="flex items-center">
-                    {user.isAdmin && <DeleteButton onClick={() => {}} />}
+                    {user.isAdmin && (
+                      <DeleteButton
+                        onClick={async () => {
+                          await deleteTodo(t.id);
+                          setTodos(todos.filter(({ id }) => id !== t.id));
+                        }}
+                      />
+                    )}
                     <input
                       id={t.id.toString()}
                       type="checkbox"
