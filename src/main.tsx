@@ -31,6 +31,7 @@ root.render(
           user={{
             id: 1,
             name: "bob",
+            isAdmin: false,
           }}
         />
       )}
