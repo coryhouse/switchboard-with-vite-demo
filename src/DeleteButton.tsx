@@ -11,7 +11,7 @@ export default function DeleteButton(props: ButtonProps) {
       )}
       {...rest}
     >
-      <span className="sr-only">Close menu</span>
+      <span className="sr-only">Delete</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6"
