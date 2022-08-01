@@ -15,10 +15,24 @@ function buildUrl(config: Partial<DevToolsConfig>) {
   });
   return "http://127.0.0.1:5173/?" + params.toString();
 }
+describe("new user", () => {
+  it("shows a welcome message", () => {
+    const url = buildUrl({
+      userId: mockUsers.noTodos.id,
+    });
+    cy.visit(url);
+    cy.findByText("Welcome! Start entering your todos below.");
+  });
+});
+
+describe("existing user", () => {
+  it("shows existing todos on initial load, supports adding a todo, and toggling complete", () => {
     // Visit Elon with 50ms delay on getTodos
-    cy.visit(
-      "http://127.0.0.1:5173/?devtools=%257B%2522user%2522%3A%257B%2522id%2522%3A3%2C%2522description%2522%3A%2522Many%2520todos%2522%2C%2522name%2522%3A%2522Elon%2522%2C%2522todos%2522%3A%255B%257B%2522id%2522%3A1%2C%2522todo%2522%3A%2522Ship%2520Model%2520S%2522%2C%2522completed%2522%3Atrue%257D%2C%257B%2522id%2522%3A2%2C%2522todo%2522%3A%2522Ship%2520Model%25203%2522%2C%2522completed%2522%3Atrue%257D%2C%257B%2522id%2522%3A3%2C%2522todo%2522%3A%2522Ship%2520Model%2520X%2522%2C%2522completed%2522%3Atrue%257D%2C%257B%2522id%2522%3A4%2C%2522todo%2522%3A%2522Ship%2520Cybertruck%2522%2C%2522completed%2522%3Afalse%257D%2C%257B%2522id%2522%3A5%2C%2522todo%2522%3A%2522Ship%2520Semi%2522%2C%2522completed%2522%3Afalse%257D%255D%257D%2C%2522autoReload%2522%3Atrue%2C%2522delay%2522%3A50%2C%2522mockApis%2522%3A%255B%257B%2522label%2522%3A%2522addTodo%2522%2C%2522delay%2522%3A0%2C%2522status%2522%3A200%257D%2C%257B%2522label%2522%3A%2522getTodos%2522%2C%2522delay%2522%3A0%2C%2522status%2522%3A200%257D%2C%257B%2522label%2522%3A%2522markTodoCompleted%2522%2C%2522delay%2522%3A0%2C%2522status%2522%3A200%257D%255D%257D"
-    );
+    const url = buildUrl({
+      userId: mockUsers.manyTodos.id,
+      delay: 50,
+    });
+    cy.visit(url);
 
     // First, assure existing todos display
     isInSection("Stuff to do", "Ship Model S");
