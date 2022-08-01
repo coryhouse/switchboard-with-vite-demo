@@ -60,6 +60,11 @@ export const useWorker = (config: DevToolsConfig | null) => {
       rest.put("/todo/:id", async (req, res, ctx) => {
         const { delay, status } = getResponseByLabel("toggleTodoCompleted");
         return res(ctx.delay(getDelay(delay)), ctx.status(status));
+      }),
+
+      rest.delete("/todo/:id", async (req, res, ctx) => {
+        const { delay, status } = getResponseByLabel("deleteTodo");
+        return res(ctx.delay(getDelay(delay)), ctx.status(status));
       })
     );
 
