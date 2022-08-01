@@ -94,10 +94,10 @@ export default function AppWithDevTools() {
               />
             </div>
 
-            {config.http.map(({ label, delay, status }) => (
+            {config.http.map(({ endpoint, delay, status }) => (
               <HttpSettingForm
-                key={label}
-                label={label}
+                key={endpoint}
+                endpoint={endpoint}
                 setConfig={setConfig}
                 delay={delay}
                 status={status}
