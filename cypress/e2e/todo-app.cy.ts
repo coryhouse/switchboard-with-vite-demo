@@ -18,6 +18,7 @@ function buildUrl(config: Partial<DevToolsConfig>) {
   });
   return "http://127.0.0.1:5173/?" + params.toString();
 }
+
 describe("new user", () => {
   it("shows a welcome message", () => {
     const url = buildUrl({
