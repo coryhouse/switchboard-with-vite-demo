@@ -14,6 +14,9 @@ export interface User {
 
   /** User's name */
   name: string;
+
+  /** Set to true if the user is an admin */
+  isAdmin: boolean;
 }
 
 export type HttpSetting = {
