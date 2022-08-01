@@ -1,29 +1,21 @@
 import App from "./App";
 import DevTools from "../DevTools";
 import { useWorker } from "../useWorker";
-import { DevToolsConfig, MockUser } from "./types";
+import { DevToolsConfig, HttpSetting } from "./types";
 import Input from "./Input";
 import Select from "./Select";
 import { mockUsers } from "./mocks/users.mocks";
-import useLocalStorageState from "use-local-storage-state";
+import { useDevToolsState } from "../useDevToolsState";
 import { ErrorBoundary } from "react-error-boundary";
-import HttpSetting from "./HttpSetting";
-import { getDevToolsSettingsFromUrlQuerystring } from "../utils/url-utils";
+import HttpSettingForm from "./HttpSettingForm";
 import ErrorFallback from "./ErrorFallback";
 
-// Returns optional URL settings if specified. Falls back to defaults otherwise.
-function getDevToolsConfigDefaults(): DevToolsConfig {
-  const urlSettings = getDevToolsSettingsFromUrlQuerystring(
-    window.location.search
-  );
-
-  if (urlSettings) return urlSettings;
-
-  const defaults: DevToolsConfig = {
-    user: mockUsers[0],
-    autoReload: true,
-    delay: 0,
-    mockApis: [
+export default function AppWithDevTools() {
+  const [userId, setUserId] = useDevToolsState("userId", mockUsers[0].id);
+  const [delay, setDelay] = useDevToolsState("delay", 0);
+  const [httpSettings, setHttpSettings] = useDevToolsState<HttpSetting[]>(
+    "httpSettings",
+    [
       {
         label: "addTodo",
         delay: 0,
@@ -39,16 +31,18 @@ function getDevToolsConfigDefaults(): DevToolsConfig {
         delay: 0,
         status: 200,
       },
-    ],
+    ]
+  );
+
+  const user = mockUsers.find((u) => u.id === userId);
+  if (!user) throw new Error("Can't find userId: " + userId);
+
+  const devToolsConfig: DevToolsConfig = {
+    user,
+    delay,
+    httpSettings,
   };
 
-  return defaults;
-}
-
-export default function AppWithDevTools() {
-  const [devToolsConfig, setDevToolsConfig] = useLocalStorageState("devtools", {
-    defaultValue: getDevToolsConfigDefaults(),
-  });
   const isReady = useWorker(devToolsConfig);
 
   if (!isReady) return <p>Initializing Mock Service Worker...</p>;
@@ -66,17 +60,12 @@ export default function AppWithDevTools() {
             <Select
               id="user"
               label="User"
-              value={devToolsConfig.user.id}
-              onChange={(e) => {
-                const user = mockUsers.find(
-                  (u) => u.id === parseInt(e.target.value)
-                ) as MockUser;
-                setDevToolsConfig({ ...devToolsConfig, user });
-              }}
+              value={userId}
+              onChange={(e) => setUserId(parseInt(e.target.value))}
             >
               {mockUsers.map((u) => (
                 <option value={u.id} key={u.id}>
-                  {u.name} ({u.description})
+                  {u.name} ({u.description.role}, {u.description.todos})
                 </option>
               ))}
             </Select>
@@ -88,13 +77,8 @@ export default function AppWithDevTools() {
               <Input
                 type="number"
                 label="Global Delay (ms)"
-                value={devToolsConfig.delay}
-                onChange={(e) =>
-                  setDevToolsConfig({
-                    ...devToolsConfig,
-                    delay: parseInt(e.target.value),
-                  })
-                }
+                value={delay}
+                onChange={(e) => setDelay(parseInt(e.target.value))}
               />
             </div>
 
