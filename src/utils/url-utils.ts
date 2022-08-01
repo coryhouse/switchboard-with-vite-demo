@@ -8,7 +8,9 @@ export function getDevToolsSettingsFromUrlQuerystring(
   const devToolsQuery = urlParams.get("devtools");
   if (!devToolsQuery) return null;
   try {
-    const settings = JSON.parse(decodeURI(devToolsQuery)) as DevToolsConfig;
+    const settings = JSON.parse(
+      decodeURIComponent(devToolsQuery)
+    ) as DevToolsConfig;
     return settings;
   } catch (err) {
     console.error(err);
