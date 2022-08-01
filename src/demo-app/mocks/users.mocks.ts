@@ -4,6 +4,7 @@ export const noTodos: MockUser = {
   id: 1,
   description: "No todos",
   name: "Cory",
+  isAdmin: false,
   todos: [],
 };
 
@@ -11,6 +12,7 @@ export const manyTodos: MockUser = {
   id: 2,
   description: "Many todos",
   name: "Elon",
+  isAdmin: true,
   todos: [
     {
       id: 1,
