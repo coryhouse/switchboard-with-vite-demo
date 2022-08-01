@@ -26,6 +26,6 @@ export function getDevToolsUrl(url: URL, config: any) {
   const params = new URLSearchParams(url.search);
   // Remove existing querystring if it exists. This assures the newly generated URL only contains the devtools querystring once.
   params.delete("devtools");
-  params.append("devtools", encodeURIComponent(JSON.stringify(config)));
+  params.append("devtools", JSON.stringify(config));
   return urlWithoutQuerystring + "?" + params.toString();
 }
