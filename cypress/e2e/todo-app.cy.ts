@@ -35,7 +35,7 @@ function toggleComplete(todo: string) {
 }
 
 // Returns a URL with the provided DevTools config included in the querystring.
-function buildUrl(config: Partial<DevToolsConfig>) {
+function buildUrl(config: Partial<UrlConfig>) {
   const params = new URLSearchParams(location.search);
   Object.keys(config).forEach((key) => {
     params.append(key, encodeURI(config[key]));
