@@ -16,7 +16,7 @@ export interface User {
   name: string;
 }
 
-export type MockApi = {
+export type HttpSetting = {
   /** Label to display in the devtools to describe the endpoint being mocked */
   label: string;
 
@@ -25,7 +25,6 @@ export type MockApi = {
 
   /** HTTP status code to return for this call */
   status: number;
-};
 
   /** Optional response message. Useful when errors are thrown. */
   response?: string;
