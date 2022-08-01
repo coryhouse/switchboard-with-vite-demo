@@ -5,11 +5,7 @@ import CloseButton from "./CloseButton";
 import OpenButton from "./OpenButton";
 import useKeypress from "react-use-keypress";
 import useOutsideClick from "./useOutsideClick";
-import LinkButton from "./LinkButton";
-import { writeToClipboard } from "./utils/clipboard-utils";
-import { buildUrlWithDevtoolsSettings } from "./utils/url-utils";
 import Checkbox from "./demo-app/Checkbox";
-import { DevToolsConfig } from "./demo-app/types";
 import Select from "./demo-app/Select";
 import Field from "./Field";
 
@@ -37,9 +33,6 @@ interface DevToolsProps {
   /** When true, close the devtools window when the escape key is pressed */
   closeViaEscapeKey?: boolean;
 
-  /** Dev tools config settings */
-  devToolsConfig: DevToolsConfig;
-
   /** Array of devtools settings */
   // settings: Array<DevToolsSetting>;
 
@@ -52,7 +45,6 @@ export default function DevTools({
   children,
   closeOnOutsideClick = false,
   closeViaEscapeKey = false,
-  devToolsConfig,
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(true);
   const [position, setPosition] = useState<DevToolsPosition>("top-left");
@@ -67,16 +59,6 @@ export default function DevTools({
   });
 
   const toggleOpen = () => setIsOpen(!isOpen);
-
-  async function copyDevToolsSettingsUrlToClipboard() {
-    const url = buildUrlWithDevtoolsSettings(window.location, devToolsConfig);
-    try {
-      await writeToClipboard(url);
-      alert("URL copied to clipboard");
-    } catch (err) {
-      () => alert("Failed to copy settings URL to clipboard");
-    }
-  }
 
   return (
     <section
@@ -114,7 +96,7 @@ export default function DevTools({
               </Select>
             </Field>
 
-            <Field>
+            {/* <Field>
               <Checkbox
                 label="Auto Reload"
                 onChange={(e) => {
@@ -124,16 +106,7 @@ export default function DevTools({
                 }}
                 checked={devToolsConfig.autoReload}
               />
-            </Field>
-
-            <Field>
-              <Button
-                className="block"
-                onClick={copyDevToolsSettingsUrlToClipboard}
-              >
-                Copy settings URL
-              </Button>
-            </Field>
+            </Field> */}
 
             <Field>
               <Button type="submit" onClick={() => window.location.reload()}>
