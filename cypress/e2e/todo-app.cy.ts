@@ -1,4 +1,4 @@
-import { DevToolsConfig } from "../../src/demo-app/types";
+import { UrlConfig } from "../../src/demo-app/types";
 import * as mockUsers from "../../src/demo-app/mocks/users.mocks";
 
 // Use parent to search within the heading's <section>
