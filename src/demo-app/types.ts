@@ -53,7 +53,10 @@ export type DevToolsConfig = {
   // autoReload: boolean;
 };
 
-/** Optional URL params for initializing the DevTools */
+/** Optional URL params for initializing the DevTools
+ * Similar to DevToolsConfig, but designed for the URL
+ * so it has a different structure.
+ */
 export type UrlConfig = {
   userId?: number;
   delay?: number;
