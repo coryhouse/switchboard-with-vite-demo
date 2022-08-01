@@ -2,7 +2,10 @@ import { MockUser } from "../types";
 
 export const noTodos: MockUser = {
   id: 1,
-  description: "No todos",
+  description: {
+    todos: "No todos",
+    role: "User",
+  },
   name: "Cory",
   isAdmin: false,
   todos: [],
@@ -10,7 +13,10 @@ export const noTodos: MockUser = {
 
 export const manyTodos: MockUser = {
   id: 2,
-  description: "Many todos",
+  description: {
+    todos: "Many todos",
+    role: "admin",
+  },
   name: "Elon",
   isAdmin: true,
   todos: [
