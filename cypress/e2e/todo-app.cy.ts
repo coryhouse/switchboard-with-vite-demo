@@ -30,7 +30,7 @@ describe("new user", () => {
 });
 
 describe("existing user", () => {
-  it("shows existing todos on initial load, supports adding a todo, and toggling complete", () => {
+  it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting", () => {
     // Visit Elon with 50ms delay on getTodos
     const url = buildUrl({
       userId: mockUsers.manyTodos.id,
@@ -61,6 +61,10 @@ describe("existing user", () => {
     // Mark as incomplete and assure line-through is removed.
     cy.findByLabelText("Write more tests").click();
     cy.findByText("Write more tests").should("not.have.class", "line-through");
+
+    // Now delete the todo added above
+    cy.findByLabelText("Delete Write more tests").click();
+    cy.findByText("Write more tests").should("not.exist");
   });
 });
 
