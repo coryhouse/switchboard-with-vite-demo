@@ -1,21 +1,20 @@
 import App from "./App";
 import DevTools from "../DevTools";
 import { useWorker } from "../useWorker";
-import { DevToolsConfig, HttpSetting } from "./types";
+import { DevToolsConfig, MockUser } from "./types";
 import Input from "./Input";
 import Select from "./Select";
-import { mockUsers } from "./mocks/users.mocks";
+import { mockUsers, noTodos } from "./mocks/users.mocks";
 import { useDevToolsState } from "../useDevToolsState";
 import { ErrorBoundary } from "react-error-boundary";
 import HttpSettingForm from "./HttpSettingForm";
 import ErrorFallback from "./ErrorFallback";
 
 export default function AppWithDevTools() {
-  const [userId, setUserId] = useDevToolsState("userId", mockUsers[0].id);
-  const [delay, setDelay] = useDevToolsState("delay", 0);
-  const [httpSettings, setHttpSettings] = useDevToolsState<HttpSetting[]>(
-    "httpSettings",
-    [
+  const [config, setConfig] = useDevToolsState<DevToolsConfig>("devtools", {
+    user: noTodos,
+    delay: 0,
+    http: [
       {
         label: "addTodo",
         delay: 0,
@@ -36,19 +35,10 @@ export default function AppWithDevTools() {
         delay: 0,
         status: 200,
       },
-    ]
-  );
+    ],
+  });
 
-  const user = mockUsers.find((u) => u.id === userId);
-  if (!user) throw new Error("Can't find userId: " + userId);
-
-  const devToolsConfig: DevToolsConfig = {
-    user,
-    delay,
-    httpSettings,
-  };
-
-  const isReady = useWorker(devToolsConfig);
+  const isReady = useWorker(config);
 
   if (!isReady) return <p>Initializing Mock Service Worker...</p>;
 
@@ -56,17 +46,22 @@ export default function AppWithDevTools() {
     <>
       {/* Wrap app in ErrorBoundary so devtools continue to display upon error */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <App user={user} />
+        <App user={config.user} />
       </ErrorBoundary>
 
-      <DevTools devToolsConfig={devToolsConfig} closeViaEscapeKey>
+      <DevTools closeViaEscapeKey>
         <>
           <div>
             <Select
               id="user"
               label="User"
-              value={userId}
-              onChange={(e) => setUserId(parseInt(e.target.value))}
+              value={config.user.id}
+              onChange={(e) => {
+                const user = mockUsers.find(
+                  (u) => u.id === parseInt(e.target.value)
+                ) as MockUser;
+                setConfig({ ...config, user });
+              }}
             >
               {mockUsers.map((u) => (
                 <option value={u.id} key={u.id}>
@@ -82,16 +77,21 @@ export default function AppWithDevTools() {
               <Input
                 type="number"
                 label="Global Delay (ms)"
-                value={delay}
-                onChange={(e) => setDelay(parseInt(e.target.value))}
+                value={config.delay}
+                onChange={(e) =>
+                  setConfig({
+                    ...config,
+                    delay: parseInt(e.target.value),
+                  })
+                }
               />
             </div>
 
-            {httpSettings.map(({ label, delay, status }) => (
+            {config.http.map(({ label, delay, status }) => (
               <HttpSettingForm
                 key={label}
                 label={label}
-                setHttpSettings={setHttpSettings}
+                setConfig={setConfig}
                 delay={delay}
                 status={status}
               />
