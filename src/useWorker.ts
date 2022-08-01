@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { setupWorker, rest, SetupWorkerApi } from "msw";
-import { DevToolsConfig, Todo } from "./demo-app/types";
+import { DevToolsConfig, Endpoint, Todo } from "./demo-app/types";
 import { getRandomNumberBelow } from "./utils/number-utils";
 
 export const useWorker = (config: DevToolsConfig | null) => {
@@ -17,27 +17,23 @@ export const useWorker = (config: DevToolsConfig | null) => {
   // Returns the endpoints delay if one is specified
   // Falls back to global delay if one is specified.
   // Returns 0 otherwise.
-  function getDelay(endpointDelay: number) {
-    if (endpointDelay > 0) return endpointDelay;
+  function getDelay(endpointDelay?: number) {
+    if (endpointDelay) return endpointDelay;
     return configRef.current?.delay ?? 0;
   }
 
-  function getResponseByLabel(label: string) {
-    const resp = configRef.current?.http.find((a) => a.label === label);
-    if (!resp) {
-      throw new Error(`Could not find an HTTP setting for: ${label}`);
-    }
-    return resp;
+  function getHttpSetting(endpoint: Endpoint) {
+    return configRef.current?.http.find((a) => a.endpoint === endpoint);
   }
 
   useEffect(() => {
     const worker = setupWorker(
       rest.get("/todos/:userId", async (_req, res, ctx) => {
-        const { delay, status } = getResponseByLabel("getTodos");
+        const setting = getHttpSetting("getTodos");
         return res(
-          ctx.delay(getDelay(delay)),
+          ctx.delay(getDelay(setting?.delay)),
           ctx.json(configRef.current?.user.todos),
-          ctx.status(status)
+          ctx.status(setting?.status ?? 200)
         );
       }),
 
@@ -49,22 +45,28 @@ export const useWorker = (config: DevToolsConfig | null) => {
           completed: false,
           todo: todo as string,
         };
-        const { delay, status } = getResponseByLabel("addTodo");
+        const setting = getHttpSetting("addTodo");
         return res(
-          ctx.delay(getDelay(delay)),
+          ctx.delay(getDelay(setting?.delay)),
           ctx.json(resp),
-          ctx.status(status)
+          ctx.status(setting?.status ?? 200)
         );
       }),
 
       rest.put("/todo/:id", async (req, res, ctx) => {
-        const { delay, status } = getResponseByLabel("toggleTodoCompleted");
-        return res(ctx.delay(getDelay(delay)), ctx.status(status));
+        const setting = getHttpSetting("toggleTodoCompleted");
+        return res(
+          ctx.delay(getDelay(setting?.delay)),
+          ctx.status(setting?.status ?? 200)
+        );
       }),
 
       rest.delete("/todo/:id", async (req, res, ctx) => {
-        const { delay, status } = getResponseByLabel("deleteTodo");
-        return res(ctx.delay(getDelay(delay)), ctx.status(status));
+        const setting = getHttpSetting("deleteTodo");
+        return res(
+          ctx.delay(getDelay(setting?.delay)),
+          ctx.status(setting?.status ?? 200)
+        );
       })
     );
 
