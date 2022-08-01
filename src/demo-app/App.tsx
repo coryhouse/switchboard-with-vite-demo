@@ -117,6 +117,7 @@ export default function App({ user }: AppProps) {
                   <li key={t.id} className="flex items-center">
                     {user.isAdmin && (
                       <DeleteButton
+                        aria-label={`Delete ${t.todo}`}
                         onClick={async () => {
                           await deleteTodo(t.id);
                           setTodos(todos.filter(({ id }) => id !== t.id));
