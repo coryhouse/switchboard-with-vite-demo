@@ -1,5 +1,9 @@
-import { UrlConfig } from "../../src/demo-app/types";
+import { getDevToolsUrl } from "../../src/utils/url-utils";
+import { defaultConfig } from "../../src/demo-app/AppWithDevTools";
 import * as mockUsers from "../../src/demo-app/mocks/users.mocks";
+import { DevToolsConfig } from "../../src/demo-app/types";
+
+const baseUrl = new URL("http://127.0.0.1:5173/");
 
 // Use parent to search within the heading's <section>
 function isInSection(heading: string, text: string) {
@@ -34,20 +38,17 @@ function toggleComplete(todo: string) {
   cy.findByText(todo).should("not.have.class", "line-through");
 }
 
-// Returns a URL with the provided DevTools config included in the querystring.
-// TODO: Move to url utils?
-function buildUrl(config: Partial<UrlConfig>) {
-  const params = new URLSearchParams(location.search);
-  Object.keys(config).forEach((key) => {
-    params.append(key, encodeURI(config[key]));
+// Returns a URL with the specified DevToolsConfig in the querystring.
+function getUrl(config: Partial<DevToolsConfig>) {
+  return getDevToolsUrl(baseUrl, {
+    ...defaultConfig,
+    ...config,
   });
-  return "http://127.0.0.1:5173/?" + params.toString();
 }
-
 describe("new user", () => {
   it("shows a welcome message, supports adding a todo, and hides the delete feature", () => {
-    const url = buildUrl({
-      userId: mockUsers.noTodos.id,
+    const url = getUrl({
+      user: mockUsers.noTodos,
       delay: 50,
     });
     cy.visit(url);
@@ -64,8 +65,8 @@ describe("new user", () => {
 describe("existing admin user", () => {
   it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting the todo", () => {
     // Visit Elon with 50ms delay
-    const url = buildUrl({
-      userId: mockUsers.manyTodos.id,
+    const url = getUrl({
+      user: mockUsers.manyTodos,
       delay: 50,
     });
     cy.visit(url);
@@ -79,6 +80,33 @@ describe("existing admin user", () => {
     // Now delete the todo added above
     cy.findByLabelText("Delete Write more tests").click();
     cy.findByText("Write more tests").should("not.exist");
+  });
+});
+
+describe("when marking a todo complete", () => {
+  it("times out the request and throws an error if the call takes longer than 3 seconds", () => {
+    const expectedError = "Oops! Updating the todo failed.";
+
+    Cypress.on("uncaught:exception", (err, runnable) => {
+      // Returning false here prevents Cypress from failing the test
+      // So check for the expected error message.
+      if (err.message.includes(expectedError)) return false;
+      return true;
+    });
+
+    const url = getUrl({
+      user: mockUsers.manyTodos,
+      http: [
+        {
+          delay: 3100,
+          endpoint: "toggleTodoCompleted",
+        },
+      ],
+    });
+    cy.visit(url);
+
+    toggleComplete("Ship Cybertruck");
+    cy.findByText(expectedError);
   });
 });
 
