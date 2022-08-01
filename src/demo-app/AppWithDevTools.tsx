@@ -102,11 +102,11 @@ export default function AppWithDevTools() {
               />
             </div>
 
-            {devToolsConfig.mockApis.map(({ label, delay, status }) => (
-              <HttpSetting
+            {httpSettings.map(({ label, delay, status }) => (
+              <HttpSettingForm
                 key={label}
                 label={label}
-                setDevToolsConfig={setDevToolsConfig}
+                setHttpSettings={setHttpSettings}
                 delay={delay}
                 status={status}
               />
