@@ -10,6 +10,30 @@ function isInSection(heading: string, text: string) {
     });
 }
 
+function addTodo(todo: string) {
+  cy.findByLabelText("What do you need to do?").type(todo);
+  cy.findByRole("button", { name: "Add" }).click();
+
+  // Should show a loading indicator while adding
+  cy.findByRole("button", { name: "Adding..." });
+
+  // New todo should display
+  isInSection("Stuff to do", todo);
+
+  // Input should be cleared after submission
+  cy.findByLabelText("What do you need to do?").should("be.empty");
+}
+
+function toggleComplete(todo: string) {
+  // Mark as complete and assure it's marked with a line through
+  cy.findByLabelText(todo).click();
+  cy.findByText(todo).should("have.class", "line-through");
+
+  // Mark as incomplete and assure line-through is removed.
+  cy.findByLabelText(todo).click();
+  cy.findByText(todo).should("not.have.class", "line-through");
+}
+
 // Returns a URL with the provided DevTools config included in the querystring.
 function buildUrl(config: Partial<DevToolsConfig>) {
   const params = new URLSearchParams(location.search);
