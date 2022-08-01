@@ -62,6 +62,7 @@ describe("existing user", () => {
     cy.findByLabelText("Write more tests").click();
     cy.findByText("Write more tests").should("not.have.class", "line-through");
   });
+});
 
   it("shows a loading status while the todo add is in progress", () => {
     // Note that this visits a URL with a short loading delay set via the URL
