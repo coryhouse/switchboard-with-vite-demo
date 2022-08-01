@@ -29,7 +29,7 @@ describe("new user", () => {
   });
 });
 
-describe("existing user", () => {
+describe("existing admin user", () => {
   it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting", () => {
     // Visit Elon with 50ms delay on getTodos
     const url = buildUrl({
