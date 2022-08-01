@@ -54,7 +54,7 @@ describe("new user", () => {
 });
 
 describe("existing admin user", () => {
-  it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting", () => {
+  it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting the todo", () => {
     // Visit Elon with 50ms delay on getTodos
     const url = buildUrl({
       userId: mockUsers.manyTodos.id,
@@ -65,26 +65,8 @@ describe("existing admin user", () => {
     // First, assure existing todos display
     isInSection("Stuff to do", "Ship Model S");
 
-    // Now, add a new todo
-    cy.findByLabelText("What do you need to do?").type("Write more tests");
-    cy.findByRole("button", { name: "Add" }).click();
-
-    // Should show a loading indicator while adding
-    cy.findByRole("button", { name: "Adding..." });
-
-    // New todo should display
-    isInSection("Stuff to do", "Write more tests");
-
-    // Input should be cleared after submission
-    cy.findByLabelText("What do you need to do?").should("be.empty");
-
-    // Mark as complete and assure it's marked with a line through
-    cy.findByLabelText("Write more tests").click();
-    cy.findByText("Write more tests").should("have.class", "line-through");
-
-    // Mark as incomplete and assure line-through is removed.
-    cy.findByLabelText("Write more tests").click();
-    cy.findByText("Write more tests").should("not.have.class", "line-through");
+    addTodo("Write more tests");
+    toggleComplete("Write more tests");
 
     // Now delete the todo added above
     cy.findByLabelText("Delete Write more tests").click();
