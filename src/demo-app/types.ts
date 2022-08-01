@@ -1,3 +1,5 @@
+import { DevToolsPosition } from "../DevTools";
+
 export type NewTodo = {
   todo: string;
 };
@@ -19,15 +21,22 @@ export interface User {
   isAdmin: boolean;
 }
 
+/** Union of app endpoint names. Used for DevTool labels */
+export type Endpoint =
+  | "getTodos"
+  | "addTodo"
+  | "deleteTodo"
+  | "toggleTodoCompleted";
+
 export type HttpSetting = {
-  /** Label to display in the devtools to describe the endpoint being mocked */
-  label: string;
+  /** The HTTP endpoint being mocked */
+  endpoint: Endpoint;
 
   /** Delay the response by a specified number of milliseconds. */
-  delay: number;
+  delay?: number;
 
   /** HTTP status code to return for this call */
-  status: number;
+  status?: number;
 
   /** Optional response. */
   response?: string;
@@ -48,12 +57,6 @@ export interface MockUser extends User {
   /** Array of todos */
   todos: Todo[];
 }
-
-export type DevToolsPosition =
-  | "top-left"
-  | "top-right"
-  | "bottom-left"
-  | "bottom-right";
 
 /** The DevTools configuration */
 export type DevToolsConfig = {
