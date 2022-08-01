@@ -40,9 +40,6 @@ interface DevToolsProps {
   /** Dev tools config settings */
   devToolsConfig: DevToolsConfig;
 
-  /** Set Dev tools config settings */
-  setDevToolsConfig: React.Dispatch<React.SetStateAction<DevToolsConfig>>;
-
   /** Array of devtools settings */
   // settings: Array<DevToolsSetting>;
 
@@ -56,7 +53,6 @@ export default function DevTools({
   closeOnOutsideClick = false,
   closeViaEscapeKey = false,
   devToolsConfig,
-  setDevToolsConfig,
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(true);
   const [position, setPosition] = useState<DevToolsPosition>("top-left");
