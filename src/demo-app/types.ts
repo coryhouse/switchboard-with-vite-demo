@@ -66,6 +66,9 @@ export type DevToolsConfig = {
   /** HTTP settings for mock APIs */
   http: HttpSetting[];
 
+  /** DevTool window position */
+  position: DevToolsPosition;
+
   /** Set to true to automatically hard reload the app when DevTools settings change */
   // autoReload: boolean;
 };
