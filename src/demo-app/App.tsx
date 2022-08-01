@@ -5,6 +5,7 @@ import Input from "./Input";
 import { Todo, User } from "./types";
 import cx from "clsx";
 import Spinner from "./Spinner";
+import DeleteButton from "../DeleteButton";
 
 type Status = "idle" | "loading" | "adding" | "toggling-complete";
 
@@ -100,7 +101,7 @@ export default function App({ user }: AppProps) {
             />
             <Button
               type="submit"
-              className={cx("ml-1", {
+              className={cx("ml-1 bg-blue-600 text-white", {
                 "bg-slate-300": status === "adding",
               })}
             >
@@ -113,7 +114,8 @@ export default function App({ user }: AppProps) {
               <h2 className="text-2xl pt-4">Stuff to do</h2>
               <ul>
                 {todos.map((t) => (
-                  <li key={t.id}>
+                  <li key={t.id} className="flex items-center">
+                    {user.isAdmin && <DeleteButton onClick={() => {}} />}
                     <input
                       id={t.id.toString()}
                       type="checkbox"
