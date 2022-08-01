@@ -38,6 +38,7 @@ export interface MockUser extends User {
   todos: Todo[];
 }
 
+/** The DevTools configuration */
 export type DevToolsConfig = {
   /** The current user */
   user: MockUser;
@@ -45,6 +46,15 @@ export type DevToolsConfig = {
   /** A global delay to apply to all mock API responses */
   delay: number;
 
-  /** APIs to mock */
-  mockApis: MockApi[];
+  /** HTTP settings for each API */
+  httpSettings: HttpSetting[];
+
+  /** Set to true to automatically hard reload the app when DevTools settings change */
+  // autoReload: boolean;
+};
+
+/** Optional URL params for initializing the DevTools */
+export type UrlConfig = {
+  userId?: number;
+  delay?: number;
 };
