@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { buildUrlWithDevtoolsSettings } from "./utils/url-utils";
+import { getDevToolsUrl } from "./utils/url-utils";
 
 /**
  * This hook makes it easy to declare state for devtools.
@@ -85,10 +85,7 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
       setStoredValue(valueToStore);
 
       // Step 2: Update the URL so it reflects the new setting, and can thus be copied and shared with others
-      const newUrl = buildUrlWithDevtoolsSettings(
-        window.location,
-        valueToStore
-      );
+      const newUrl = getDevToolsUrl(new URL(window.location), valueToStore);
       window.history.pushState("", "DevTools state update", newUrl);
 
       // Step 3: Save to local storage, so the settings persist after the window is closed
