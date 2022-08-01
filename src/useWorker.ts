@@ -24,9 +24,9 @@ export const useWorker = (config: DevToolsConfig | null) => {
   }
 
   function getResponseByLabel(label: string) {
-    const resp = configRef.current?.mockApis.find((a) => a.label === label);
+    const resp = configRef.current?.httpSettings.find((a) => a.label === label);
     if (!resp) {
-      throw new Error(`Could not find an MSW delay config for: ${label}`);
+      throw new Error(`Could not find an HTTP setting for: ${label}`);
     }
     return resp;
   }
