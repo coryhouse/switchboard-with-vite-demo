@@ -32,3 +32,10 @@ export async function updateTodo(todo: Todo): Promise<void> {
   });
   if (!resp.ok) throw resp;
 }
+
+export async function deleteTodo(todoId: number): Promise<void> {
+  const resp = await fetch(`/todo/${todoId}`, {
+    method: "DELETE",
+  });
+  if (!resp.ok) throw resp;
+}
