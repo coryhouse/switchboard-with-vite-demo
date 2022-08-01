@@ -2,21 +2,21 @@ import Input from "./Input";
 import { DevToolsConfig } from "./types";
 
 type HttpSettingFormProps = {
-  label: string;
-  delay: number;
-  status: number;
+  endpoint: string;
+  delay?: number;
+  status?: number;
   setConfig: React.Dispatch<React.SetStateAction<DevToolsConfig>>;
 };
 
 export default function HttpSettingForm({
-  label,
+  endpoint,
   delay,
   status,
   setConfig,
 }: HttpSettingFormProps) {
   return (
     <fieldset className="mt-4 border p-2">
-      <legend>{label}</legend>
+      <legend>{endpoint}</legend>
       <div className="flex flex-row">
         <Input
           type="number"
@@ -27,9 +27,9 @@ export default function HttpSettingForm({
             setConfig((config) => ({
               ...config,
               http: config.http.map((s) =>
-                s.label === label
+                s.endpoint === endpoint
                   ? {
-                      label,
+                      endpoint,
                       delay: parseInt(e.target.value),
                       status,
                     }
@@ -48,9 +48,9 @@ export default function HttpSettingForm({
             setConfig((config) => ({
               ...config,
               http: config.http.map((s) =>
-                s.label === label
+                s.endpoint === endpoint
                   ? {
-                      label,
+                      endpoint,
                       delay,
                       status: parseInt(e.target.value),
                     }
