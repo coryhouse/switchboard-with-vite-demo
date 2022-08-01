@@ -8,18 +8,24 @@ import useOutsideClick from "./useOutsideClick";
 import Checkbox from "./demo-app/Checkbox";
 import Select from "./demo-app/Select";
 import Field from "./Field";
-import { DevToolsPosition } from "./demo-app/types";
+import { DevToolsConfig } from "./demo-app/types";
 
-interface DevToolsSetting {
-  /** Setting label */
-  label: string;
+export type DevToolsPosition =
+  | "top-left"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-right";
 
-  /** Setting default value */
-  defaultValue: string | Array<string>;
+// interface DevToolsSetting {
+//   /** Setting label */
+//   label: string;
 
-  /** Input type */
-  inputType: "text" | "radio" | "checkbox" | "select";
-}
+//   /** Setting default value */
+//   defaultValue: string | Array<string>;
+
+//   /** Input type */
+//   inputType: "text" | "radio" | "checkbox" | "select";
+// }
 
 interface DevToolsProps {
   /** When true, the devtools window closes automatically when any content outside the window is clicked. */
@@ -27,6 +33,14 @@ interface DevToolsProps {
 
   /** When true, close the devtools window when the escape key is pressed */
   closeViaEscapeKey?: boolean;
+
+  /** Update config */
+  setConfig: (
+    value: DevToolsConfig | ((val: DevToolsConfig) => DevToolsConfig)
+  ) => void;
+
+  /** DevTool window position */
+  position: DevToolsPosition;
 
   /** Array of devtools settings */
   // settings: Array<DevToolsSetting>;
@@ -40,9 +54,10 @@ export default function DevTools({
   children,
   closeOnOutsideClick = false,
   closeViaEscapeKey = false,
+  setConfig,
+  position,
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(true);
-  const [position, setPosition] = useState<DevToolsPosition>("top-left");
   const ref = useRef<HTMLDivElement>(null);
 
   useKeypress("Escape", () => {
@@ -69,7 +84,7 @@ export default function DevTools({
       {isOpen ? (
         <>
           <div className="flex flex-row-reverse">
-            <CloseButton aria-label="Close devtools" onClick={toggleOpen} />
+            <CloseButton aria-label="Close DevTools" onClick={toggleOpen} />
           </div>
           {children}
 
@@ -81,7 +96,12 @@ export default function DevTools({
                 label="Position"
                 value={position}
                 onChange={(e) =>
-                  setPosition(e.target.value as DevToolsPosition)
+                  setConfig((config) => {
+                    return {
+                      ...config,
+                      position: e.target.value,
+                    };
+                  })
                 }
               >
                 <option value="top-left">Top left</option>
