@@ -58,7 +58,7 @@ export type DevToolsConfig = {
   delay: number;
 
   /** HTTP settings for each API */
-  httpSettings: HttpSetting[];
+  http: HttpSetting[];
 
   /** Set to true to automatically hard reload the app when DevTools settings change */
   // autoReload: boolean;
