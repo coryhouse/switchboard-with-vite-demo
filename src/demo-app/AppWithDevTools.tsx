@@ -10,33 +10,40 @@ import { ErrorBoundary } from "react-error-boundary";
 import HttpSettingForm from "./HttpSettingForm";
 import ErrorFallback from "./ErrorFallback";
 
+// These defaults apply if the URL and localStorage are empty
+export const defaultConfig: DevToolsConfig = {
+  user: noTodos,
+  delay: 0,
+  http: [
+    {
+      label: "addTodo",
+      delay: 0,
+      status: 200,
+    },
+    {
+      label: "getTodos",
+      delay: 0,
+      status: 200,
+    },
+    {
+      label: "toggleTodoCompleted",
+      delay: 0,
+      status: 200,
+    },
+    {
+      label: "deleteTodo",
+      delay: 0,
+      status: 200,
+    },
+  ],
+  position: "top-left",
+};
+
 export default function AppWithDevTools() {
-  const [config, setConfig] = useDevToolsState<DevToolsConfig>("devtools", {
-    user: noTodos,
-    delay: 0,
-    http: [
-      {
-        label: "addTodo",
-        delay: 0,
-        status: 200,
-      },
-      {
-        label: "getTodos",
-        delay: 0,
-        status: 200,
-      },
-      {
-        label: "toggleTodoCompleted",
-        delay: 0,
-        status: 200,
-      },
-      {
-        label: "deleteTodo",
-        delay: 0,
-        status: 200,
-      },
-    ],
-  });
+  const [config, setConfig] = useDevToolsState<DevToolsConfig>(
+    "devtools",
+    defaultConfig
+  );
 
   const isReady = useWorker(config);
 
