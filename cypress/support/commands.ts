@@ -1,4 +1,9 @@
 /// <reference types="cypress" />
+import "@testing-library/cypress/add-commands";
+import { getDevToolsUrl } from "../../src/utils/url-utils";
+import { defaultConfig } from "../../src/demo-app/AppWithDevTools";
+import { DevToolsConfig } from "../../src/demo-app/types";
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -35,4 +40,16 @@
 //     }
 //   }
 // }
-import "@testing-library/cypress/add-commands";
+Cypress.Commands.add(
+  "visitUrl",
+  (config: Partial<DevToolsConfig>): Cypress.Chainable => {
+    const baseUrl = new URL("http://127.0.0.1:5173/");
+
+    const url = getDevToolsUrl(baseUrl, "devtools", {
+      ...defaultConfig,
+      ...config,
+    });
+
+    return cy.visit(url);
+  }
+);
