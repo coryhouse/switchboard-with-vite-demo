@@ -22,6 +22,11 @@ export const useWorker = (config: DevToolsConfig | null) => {
     return configRef.current?.delay ?? 0;
   }
 
+  function getResp(customResponse: string | undefined, defaultResponse: any) {
+    if (customResponse && customResponse !== "default") return customResponse;
+    return defaultResponse;
+  }
+
   function getHttpSetting(endpoint: Endpoint) {
     return configRef.current?.http.find((a) => a.endpoint === endpoint);
   }
@@ -32,7 +37,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
         const setting = getHttpSetting("getTodos");
         return res(
           ctx.delay(getDelay(setting?.delay)),
-          ctx.json(setting?.response ?? configRef.current?.user.todos),
+          ctx.json(getResp(setting?.response, configRef.current?.user.todos)),
           ctx.status(setting?.status ?? 200)
         );
       }),
@@ -48,7 +53,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
         const setting = getHttpSetting("addTodo");
         return res(
           ctx.delay(getDelay(setting?.delay)),
-          ctx.json(setting?.response ?? defaultResp),
+          ctx.json(getResp(setting?.response, defaultResp)),
           ctx.status(setting?.status ?? 200)
         );
       }),
@@ -57,7 +62,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
         const setting = getHttpSetting("toggleTodoCompleted");
         return res(
           ctx.delay(getDelay(setting?.delay)),
-          ctx.json(setting?.response ?? ""),
+          ctx.json(getResp(setting?.response, "")),
           ctx.status(setting?.status ?? 200)
         );
       }),
@@ -66,7 +71,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
         const setting = getHttpSetting("deleteTodo");
         return res(
           ctx.delay(getDelay(setting?.delay)),
-          ctx.json(setting?.response ?? ""),
+          ctx.json(getResp(setting?.response, "")),
           ctx.status(setting?.status ?? 200)
         );
       })
