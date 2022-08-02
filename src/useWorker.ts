@@ -32,14 +32,14 @@ export const useWorker = (config: DevToolsConfig | null) => {
         const setting = getHttpSetting("getTodos");
         return res(
           ctx.delay(getDelay(setting?.delay)),
-          ctx.json(configRef.current?.user.todos),
+          ctx.json(setting?.response ?? configRef.current?.user.todos),
           ctx.status(setting?.status ?? 200)
         );
       }),
 
       rest.post("/todo", async (req, res, ctx) => {
         const { todo } = await req.json();
-        const resp: Todo = {
+        const defaultResp: Todo = {
           // TODO: Perhaps use max todo id + 1
           id: getRandomNumberBelow(100000),
           completed: false,
@@ -48,7 +48,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
         const setting = getHttpSetting("addTodo");
         return res(
           ctx.delay(getDelay(setting?.delay)),
-          ctx.json(resp),
+          ctx.json(setting?.response ?? defaultResp),
           ctx.status(setting?.status ?? 200)
         );
       }),
@@ -57,6 +57,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
         const setting = getHttpSetting("toggleTodoCompleted");
         return res(
           ctx.delay(getDelay(setting?.delay)),
+          ctx.json(setting?.response ?? ""),
           ctx.status(setting?.status ?? 200)
         );
       }),
@@ -65,6 +66,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
         const setting = getHttpSetting("deleteTodo");
         return res(
           ctx.delay(getDelay(setting?.delay)),
+          ctx.json(setting?.response ?? ""),
           ctx.status(setting?.status ?? 200)
         );
       })
