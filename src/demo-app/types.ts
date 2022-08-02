@@ -72,6 +72,9 @@ export type DevToolsConfig = {
   /** DevTool window position */
   position: DevToolsPosition;
 
+  /** Set to true to open the DevTools window by default */
+  openByDefault: boolean;
+
   /** Set to true to automatically hard reload the app when DevTools settings change */
   // autoReload: boolean;
 };
