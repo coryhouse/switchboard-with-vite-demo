@@ -6,7 +6,7 @@ const baseUrl = new URL("http://127.0.0.1:5173/");
 
 // Returns a URL with the specified DevToolsConfig in the querystring.
 export function getUrl(config: Partial<DevToolsConfig>) {
-  return getDevToolsUrl(baseUrl, {
+  return getDevToolsUrl(baseUrl, "devtools", {
     ...defaultConfig,
     ...config,
   });
