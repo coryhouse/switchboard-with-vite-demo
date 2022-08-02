@@ -70,7 +70,7 @@ export default function AppWithDevTools() {
 
           <details>
             <summary className="mt-4 font-bold">HTTP</summary>
-            <div className="mt-4">
+            <Field>
               <Input
                 type="number"
                 label="Global Delay (ms)"
@@ -82,7 +82,7 @@ export default function AppWithDevTools() {
                   })
                 }
               />
-            </div>
+            </Field>
 
             {config.http.map(({ endpoint, delay, status }) => (
               <HttpSettingForm
