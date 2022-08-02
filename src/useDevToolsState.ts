@@ -76,6 +76,7 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
       // Step 2: Update the URL so it reflects the new setting, and can thus be copied and shared with others
       const newUrl = getDevToolsUrl(
         new URL(window.location.href),
+        key,
         valueToStore
       );
       window.history.pushState("", "DevTools state update", newUrl);
