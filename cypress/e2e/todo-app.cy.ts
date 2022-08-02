@@ -1,50 +1,6 @@
-import { getDevToolsUrl } from "../../src/utils/url-utils";
-import { defaultConfig } from "../../src/demo-app/AppWithDevTools";
 import * as mockUsers from "../../src/demo-app/mocks/users.mocks";
-import { DevToolsConfig } from "../../src/demo-app/types";
+import { getUrl } from "../utils/urlUtils";
 
-const baseUrl = new URL("http://127.0.0.1:5173/");
-
-// Use parent to search within the heading's <section>
-function isInSection(heading: string, text: string) {
-  cy.findByRole("heading", { name: heading })
-    .parent()
-    .within(() => {
-      cy.findByText(text);
-    });
-}
-
-function addTodo(todo: string) {
-  cy.findByLabelText("What do you need to do?").type(todo);
-  cy.findByRole("button", { name: "Add" }).click();
-
-  // Should show a loading indicator while adding
-  cy.findByRole("button", { name: "Adding..." });
-
-  // New todo should display
-  isInSection("Stuff to do", todo);
-
-  // Input should be cleared after submission
-  cy.findByLabelText("What do you need to do?").should("be.empty");
-}
-
-function toggleComplete(todo: string) {
-  // Mark as complete and assure it's marked with a line through
-  cy.findByLabelText(todo).click();
-  cy.findByText(todo).should("have.class", "line-through");
-
-  // Mark as incomplete and assure line-through is removed.
-  cy.findByLabelText(todo).click();
-  cy.findByText(todo).should("not.have.class", "line-through");
-}
-
-// Returns a URL with the specified DevToolsConfig in the querystring.
-function getUrl(config: Partial<DevToolsConfig>) {
-  return getDevToolsUrl(baseUrl, {
-    ...defaultConfig,
-    ...config,
-  });
-}
 describe("new user", () => {
   it("shows a welcome message, supports adding a todo, and hides the delete feature", () => {
     const url = getUrl({
@@ -115,3 +71,39 @@ describe("when adding a todo", () => {
     // Note that this visits a URL with a short loading delay set via the URL
   });
 });
+
+// Helper functions used by the tests above.
+// ------------------------------------------
+
+// Use parent to search within the heading's <section>
+function isInSection(heading: string, text: string) {
+  cy.findByRole("heading", { name: heading })
+    .parent()
+    .within(() => {
+      cy.findByText(text);
+    });
+}
+
+function addTodo(todo: string) {
+  cy.findByLabelText("What do you need to do?").type(todo);
+  cy.findByRole("button", { name: "Add" }).click();
+
+  // Should show a loading indicator while adding
+  cy.findByRole("button", { name: "Adding..." });
+
+  // New todo should display
+  isInSection("Stuff to do", todo);
+
+  // Input should be cleared after submission
+  cy.findByLabelText("What do you need to do?").should("be.empty");
+}
+
+function toggleComplete(todo: string) {
+  // Mark as complete and assure it's marked with a line through
+  cy.findByLabelText(todo).click();
+  cy.findByText(todo).should("have.class", "line-through");
+
+  // Mark as incomplete and assure line-through is removed.
+  cy.findByLabelText(todo).click();
+  cy.findByText(todo).should("not.have.class", "line-through");
+}
