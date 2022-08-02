@@ -5,6 +5,7 @@ type HttpSettingFormProps = {
   endpoint: string;
   delay?: number;
   status?: number;
+  response?: string;
   setConfig: React.Dispatch<React.SetStateAction<DevToolsConfig>>;
 };
 
@@ -12,6 +13,7 @@ export default function HttpSettingForm({
   endpoint,
   delay,
   status,
+  response,
   setConfig,
 }: HttpSettingFormProps) {
   return (
@@ -42,7 +44,7 @@ export default function HttpSettingForm({
         <Input
           type="number"
           label="Status"
-          className="w-20"
+          className="w-20 mr-4"
           value={status}
           onChange={(e) =>
             setConfig((config) => ({
@@ -53,6 +55,28 @@ export default function HttpSettingForm({
                       endpoint,
                       delay,
                       status: parseInt(e.target.value),
+                    }
+                  : s
+              ),
+            }))
+          }
+        />
+
+        <Input
+          type="text"
+          label="Response"
+          className="w-20"
+          value={response}
+          onChange={(e) =>
+            setConfig((config) => ({
+              ...config,
+              http: config.http.map((s) =>
+                s.endpoint === endpoint
+                  ? {
+                      endpoint,
+                      delay,
+                      status,
+                      response: e.target.value,
                     }
                   : s
               ),
