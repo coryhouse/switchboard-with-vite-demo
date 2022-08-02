@@ -21,12 +21,15 @@ export interface User {
   isAdmin: boolean;
 }
 
+export const endpoints = [
+  "getTodos",
+  "addTodo",
+  "deleteTodo",
+  "toggleTodoCompleted",
+] as const;
+
 /** Union of app endpoint names. Used for DevTool labels */
-export type Endpoint =
-  | "getTodos"
-  | "addTodo"
-  | "deleteTodo"
-  | "toggleTodoCompleted";
+export type Endpoint = typeof endpoints[number];
 
 export type HttpSetting = {
   /** The HTTP endpoint being mocked */
