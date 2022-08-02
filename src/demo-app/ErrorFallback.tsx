@@ -9,7 +9,9 @@ export default function ErrorFallback({
     <div role="alert" className="grid h-screen place-content-center">
       <p>Something went wrong:</p>
       <pre>{error.message}</pre>
-      <Button onClick={resetErrorBoundary}>Try again</Button>
+      <Button className="bg-blue-600 text-white" onClick={resetErrorBoundary}>
+        Try again
+      </Button>
     </div>
   );
 }
