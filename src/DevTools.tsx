@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, ChangeEvent } from "react";
 import Button from "./demo-app/Button";
 import cx from "clsx";
 import CloseButton from "./CloseButton";
@@ -8,7 +8,6 @@ import useOutsideClick from "./useOutsideClick";
 import Checkbox from "./demo-app/Checkbox";
 import Select from "./demo-app/Select";
 import Field from "./Field";
-import { DevToolsConfig } from "./demo-app/types";
 
 export type DevToolsPosition =
   | "top-left"
@@ -34,13 +33,17 @@ interface DevToolsProps {
   /** When true, close the devtools window when the escape key is pressed */
   closeViaEscapeKey?: boolean;
 
-  /** Update config */
-  setConfig: (
-    value: DevToolsConfig | ((val: DevToolsConfig) => DevToolsConfig)
-  ) => void;
+  /** Update position */
+  setPosition: (newPosition: DevToolsPosition) => void;
 
   /** DevTool window position */
   position: DevToolsPosition;
+
+  /** Set to true to open the DevTools window by default */
+  openByDefault: boolean;
+
+  /** Toggle the openByDefault setting */
+  setOpenByDefault: (openByDefault: boolean) => void;
 
   /** Array of devtools settings */
   // settings: Array<DevToolsSetting>;
@@ -54,10 +57,12 @@ export default function DevTools({
   children,
   closeOnOutsideClick = false,
   closeViaEscapeKey = false,
-  setConfig,
+  setPosition,
   position,
+  openByDefault,
+  setOpenByDefault,
 }: DevToolsProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(openByDefault);
   const ref = useRef<HTMLDivElement>(null);
 
   useKeypress("Escape", () => {
@@ -96,12 +101,7 @@ export default function DevTools({
                 label="Position"
                 value={position}
                 onChange={(e) =>
-                  setConfig((config) => {
-                    return {
-                      ...config,
-                      position: e.target.value,
-                    };
-                  })
+                  setPosition(e.target.value as DevToolsPosition)
                 }
               >
                 <option value="top-left">Top left</option>
@@ -109,6 +109,14 @@ export default function DevTools({
                 <option value="bottom-left">Bottom left</option>
                 <option value="bottom-right">Bottom right</option>
               </Select>
+            </Field>
+
+            <Field>
+              <Checkbox
+                label="Open by default"
+                onChange={() => setOpenByDefault(!openByDefault)}
+                checked={openByDefault}
+              />
             </Field>
 
             {/* <Field>
