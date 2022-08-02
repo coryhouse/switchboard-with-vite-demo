@@ -139,7 +139,7 @@ export default function DevTools({
           </details>
         </>
       ) : (
-        <OpenButton onClick={toggleOpen} />
+        <OpenButton aria-label="Open devTools" onClick={toggleOpen} />
       )}
     </section>
   );
