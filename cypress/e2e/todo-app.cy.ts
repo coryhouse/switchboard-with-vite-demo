@@ -1,13 +1,11 @@
 import * as mockUsers from "../../src/demo-app/mocks/users.mocks";
-import { getUrl } from "../utils/urlUtils";
 
 describe("new user", () => {
   it("shows a welcome message, supports adding a todo, and hides the delete feature", () => {
-    const url = getUrl({
+    cy.visitUrl({
       user: mockUsers.noTodos,
       delay: 50,
     });
-    cy.visit(url);
     cy.findByText("Welcome! Start entering your todos below.");
 
     addTodo("Write more tests");
@@ -21,11 +19,10 @@ describe("new user", () => {
 describe("existing admin user", () => {
   it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting the todo", () => {
     // Visit Elon with 50ms delay
-    const url = getUrl({
+    cy.visitUrl({
       user: mockUsers.manyTodos,
       delay: 50,
     });
-    cy.visit(url);
 
     // First, assure existing todos display
     isInSection("Stuff to do", "Ship Model S");
@@ -50,7 +47,7 @@ describe("when marking a todo complete", () => {
       return true;
     });
 
-    const url = getUrl({
+    cy.visitUrl({
       user: mockUsers.manyTodos,
       http: [
         {
@@ -59,7 +56,6 @@ describe("when marking a todo complete", () => {
         },
       ],
     });
-    cy.visit(url);
 
     toggleComplete("Ship Cybertruck");
     cy.findByText(expectedError);
