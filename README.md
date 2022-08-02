@@ -11,13 +11,14 @@ This toolkit contains 2 features:
 - Declarative mock APIs using [msw]
 - Configurable positioning
 - Copy settings to URL
+- Whether to open by default
 - Close via outside click or a specified key
 - Specify a global delay (to simulate a slow connection)
 - Force a specific HTTP response, delay, or status code from an endpoint
 
 2. `useDevToolState` Hook
 
-Configure custom DevTool state that persists between reloads via localStorage. Initialize settings via the URL.
+Configure custom DevTool state that persists between reloads via localStorage. Initialize and share settings via the URL.
 
 ## Quick Start
 
