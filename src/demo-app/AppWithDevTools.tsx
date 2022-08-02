@@ -108,8 +108,8 @@ export default function AppWithDevTools() {
               >
                 <option>Select Endpoint</option>
                 {endpoints
-                  // Only list endpoints that aren't already configured
-                  //.filter((e) => config.http.includes((c) => c.endpoint === e))
+                  // Filter out endpoints that are already customized
+                  .filter((e) => !config.http.some((h) => h.endpoint === e))
                   .map((e) => (
                     <option key={e}>{e}</option>
                   ))}
