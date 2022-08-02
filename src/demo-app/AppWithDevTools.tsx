@@ -1,5 +1,5 @@
 import App from "./App";
-import DevTools from "../DevTools";
+import DevTools, { DevToolsPosition } from "../DevTools";
 import { useWorker } from "../useWorker";
 import { DevToolsConfig, MockUser } from "./types";
 import Input from "./Input";
@@ -16,6 +16,7 @@ export const defaultConfig: DevToolsConfig = {
   delay: 0,
   http: [],
   position: "top-left",
+  openByDefault: true,
 };
 
 export default function AppWithDevTools() {
@@ -37,7 +38,13 @@ export default function AppWithDevTools() {
 
       <DevTools
         position={config.position}
-        setConfig={setConfig}
+        openByDefault={config.openByDefault}
+        setPosition={(position: DevToolsPosition) => {
+          setConfig({ ...config, position });
+        }}
+        setOpenByDefault={(newVal) => {
+          setConfig({ ...config, openByDefault: newVal });
+        }}
         closeViaEscapeKey
       >
         <>
