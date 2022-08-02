@@ -9,11 +9,15 @@ import Checkbox from "./demo-app/Checkbox";
 import Select from "./demo-app/Select";
 import Field from "./Field";
 
-export type DevToolsPosition =
-  | "top-left"
-  | "top-right"
-  | "bottom-left"
-  | "bottom-right";
+export const devToolsPositions = [
+  "top-left",
+  "top-right",
+  "bottom-left",
+  "bottom-right",
+] as const;
+
+/** Union of devTools positions. */
+export type DevToolsPosition = typeof devToolsPositions[number];
 
 // interface DevToolsSetting {
 //   /** Setting label */
