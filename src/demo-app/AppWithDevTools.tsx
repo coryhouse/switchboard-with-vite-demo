@@ -9,6 +9,7 @@ import { useDevToolsState } from "../useDevToolsState";
 import { ErrorBoundary } from "react-error-boundary";
 import HttpSettingForm from "./HttpSettingForm";
 import ErrorFallback from "./ErrorFallback";
+import Field from "../Field";
 
 // These defaults apply if the URL and localStorage are empty
 export const defaultConfig: DevToolsConfig = {
