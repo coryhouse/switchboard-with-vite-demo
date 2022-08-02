@@ -1,24 +1,31 @@
+import DeleteButton from "../DeleteButton";
 import Input from "./Input";
-import { DevToolsConfig } from "./types";
+import { DevToolsConfig, HttpSetting } from "./types";
 
 type HttpSettingFormProps = {
-  endpoint: string;
-  delay?: number;
-  status?: number;
-  response?: string;
+  httpSetting: HttpSetting;
   setConfig: React.Dispatch<React.SetStateAction<DevToolsConfig>>;
 };
 
 export default function HttpSettingForm({
-  endpoint,
-  delay,
-  status,
-  response,
+  httpSetting,
   setConfig,
 }: HttpSettingFormProps) {
+  const { endpoint, delay, status, response } = httpSetting;
+
   return (
     <fieldset className="mt-4 border p-2">
-      <legend>{endpoint}</legend>
+      <legend>
+        {endpoint}{" "}
+        <DeleteButton
+          onClick={() =>
+            setConfig((config) => ({
+              ...config,
+              http: config.http.filter((h) => h.endpoint !== endpoint),
+            }))
+          }
+        />
+      </legend>
       <div className="flex flex-row">
         <Input
           type="number"
@@ -31,9 +38,8 @@ export default function HttpSettingForm({
               http: config.http.map((s) =>
                 s.endpoint === endpoint
                   ? {
-                      endpoint,
+                      ...s,
                       delay: parseInt(e.target.value),
-                      status,
                     }
                   : s
               ),
@@ -52,8 +58,7 @@ export default function HttpSettingForm({
               http: config.http.map((s) =>
                 s.endpoint === endpoint
                   ? {
-                      endpoint,
-                      delay,
+                      ...s,
                       status: parseInt(e.target.value),
                     }
                   : s
@@ -73,9 +78,7 @@ export default function HttpSettingForm({
               http: config.http.map((s) =>
                 s.endpoint === endpoint
                   ? {
-                      endpoint,
-                      delay,
-                      status,
+                      ...s,
                       response: e.target.value,
                     }
                   : s
