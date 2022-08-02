@@ -1,7 +1,7 @@
 import App from "./App";
 import DevTools, { DevToolsPosition } from "../DevTools";
 import { useWorker } from "../useWorker";
-import { DevToolsConfig, MockUser } from "./types";
+import { DevToolsConfig, MockUser, Endpoint, endpoints } from "./types";
 import Input from "./Input";
 import Select from "./Select";
 import { mockUsers, noTodos } from "./mocks/users.mocks";
@@ -10,6 +10,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import HttpSettingForm from "./HttpSettingForm";
 import ErrorFallback from "./ErrorFallback";
 import Field from "../Field";
+import qs from "qs";
 
 // These defaults apply if the URL and localStorage are empty
 export const defaultConfig: DevToolsConfig = {
@@ -85,13 +86,41 @@ export default function AppWithDevTools() {
               />
             </Field>
 
-            {config.http.map(({ endpoint, delay, status }) => (
+            <Field>
+              <Select
+                label="Customize Endpoint"
+                // Value need not change since the selected value disappears once selected.
+                value=""
+                onChange={(e) => {
+                  setConfig({
+                    ...config,
+                    http: [
+                      ...config.http,
+                      {
+                        endpoint: e.target.value as Endpoint,
+                        delay: 0,
+                        status: 200,
+                        response: "",
+                      },
+                    ],
+                  });
+                }}
+              >
+                <option>Select Endpoint</option>
+                {endpoints
+                  // Only list endpoints that aren't already configured
+                  //.filter((e) => config.http.includes((c) => c.endpoint === e))
+                  .map((e) => (
+                    <option key={e}>{e}</option>
+                  ))}
+              </Select>
+            </Field>
+
+            {config.http.map((httpSetting) => (
               <HttpSettingForm
-                key={endpoint}
-                endpoint={endpoint}
+                key={httpSetting.endpoint}
+                httpSetting={httpSetting}
                 setConfig={setConfig}
-                delay={delay}
-                status={status}
               />
             ))}
           </details>
