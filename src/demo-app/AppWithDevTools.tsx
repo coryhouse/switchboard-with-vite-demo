@@ -100,7 +100,7 @@ export default function AppWithDevTools() {
                         endpoint: e.target.value as Endpoint,
                         delay: 0,
                         status: 200,
-                        response: "",
+                        response: "default",
                       },
                     ],
                   });
