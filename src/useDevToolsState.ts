@@ -38,31 +38,19 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
     }
 
     // First, check the URL for a value and use it for the default if found.
-    // Convert the params to lowercase to avoid casing issues.
     const params = new URLSearchParams(window.location.search);
-    const lowercaseParams = new URLSearchParams();
-    for (const [name, value] of params) {
-      lowercaseParams.append(name.toLowerCase(), value);
-    }
-    // Convert key to lowercase when comparing to avoid casing issues.
-    const urlValue = lowercaseParams.get(key.toLowerCase());
+    const urlValue = params.get(key);
     if (urlValue) {
-      if (Number(urlValue)) {
-        const int = parseInt(urlValue);
-        // Update localStorage with URL value too
-        window.localStorage.setItem(key, JSON.stringify(int));
-        return int;
-      } else {
-        // Update localStorage with URL value too
-        window.localStorage.setItem(key, JSON.stringify(urlValue));
-        return JSON.parse(decodeURIComponent(urlValue));
-      }
+      // Update localStorage with URL value too
+      const parsedObject = JSON.parse(urlValue);
+      // TODO: Validate the object
+      window.localStorage.setItem(key, JSON.stringify(parsedObject));
+      return parsedObject;
     }
 
     // If URL doesn't contain the key, then fallback to checking localStorage for a default value
     try {
       // Get from local storage by key
-      // TODO: Use Zod to assure localStorage parses into a DevToolsConfig
       const item = window.localStorage.getItem(key);
       // Parse stored json or if none return initialValue
 
@@ -81,11 +69,15 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
       // Allow value to be a function so we have same API as useState
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
+
       // Step 1: Save state, so React re-renders
       setStoredValue(valueToStore);
 
       // Step 2: Update the URL so it reflects the new setting, and can thus be copied and shared with others
-      const newUrl = getDevToolsUrl(new URL(window.location), valueToStore);
+      const newUrl = getDevToolsUrl(
+        new URL(window.location.href),
+        valueToStore
+      );
       window.history.pushState("", "DevTools state update", newUrl);
 
       // Step 3: Save to local storage, so the settings persist after the window is closed
@@ -94,7 +86,7 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
       }
     } catch (error) {
       // TODO: Improve error handling
-      console.log(error);
+      console.error(error);
     }
   };
   return [storedValue, setValue] as const;
