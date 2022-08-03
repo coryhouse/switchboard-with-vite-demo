@@ -3,6 +3,9 @@ import cx from "clsx";
 interface CheckboxProps extends React.ComponentPropsWithoutRef<"input"> {
   /** Input label */
   label: string;
+
+  /** Required for a11y */
+  id: string;
 }
 
 export default function Checkbox(props: CheckboxProps) {
