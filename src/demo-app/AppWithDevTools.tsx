@@ -1,7 +1,7 @@
 import App from "./App";
 import DevTools, { DevToolsPosition } from "../DevTools";
 import { useWorker } from "../useWorker";
-import { DevToolsConfig, MockUser, Endpoint, endpoints } from "./types";
+import { DevToolsConfig, Endpoint, endpoints, HttpSetting } from "./types";
 import Input from "./Input";
 import Select from "./Select";
 import { mockUsers, noTodos } from "./mocks/users.mocks";
@@ -13,7 +13,7 @@ import Field from "../Field";
 
 // These defaults apply if the URL and localStorage are empty
 export const defaultConfig: DevToolsConfig = {
-  user: noTodos,
+  userId: noTodos.id,
   delay: 0,
   http: [],
   position: "top-left",
@@ -21,12 +21,32 @@ export const defaultConfig: DevToolsConfig = {
 };
 
 export default function AppWithDevTools() {
-  const [config, setConfig] = useDevToolsState<DevToolsConfig>(
-    "devtools",
-    defaultConfig
+  const [userId, setUserId] = useDevToolsState("userId", defaultConfig.userId);
+  const [delay, setDelay] = useDevToolsState("delay", defaultConfig.delay);
+  const [position, setPosition] = useDevToolsState(
+    "position",
+    defaultConfig.position
+  );
+  const [openByDefault, setOpenByDefault] = useDevToolsState(
+    "openByDefault",
+    defaultConfig.openByDefault
   );
 
-  const isReady = useWorker(config);
+  const [http, setHttp] = useDevToolsState<HttpSetting[]>(
+    "http",
+    defaultConfig.http
+  );
+
+  const user = mockUsers.find((u) => u.id === userId);
+  if (!user) throw new Error("User not found: " + userId);
+
+  const isReady = useWorker({
+    userId,
+    delay: 0,
+    http,
+    openByDefault,
+    position,
+  });
 
   if (!isReady) return <p>Initializing Mock Service Worker...</p>;
 
@@ -34,17 +54,15 @@ export default function AppWithDevTools() {
     <>
       {/* Wrap app in ErrorBoundary so devtools continue to display upon error */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <App user={config.user} />
+        <App user={user} />
       </ErrorBoundary>
 
       <DevTools
-        position={config.position}
-        openByDefault={config.openByDefault}
-        setPosition={(position: DevToolsPosition) => {
-          setConfig({ ...config, position });
-        }}
+        position={position}
+        openByDefault={openByDefault}
+        setPosition={(position: DevToolsPosition) => setPosition(position)}
         setOpenByDefault={(newVal) => {
-          setConfig({ ...config, openByDefault: newVal });
+          setOpenByDefault(newVal);
         }}
         closeViaEscapeKey
       >
@@ -53,13 +71,8 @@ export default function AppWithDevTools() {
             <Select
               id="user"
               label="User"
-              value={config.user.id}
-              onChange={(e) => {
-                const user = mockUsers.find(
-                  (u) => u.id === parseInt(e.target.value)
-                ) as MockUser;
-                setConfig({ ...config, user });
-              }}
+              value={userId}
+              onChange={(e) => setUserId(parseInt(e.target.value))}
             >
               {mockUsers.map((u) => (
                 <option value={u.id} key={u.id}>
@@ -75,13 +88,8 @@ export default function AppWithDevTools() {
               <Input
                 type="number"
                 label="Global Delay (ms)"
-                value={config.delay}
-                onChange={(e) =>
-                  setConfig({
-                    ...config,
-                    delay: parseInt(e.target.value),
-                  })
-                }
+                value={delay}
+                onChange={(e) => setDelay(parseInt(e.target.value))}
               />
             </Field>
 
@@ -91,35 +99,32 @@ export default function AppWithDevTools() {
                 // Value need not change since the selected value disappears once selected.
                 value=""
                 onChange={(e) => {
-                  setConfig({
-                    ...config,
-                    http: [
-                      ...config.http,
-                      {
-                        endpoint: e.target.value as Endpoint,
-                        delay: 0,
-                        status: 200,
-                        response: "default",
-                      },
-                    ],
-                  });
+                  setHttp([
+                    ...http,
+                    {
+                      endpoint: e.target.value as Endpoint,
+                      delay: 0,
+                      status: 200,
+                      response: "default",
+                    },
+                  ]);
                 }}
               >
                 <option>Select Endpoint</option>
                 {endpoints
                   // Filter out endpoints that are already customized
-                  .filter((e) => !config.http.some((h) => h.endpoint === e))
+                  .filter((e) => !http.some((h) => h.endpoint === e))
                   .map((e) => (
                     <option key={e}>{e}</option>
                   ))}
               </Select>
             </Field>
 
-            {config.http.map((httpSetting) => (
+            {http.map((setting) => (
               <HttpSettingForm
-                key={httpSetting.endpoint}
-                httpSetting={httpSetting}
-                setConfig={setConfig}
+                key={setting.endpoint}
+                http={setting}
+                setHttp={setHttp}
               />
             ))}
           </details>
