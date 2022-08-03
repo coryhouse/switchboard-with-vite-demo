@@ -38,14 +38,15 @@ interface DevToolsProps {
   /** DevTool window position */
   position: DevToolsPosition;
 
+  // TODO: Implement
+  /** Specify a keyboard shortcut that toggles the window open/closed */
+  openKeyboardShortcut?: string;
+
   /** Set to true to open the DevTools window by default */
   openByDefault: boolean;
 
   /** Toggle the openByDefault setting */
   setOpenByDefault: (openByDefault: boolean) => void;
-
-  /** Array of devtools settings */
-  // settings: Array<DevToolsSetting>;
 
   /** Content and settings to render inside the devtools */
   children: React.ReactNode;
