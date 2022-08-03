@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getUrlWithUpdatedQuery } from "./utils/url-utils";
+import { getUrlWithUpdatedQuery } from "../utils/url-utils";
 
 export type DevToolsStateOptions = {
   /** Set to true to show values that match the default value in the URL.

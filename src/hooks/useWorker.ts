@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { setupWorker, rest, SetupWorkerApi } from "msw";
-import { DevToolsConfig, Endpoint, Todo } from "./demo-app/types";
-import { getRandomNumberBelow } from "./utils/number-utils";
-import { mockUsers } from "./demo-app/mocks/users.mocks";
+import { DevToolsConfig, Endpoint, Todo } from "../demo-app/types";
+import { getRandomNumberBelow } from "../utils/number-utils";
+import { mockUsers } from "../demo-app/mocks/users.mocks";
 
+// TODO: Accept generic type for DevToolsConfig
 export const useWorker = (config: DevToolsConfig | null) => {
   const configRef = useRef(config);
   const [isReady, setIsReady] = useState(false);
@@ -32,8 +33,12 @@ export const useWorker = (config: DevToolsConfig | null) => {
     return configRef.current?.http.find((a) => a.endpoint === endpoint);
   }
 
+  // Draw attention to non-default values
+  // Support reset to defaults
+
   useEffect(() => {
     const worker = setupWorker(
+      // TODO: Extract and accept as an arg to the hook
       rest.post("/login", async (req, res, ctx) => {
         const setting = getHttpSetting("login");
 
@@ -104,6 +109,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
       await worker.start({
         onUnhandledRequest: ({ method, url }) => {
           // Ignore these requests that need not be mocked
+          // TODO: Extract and accept onUnhandledRequest (and other msw APIs) as an arg
           if (
             url.pathname !== "/src/demo-app/CloseButton.tsx" &&
             url.pathname !== "/src/index.css" &&
