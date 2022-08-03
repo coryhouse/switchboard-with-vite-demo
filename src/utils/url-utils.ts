@@ -1,7 +1,11 @@
 import { DevToolsConfig } from "../demo-app/types";
 
 /** Returns a string that contains the current URL with the specified key and value in the querystring */
-export function getDevToolsUrl(url: URL, key: string, value: any = null) {
+export function getUrlWithUpdatedQuery(
+  url: URL,
+  key: string,
+  value: any = null
+) {
   const urlWithoutQuerystring = url.href.split("?")[0];
   const params = new URLSearchParams(url.search);
   // Remove existing querystring if it exists. Here's why:
