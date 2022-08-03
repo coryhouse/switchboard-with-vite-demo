@@ -1,4 +1,4 @@
-import Button, { ButtonProps } from "./demo-app/Button";
+import Button, { ButtonProps } from "./Button";
 
 export default function OpenButton(props: ButtonProps) {
   return (

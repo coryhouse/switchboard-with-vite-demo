@@ -1,4 +1,4 @@
-import Button, { ButtonProps } from "./demo-app/Button";
+import Button, { ButtonProps } from "./Button";
 import cx from "clsx";
 
 export default function SettingsButton(props: ButtonProps) {
