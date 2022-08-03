@@ -87,7 +87,7 @@ export default function DevTools({
           {children}
 
           <details className="mt-4">
-            <summary className="mt-4 font-bold">Meta</summary>
+            <summary className="mt-4 font-bold">General</summary>
 
             <Field>
               <Select
