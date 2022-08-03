@@ -42,7 +42,7 @@ export default function AppWithDevTools() {
 
   const isReady = useWorker({
     userId,
-    delay: 0,
+    delay,
     http,
     openByDefault,
     position,
