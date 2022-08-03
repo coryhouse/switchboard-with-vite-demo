@@ -11,31 +11,18 @@ import HttpSettingForm from "./HttpSettingForm";
 import ErrorFallback from "./ErrorFallback";
 import Field from "../Field";
 
-// These defaults apply if the URL and localStorage are empty
-export const defaultConfig: DevToolsConfig = {
-  userId: noTodos.id,
-  delay: 0,
-  http: [],
-  position: "top-left",
-  openByDefault: true,
-};
-
 export default function AppWithDevTools() {
-  const [userId, setUserId] = useDevToolsState("userId", defaultConfig.userId);
-  const [delay, setDelay] = useDevToolsState("delay", defaultConfig.delay);
-  const [position, setPosition] = useDevToolsState(
+  const [userId, setUserId] = useDevToolsState("userId", noTodos.id);
+  const [delay, setDelay] = useDevToolsState("delay", 0);
+  const [position, setPosition] = useDevToolsState<DevToolsPosition>(
     "position",
-    defaultConfig.position
+    "top-left"
   );
   const [openByDefault, setOpenByDefault] = useDevToolsState(
     "openByDefault",
-    defaultConfig.openByDefault
+    true
   );
-
-  const [http, setHttp] = useDevToolsState<HttpSetting[]>(
-    "http",
-    defaultConfig.http
-  );
+  const [http, setHttp] = useDevToolsState<HttpSetting[]>("http", []);
 
   const user = mockUsers.find((u) => u.id === userId);
   if (!user) throw new Error("User not found: " + userId);
