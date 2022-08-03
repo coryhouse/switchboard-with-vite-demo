@@ -51,12 +51,15 @@ export default function AppWithDevTools() {
         closeViaEscapeKey
       >
         <>
-          <div>
+          <Field customized={userIdChanged}>
             <Select
               id="user"
               label="User"
               value={userId}
-              onChange={(e) => setUserId(parseInt(e.target.value))}
+              onChange={(e) => {
+                const userId = parseInt(e.target.value);
+                userId ? simulateLogin(userId) : simulateLogout();
+              }}
             >
               <option value="">Logged out</option>
               {mockUsers.map((u) => (
@@ -65,7 +68,7 @@ export default function AppWithDevTools() {
                 </option>
               ))}
             </Select>
-          </div>
+          </Field>
 
           <details>
             <summary className="mt-4 font-bold">HTTP</summary>
