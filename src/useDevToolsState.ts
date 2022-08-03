@@ -41,9 +41,9 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
     const params = new URLSearchParams(window.location.search);
     const urlValue = params.get(key);
     if (urlValue) {
-      // Update localStorage with URL value too
-      const parsedObject = JSON.parse(urlValue);
       // TODO: Validate the object
+      const parsedObject = JSON.parse(urlValue);
+      // Update localStorage with URL value too
       window.localStorage.setItem(key, JSON.stringify(parsedObject));
       return parsedObject;
     }
