@@ -34,6 +34,23 @@ export const useWorker = (config: DevToolsConfig | null) => {
 
   useEffect(() => {
     const worker = setupWorker(
+      rest.post("/login", async (req, res, ctx) => {
+        const setting = getHttpSetting("login");
+
+        const user = mockUsers.find(
+          (u) =>
+            u.email === req.params["email"] &&
+            u.password === req.params["password"]
+        );
+        if (!user) return res(ctx.status(401));
+
+        return res(
+          ctx.delay(getDelay(setting?.delay)),
+          ctx.json(user),
+          ctx.status(setting?.status ?? 200)
+        );
+      }),
+
       rest.get("/todos/:userId", async (_req, res, ctx) => {
         const setting = getHttpSetting("getTodos");
 
