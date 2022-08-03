@@ -6,7 +6,7 @@ A toolkit for creating custom React DevTools for your project.
 
 This project provide 3 key tools for building your own custom DevTools:
 
-### 1. `DevTool` component
+### 1. `DevTools` component
 
 - Configurable position
 - Copy settings to URL
