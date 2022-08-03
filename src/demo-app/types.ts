@@ -17,11 +17,18 @@ export interface User {
   /** User's name */
   name: string;
 
+  /** User's email */
+  email: string;
+
+  /** User's password */
+  password: string;
+
   /** Set to true if the user is an admin */
   isAdmin: boolean;
 }
 
 export const endpoints = [
+  "login",
   "getTodos",
   "addTodo",
   "deleteTodo",
@@ -63,7 +70,7 @@ export interface MockUser extends User {
 
 /** The DevTools configuration */
 export type DevToolsConfig = {
-  /** Current userId */
+  /** Current User's Id */
   userId: number;
 
   /** A global delay to apply to all mock API responses */
