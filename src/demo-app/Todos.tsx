@@ -23,15 +23,17 @@ export default function Todos() {
 
   const navigate = useNavigate();
 
-  // HACK: Doing this to keep the demo simple
-  // TODO: Implement protected route instead
-  function getUser() {
-    const ls = localStorage.getItem("userId");
-    if (!ls) return navigate("/");
-    return JSON.parse(ls) as User;
-  }
-
-  const user = getUser();
+  useEffect(() => {
+    // HACK: A real app would typically have a cookie/jwt as an auth token,
+    // and would implement protected route above this page instead.
+    async function loadUserSession() {
+      const userId = localStorage.getItem("userId");
+      if (!userId) return navigate("/");
+      const user = await fetchUser();
+      setUser(user);
+    }
+    loadUserSession();
+  }, []);
 
   useEffect(() => {
     async function fetchTodos() {
