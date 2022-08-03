@@ -39,7 +39,7 @@ export default function AppWithDevTools() {
 
   return (
     <>
-      {/* Wrap app in ErrorBoundary so devtools continue to display upon error */}
+      {/* Wrap app in ErrorBoundary so DevTools continue to display upon error */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <App user={user} />
       </ErrorBoundary>
