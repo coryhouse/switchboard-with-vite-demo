@@ -126,5 +126,7 @@ export function useDevToolsState<T>(
       console.error(error);
     }
   };
-  return [storedValue, setValue] as const;
+  const isChanged = storedValue !== defaultValue;
+
+  return [storedValue, setValue, isChanged] as const;
 }
