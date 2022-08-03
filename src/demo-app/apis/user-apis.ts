@@ -11,3 +11,10 @@ export async function login(email: string, password: string) {
   if (!resp.ok) throw resp;
   return resp.json() as Promise<User>;
 }
+
+export async function fetchUser() {
+  // HACK: In a real app, an auth token would be passed to determine the response.
+  const resp = await fetch("/user");
+  if (!resp.ok) throw resp;
+  return resp.json() as Promise<User>;
+}
