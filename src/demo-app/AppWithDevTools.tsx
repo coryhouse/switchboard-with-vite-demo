@@ -30,7 +30,20 @@ export default function AppWithDevTools() {
     http,
     openByDefault,
     position,
-  });
+  const isReady = useWorker(devToolsConfig);
+
+  function simulateLogin(userId: number) {
+    setUserId(userId);
+    const user = mockUsers.find((u) => u.id === userId);
+    if (!user) throw new Error("Can't find user: " + userId);
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    navigate("/todos");
+  }
+
+  function simulateLogout() {
+    localStorage.removeItem("loggedInUser");
+    navigate("/");
+  }
 
   if (!isReady) return <p>Initializing...</p>;
 
