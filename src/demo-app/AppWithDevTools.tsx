@@ -1,6 +1,6 @@
 import App from "./App";
 import DevTools, { DevToolsPosition } from "../DevTools";
-import { useWorker } from "../useWorker";
+import { useWorker } from "../hooks/useWorker";
 import { Endpoint, endpoints, HttpSetting } from "./types";
 import Input from "../components/Input";
 import Select from "../components/Select";
