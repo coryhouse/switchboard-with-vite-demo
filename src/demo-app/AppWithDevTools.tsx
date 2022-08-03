@@ -58,6 +58,7 @@ export default function AppWithDevTools() {
               value={userId}
               onChange={(e) => setUserId(parseInt(e.target.value))}
             >
+              <option value="">Select User</option>
               {mockUsers.map((u) => (
                 <option value={u.id} key={u.id}>
                   {u.name} ({u.description.role}, {u.description.todos})
