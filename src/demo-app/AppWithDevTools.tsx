@@ -13,7 +13,10 @@ import Field from "../components/Field";
 import { useNavigate } from "react-router-dom";
 
 export default function AppWithDevTools() {
-  const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
+  const [userId, setUserId, userIdChanged] = useDevToolsState<number | "">(
+    "userId",
+    ""
+  );
   const [delay, setDelay] = useDevToolsState("delay", 0);
   const [position, setPosition] = useDevToolsState<DevToolsPosition>(
     "position",
