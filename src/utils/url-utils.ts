@@ -1,3 +1,5 @@
+import { DevToolsConfig } from "../demo-app/types";
+
 /** Returns a string that contains the current URL with the specified key and value in the querystring */
 export function getDevToolsUrl(url: URL, key: string, value: any = null) {
   const urlWithoutQuerystring = url.href.split("?")[0];
@@ -9,4 +11,16 @@ export function getDevToolsUrl(url: URL, key: string, value: any = null) {
   params.delete(key);
   if (value) params.append(key, JSON.stringify(value));
   return urlWithoutQuerystring + "?" + params.toString();
+}
+
+/** Build a URL that contains a querystring key/value pair for each
+ * populated property in the provided config. By convention, each property
+ * name is mapped to the querystring's key.
+ */
+export function buildUrl(baseUrl: string, config: Partial<DevToolsConfig>) {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(config)) {
+    if (value) params.append(key, JSON.stringify(value));
+  }
+  return baseUrl + "?" + params.toString();
 }
