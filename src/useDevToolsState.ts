@@ -74,16 +74,27 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
       setStoredValue(valueToStore);
 
       // Step 2: Update the URL so it reflects the new setting, and can thus be copied and shared with others
-      const newUrl = getDevToolsUrl(
-        new URL(window.location.href),
-        key,
-        valueToStore
-      );
-      window.history.pushState("", "DevTools state update", newUrl);
+      // If the value matches the default value, then remove it from the URL (to keep the URL as lean as possible).
+      if (valueToStore == initialValue) {
+        const newUrl = getDevToolsUrl(new URL(window.location.href), key);
+        window.history.pushState("", "DevTools state update", newUrl);
+      } else {
+        const newUrl = getDevToolsUrl(
+          new URL(window.location.href),
+          key,
+          valueToStore
+        );
+        window.history.pushState("", "DevTools state update", newUrl);
+      }
 
       // Step 3: Save to local storage, so the settings persist after the window is closed
       if (typeof window !== "undefined") {
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        // If the value is the initial value, then we can omit it from localStorage.
+        if (valueToStore == initialValue) {
+          window.localStorage.removeItem(key);
+        } else {
+          window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        }
       }
     } catch (error) {
       // TODO: Improve error handling
