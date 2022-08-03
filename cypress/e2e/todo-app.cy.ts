@@ -3,7 +3,7 @@ import * as mockUsers from "../../src/demo-app/mocks/users.mocks";
 describe("new user", () => {
   it("shows a welcome message, supports adding a todo, and hides the delete feature", () => {
     cy.visitUrl({
-      user: mockUsers.noTodos,
+      userId: mockUsers.noTodos.id,
       delay: 50,
     });
     cy.findByText("Welcome! Start entering your todos below.");
@@ -20,7 +20,7 @@ describe("existing admin user", () => {
   it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting the todo", () => {
     // Visit Elon with 50ms delay
     cy.visitUrl({
-      user: mockUsers.manyTodos,
+      userId: mockUsers.manyTodos.id,
       delay: 50,
     });
 
@@ -48,7 +48,7 @@ describe("when marking a todo complete", () => {
     });
 
     cy.visitUrl({
-      user: mockUsers.manyTodos,
+      userId: mockUsers.manyTodos.id,
       http: [
         {
           delay: 3100,
