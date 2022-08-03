@@ -10,6 +10,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import HttpSettingForm from "./HttpSettingForm";
 import ErrorFallback from "./ErrorFallback";
 import Field from "../components/Field";
+import { useNavigate } from "react-router-dom";
 
 export default function AppWithDevTools() {
   const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
@@ -24,7 +25,7 @@ export default function AppWithDevTools() {
   );
   const [http, setHttp] = useDevToolsState<HttpSetting[]>("http", []);
 
-  const isReady = useWorker({
+  const navigate = useNavigate();
     userId,
     delay,
     http,
