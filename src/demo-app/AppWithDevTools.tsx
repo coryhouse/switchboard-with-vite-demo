@@ -12,7 +12,7 @@ import ErrorFallback from "./ErrorFallback";
 import Field from "../Field";
 
 export default function AppWithDevTools() {
-  const [userId, setUserId] = useDevToolsState("userId", noTodos.id);
+  const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
   const [delay, setDelay] = useDevToolsState("delay", 0);
   const [position, setPosition] = useDevToolsState<DevToolsPosition>(
     "position",
