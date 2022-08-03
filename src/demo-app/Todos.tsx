@@ -8,6 +8,7 @@ import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
 import { useNavigate } from "react-router-dom";
 
+// TODO: Handle status separately for each HTTP call (perhaps via react-query)
 type Status = "idle" | "loading" | "adding" | "toggling-complete";
 
 type Todos = {
