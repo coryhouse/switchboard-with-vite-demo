@@ -14,7 +14,7 @@ export default function Input(props: InputProps) {
       </label>
       <input
         className={cx(
-          "border-slate-400 border-solid border rounded",
+          "border-slate-400 border-solid border rounded p-1",
           className
         )}
         type="text"
