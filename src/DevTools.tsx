@@ -1,13 +1,13 @@
 import React, { useState, useRef, ChangeEvent } from "react";
-import Button from "./demo-app/Button";
+import Button from "./components/Button";
 import cx from "clsx";
-import CloseButton from "./CloseButton";
-import OpenButton from "./OpenButton";
+import CloseButton from "./components/CloseButton";
+import OpenButton from "./components/OpenButton";
 import useKeypress from "react-use-keypress";
-import useOutsideClick from "./useOutsideClick";
-import Checkbox from "./demo-app/Checkbox";
-import Select from "./demo-app/Select";
-import Field from "./Field";
+import useOutsideClick from "./hooks/useOutsideClick";
+import Checkbox from "./components/Checkbox";
+import Select from "./components/Select";
+import Field from "./components/Field";
 
 export const devToolsPositions = [
   "top-left",
