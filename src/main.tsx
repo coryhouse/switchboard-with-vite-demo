@@ -4,6 +4,7 @@ import App from "./demo-app/App";
 import { ErrorBoundary } from "react-error-boundary";
 import "./index.css";
 import ErrorFallback from "./demo-app/ErrorFallback";
+import { BrowserRouter } from "react-router-dom";
 
 // Lazy load so it's not part of the prod bundle.
 const AppWithDevTools = React.lazy(
@@ -21,20 +22,15 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      {useDevTools ? (
-        <Suspense fallback="Loading with devtools...">
-          <AppWithDevTools />
-        </Suspense>
-      ) : (
-        <App
-          // Stubbing in fake user here since this demo app includes no real implementation, just mocks */}
-          user={{
-            id: 1,
-            name: "bob",
-            isAdmin: false,
-          }}
-        />
-      )}
+      <BrowserRouter>
+        {useDevTools ? (
+          <Suspense fallback="Loading with devtools...">
+            <AppWithDevTools />
+          </Suspense>
+        ) : (
+          <App />
+        )}
+      </BrowserRouter>
     </ErrorBoundary>
   </React.StrictMode>
 );
