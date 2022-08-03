@@ -81,14 +81,3 @@ export type DevToolsConfig = {
   /** Set to true to automatically hard reload the app when DevTools settings change */
   // autoReload: boolean;
 };
-
-/** Optional URL params for initializing the DevTools
- * Similar to DevToolsConfig, but designed for the URL so it has a slightly different structure,
- * and all properties are optional to keep the URL lean.
- */
-export type UrlConfig = {
-  userId?: number;
-  delay?: number;
-  position?: DevToolsPosition;
-  http?: HttpSetting[];
-};
