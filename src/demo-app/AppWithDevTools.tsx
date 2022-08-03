@@ -44,12 +44,12 @@ export default function AppWithDevTools() {
     setUserId(userId);
     const user = mockUsers.find((u) => u.id === userId);
     if (!user) throw new Error("Can't find user: " + userId);
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    localStorage.setItem("userId", JSON.stringify(userId));
     navigate("/todos");
   }
 
   function simulateLogout() {
-    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("userId");
     navigate("/");
   }
 
