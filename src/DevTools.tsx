@@ -19,17 +19,6 @@ export const devToolsPositions = [
 /** Union of devTools positions. */
 export type DevToolsPosition = typeof devToolsPositions[number];
 
-// interface DevToolsSetting {
-//   /** Setting label */
-//   label: string;
-
-//   /** Setting default value */
-//   defaultValue: string | Array<string>;
-
-//   /** Input type */
-//   inputType: "text" | "radio" | "checkbox" | "select";
-// }
-
 interface DevToolsProps {
   /** When true, the devtools window closes automatically when any content outside the window is clicked. */
   closeOnOutsideClick?: boolean;
