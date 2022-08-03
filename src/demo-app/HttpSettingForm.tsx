@@ -1,17 +1,17 @@
 import DeleteButton from "../DeleteButton";
 import Input from "./Input";
-import { DevToolsConfig, HttpSetting } from "./types";
+import { HttpSetting } from "./types";
 
 type HttpSettingFormProps = {
-  httpSetting: HttpSetting;
-  setConfig: React.Dispatch<React.SetStateAction<DevToolsConfig>>;
+  http: HttpSetting;
+  setHttp: React.Dispatch<React.SetStateAction<HttpSetting[]>>;
 };
 
 export default function HttpSettingForm({
-  httpSetting,
-  setConfig,
+  http,
+  setHttp,
 }: HttpSettingFormProps) {
-  const { endpoint, delay, status, response } = httpSetting;
+  const { endpoint, delay, status, response } = http;
 
   return (
     <fieldset className="mt-4 border p-2">
@@ -19,10 +19,7 @@ export default function HttpSettingForm({
         {endpoint}{" "}
         <DeleteButton
           onClick={() =>
-            setConfig((config) => ({
-              ...config,
-              http: config.http.filter((h) => h.endpoint !== endpoint),
-            }))
+            setHttp((http) => http.filter((h) => h.endpoint !== endpoint))
           }
         />
       </legend>
@@ -33,17 +30,16 @@ export default function HttpSettingForm({
           className="w-20 mr-4"
           value={delay}
           onChange={(e) =>
-            setConfig((config) => ({
-              ...config,
-              http: config.http.map((s) =>
+            setHttp((http) =>
+              http.map((s) =>
                 s.endpoint === endpoint
                   ? {
                       ...s,
                       delay: parseInt(e.target.value),
                     }
                   : s
-              ),
-            }))
+              )
+            )
           }
         />
 
@@ -53,17 +49,16 @@ export default function HttpSettingForm({
           className="w-20 mr-4"
           value={status}
           onChange={(e) =>
-            setConfig((config) => ({
-              ...config,
-              http: config.http.map((s) =>
+            setHttp((http) =>
+              http.map((s) =>
                 s.endpoint === endpoint
                   ? {
                       ...s,
                       status: parseInt(e.target.value),
                     }
                   : s
-              ),
-            }))
+              )
+            )
           }
         />
 
@@ -73,17 +68,16 @@ export default function HttpSettingForm({
           className="w-20"
           value={response}
           onChange={(e) =>
-            setConfig((config) => ({
-              ...config,
-              http: config.http.map((s) =>
+            setHttp((http) =>
+              http.map((s) =>
                 s.endpoint === endpoint
                   ? {
                       ...s,
                       response: e.target.value,
                     }
                   : s
-              ),
-            }))
+              )
+            )
           }
         />
       </div>
