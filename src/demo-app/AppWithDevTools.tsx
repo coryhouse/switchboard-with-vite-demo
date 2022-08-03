@@ -35,7 +35,7 @@ export default function AppWithDevTools() {
     position,
   });
 
-  if (!isReady) return <p>Initializing Mock Service Worker...</p>;
+  if (!isReady) return <p>Initializing...</p>;
 
   return (
     <>
