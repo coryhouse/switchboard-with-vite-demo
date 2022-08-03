@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Field from "../components/Field";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -11,10 +11,11 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  async function onSubmit() {
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
     const user = await login(email, password);
     if (!user) return setError("Invalid email or password.");
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    localStorage.setItem("userId", JSON.stringify(user.id));
     navigate("/todos");
   }
 
