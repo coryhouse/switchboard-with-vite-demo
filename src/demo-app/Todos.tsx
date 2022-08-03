@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { addTodo, deleteTodo, getTodos, updateTodo } from "./apis/todo-apis";
-import Button from "./Button";
-import Input from "./Input";
+import Button from "../components/Button";
+import Input from "../components/Input";
 import { Todo, User } from "./types";
 import cx from "clsx";
 import Spinner from "./Spinner";
-import DeleteButton from "../DeleteButton";
+import DeleteButton from "../components/DeleteButton";
 
 type Status = "idle" | "loading" | "adding" | "toggling-complete";
 
@@ -15,14 +15,20 @@ type Todos = {
 
 export default function Todos() {
   const [status, setStatus] = useState<Status>("loading");
-  const [user, setUser] = useState<User | null>(null);
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
+  // HACK: Doing this to keep the demo simple
+  function getUser() {
+    const ls = localStorage.getItem("loggedInUser");
+    if (!ls) throw new Error("User not found in localStorage");
+    return JSON.parse(ls) as User;
+  }
+
+  const user = getUser();
+
   useEffect(() => {
-    // HACK: Just doing this for simplicity.
-    const user = localStorage.getItem("user") as unknown as User;
     async function fetchTodos() {
       setStatus("loading");
       try {
@@ -35,7 +41,7 @@ export default function Todos() {
       }
     }
     fetchTodos();
-  }, [userId]);
+  }, [user.id]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
