@@ -75,6 +75,7 @@ export default function AppWithDevTools() {
         openByDefault={openByDefault}
         setPosition={(position: DevToolsPosition) => setPosition(position)}
         setOpenByDefault={(newVal) => {
+          // TODO: Why isn't this getting called?
           setOpenByDefault(newVal);
         }}
         closeViaEscapeKey
