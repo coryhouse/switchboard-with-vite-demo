@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { setupWorker, rest, SetupWorkerApi } from "msw";
 import { DevToolsConfig, Endpoint, Todo } from "./demo-app/types";
 import { getRandomNumberBelow } from "./utils/number-utils";
+import { mockUsers } from "./demo-app/mocks/users.mocks";
 
 export const useWorker = (config: DevToolsConfig | null) => {
   const configRef = useRef(config);
@@ -35,9 +36,14 @@ export const useWorker = (config: DevToolsConfig | null) => {
     const worker = setupWorker(
       rest.get("/todos/:userId", async (_req, res, ctx) => {
         const setting = getHttpSetting("getTodos");
+
+        const userId = configRef.current?.userId;
+        const user = mockUsers.find((u) => u.id === userId);
+        if (!user) throw new Error("User not found: " + userId);
+
         return res(
           ctx.delay(getDelay(setting?.delay)),
-          ctx.json(getResp(setting?.response, configRef.current?.user.todos)),
+          ctx.json(getResp(setting?.response, user.todos)),
           ctx.status(setting?.status ?? 200)
         );
       }),
