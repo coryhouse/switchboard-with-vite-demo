@@ -1,15 +1,15 @@
 import App from "./App";
 import DevTools, { DevToolsPosition } from "../DevTools";
 import { useWorker } from "../useWorker";
-import { DevToolsConfig, Endpoint, endpoints, HttpSetting } from "./types";
-import Input from "./Input";
-import Select from "./Select";
-import { mockUsers, noTodos } from "./mocks/users.mocks";
-import { useDevToolsState } from "../useDevToolsState";
+import { Endpoint, endpoints, HttpSetting } from "./types";
+import Input from "../components/Input";
+import Select from "../components/Select";
+import { mockUsers } from "./mocks/users.mocks";
+import { useDevToolsState } from "../hooks/useDevToolsState";
 import { ErrorBoundary } from "react-error-boundary";
 import HttpSettingForm from "./HttpSettingForm";
 import ErrorFallback from "./ErrorFallback";
-import Field from "../Field";
+import Field from "../components/Field";
 
 export default function AppWithDevTools() {
   const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
