@@ -1,6 +1,19 @@
 import { useState } from "react";
 import { getUrlWithUpdatedQuery } from "./utils/url-utils";
 
+export type DevToolsStateOptions = {
+  /** Set to true to show values that match the default value in the URL.
+   * By default, if the selected value matches the default value, it's omitted from the URL.
+   * This keeps the URL as short as possible.  */
+  showDefaultValuesInTheUrl?: boolean;
+
+  /** Set to true to store values that match the default value in localStorage.
+   * By default, if the selected value matches the default value, it's omitted from localStorage.
+   * This keeps localStorage as minimal as possible.
+   */
+  storeDefaultValuesInLocalStorage?: boolean;
+};
+
 /**
  * This hook makes it easy to declare state for devtools.
  * It's a fork of https://usehooks.com/useLocalStorage/,
@@ -29,7 +42,11 @@ import { getUrlWithUpdatedQuery } from "./utils/url-utils";
  * @param key The URL param to check for the default, as well as the key used to write the value to localStorage
  * @param initialValue The default value to use if the URL and localStorage both don't have a matching value for the provided key.
  * */
-export function useDevToolsState<T>(key: string, initialValue: T) {
+export function useDevToolsState<T>(
+  key: string,
+  initialValue: T,
+  options?: DevToolsStateOptions
+) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState<T>(() => {
@@ -75,7 +92,8 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
 
       // Step 2: Update the URL so it reflects the new setting, and can thus be copied and shared with others
       // If the value matches the default value, then remove it from the URL (to keep the URL as lean as possible).
-      if (valueToStore == initialValue) {
+      // However, go ahead and put the value in the URL anyway if showDefaultValuesInTheUrl is true.
+      if (valueToStore == initialValue && !options?.showDefaultValuesInTheUrl) {
         const newUrl = getUrlWithUpdatedQuery(
           new URL(window.location.href),
           key
@@ -93,7 +111,11 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
       // Step 3: Save to local storage, so the settings persist after the window is closed
       if (typeof window !== "undefined") {
         // If the value is the initial value, then we can omit it from localStorage.
-        if (valueToStore == initialValue) {
+        // But, go ahead and put it in localStorage anyway if storeDefaultValuesInLocalStorage is true.
+        if (
+          valueToStore == initialValue &&
+          !options?.storeDefaultValuesInLocalStorage
+        ) {
           window.localStorage.removeItem(key);
         } else {
           window.localStorage.setItem(key, JSON.stringify(valueToStore));
