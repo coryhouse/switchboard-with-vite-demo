@@ -41,11 +41,10 @@ export const useWorker = (config: DevToolsConfig | null) => {
       // TODO: Extract and accept as an arg to the hook
       rest.post("/login", async (req, res, ctx) => {
         const setting = getHttpSetting("login");
+        const { email, password } = await req.json();
 
         const user = mockUsers.find(
-          (u) =>
-            u.email === req.params["email"] &&
-            u.password === req.params["password"]
+          (u) => u.email === email && u.password === password
         );
         if (!user) return res(ctx.status(401));
 
