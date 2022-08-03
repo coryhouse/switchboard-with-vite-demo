@@ -7,6 +7,8 @@ export const noTodos: MockUser = {
     role: "User",
   },
   name: "Cory",
+  email: "cory@reactjsconsulting.com",
+  password: "123",
   isAdmin: false,
   todos: [],
 };
@@ -18,6 +20,8 @@ export const manyTodos: MockUser = {
     role: "admin",
   },
   name: "Elon",
+  email: "elon@tesla.com",
+  password: "123",
   isAdmin: true,
   todos: [
     {
@@ -43,6 +47,11 @@ export const manyTodos: MockUser = {
     {
       id: 5,
       todo: "Ship Semi",
+      completed: false,
+    },
+    {
+      id: 6,
+      todo: "Buy Twitter?",
       completed: false,
     },
   ],
