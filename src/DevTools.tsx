@@ -117,6 +117,7 @@ export default function DevTools({
 
             <Field>
               <Checkbox
+                id="openByDefault"
                 label="Open by default"
                 onChange={() => setOpenByDefault(!openByDefault)}
                 checked={openByDefault}
