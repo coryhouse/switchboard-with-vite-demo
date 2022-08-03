@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Field from "../Field";
-import Button from "./Button";
-import Input from "./Input";
+import Field from "../components/Field";
+import Button from "../components/Button";
+import Input from "../components/Input";
 import { useNavigate } from "react-router-dom";
 import { login } from "./apis/user-apis";
 

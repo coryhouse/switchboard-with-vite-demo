@@ -1,5 +1,5 @@
-import DeleteButton from "../DeleteButton";
-import Input from "./Input";
+import DeleteButton from "../components/DeleteButton";
+import Input from "../components/Input";
 import { HttpSetting } from "./types";
 
 type HttpSettingFormProps = {
