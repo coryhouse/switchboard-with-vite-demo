@@ -5,7 +5,8 @@ export type DevToolsStateOptions = {
   /** Set to true to show values that match the default value in the URL.
    * By default, if the selected value matches the default value, it's omitted from the URL.
    * This keeps the URL as short as possible.  */
-  showDefaultValuesInTheUrl?: boolean;
+  // TODO: Finish refactor to union
+  urlBehavior?: "initialization-only" | "initialize-and-display-always";
 
   /** Set to true to store values that match the default value in localStorage.
    * By default, if the selected value matches the default value, it's omitted from localStorage.
