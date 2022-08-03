@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getDevToolsUrl } from "./utils/url-utils";
+import { getUrlWithUpdatedQuery } from "./utils/url-utils";
 
 /**
  * This hook makes it easy to declare state for devtools.
@@ -76,10 +76,13 @@ export function useDevToolsState<T>(key: string, initialValue: T) {
       // Step 2: Update the URL so it reflects the new setting, and can thus be copied and shared with others
       // If the value matches the default value, then remove it from the URL (to keep the URL as lean as possible).
       if (valueToStore == initialValue) {
-        const newUrl = getDevToolsUrl(new URL(window.location.href), key);
+        const newUrl = getUrlWithUpdatedQuery(
+          new URL(window.location.href),
+          key
+        );
         window.history.pushState("", "DevTools state update", newUrl);
       } else {
-        const newUrl = getDevToolsUrl(
+        const newUrl = getUrlWithUpdatedQuery(
           new URL(window.location.href),
           key,
           valueToStore
