@@ -67,6 +67,7 @@ export default function AppWithDevTools() {
           setOpenByDefault(newVal);
         }}
         closeViaEscapeKey
+        devToolsConfig={devToolsConfig}
       >
         <>
           <Field customized={userIdChanged}>
