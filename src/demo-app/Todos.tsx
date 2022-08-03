@@ -7,6 +7,7 @@ import cx from "clsx";
 import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
 import { useNavigate } from "react-router-dom";
+import { fetchUser } from "./apis/user-apis";
 
 // TODO: Handle status separately for each HTTP call (perhaps via react-query)
 type Status = "idle" | "loading" | "adding" | "toggling-complete";
@@ -95,6 +96,8 @@ export default function Todos() {
   }
 
   if (error) throw error;
+  // TODO: Eliminate this when the statuses are separated above
+  if (!user) return <Spinner />;
 
   return (
     <main className="grid h-screen place-content-center">
