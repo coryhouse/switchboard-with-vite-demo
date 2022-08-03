@@ -11,6 +11,7 @@ import HttpSettingForm from "./HttpSettingForm";
 import ErrorFallback from "./ErrorFallback";
 import Field from "../components/Field";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function AppWithDevTools() {
   const [userId, setUserId, userIdChanged] = useDevToolsState<number | "">(
