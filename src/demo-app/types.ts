@@ -29,6 +29,7 @@ export interface User {
 
 export const endpoints = [
   "login",
+  "getUser",
   "getTodos",
   "addTodo",
   "deleteTodo",
