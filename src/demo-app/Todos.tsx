@@ -26,8 +26,8 @@ export default function Todos() {
     async function fetchTodos() {
       setStatus("loading");
       try {
-        const todosResp = await getTodos(user.id);
-        setTodos(todosResp);
+        const resp = await getTodos(user.id);
+        setTodos(resp);
       } catch (err) {
         setError(err as Error);
       } finally {
