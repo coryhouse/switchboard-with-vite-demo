@@ -8,6 +8,9 @@ import useOutsideClick from "./hooks/useOutsideClick";
 import Checkbox from "./components/Checkbox";
 import Select from "./components/Select";
 import Field from "./components/Field";
+import { buildUrl } from "./utils/url-utils";
+import { DevToolsConfig } from "./demo-app/types";
+import { writeToClipboard } from "./utils/clipboard-utils";
 
 export const devToolsPositions = [
   "top-left",
@@ -25,6 +28,9 @@ interface DevToolsProps {
 
   /** When true, close the devtools window when the escape key is pressed */
   closeViaEscapeKey?: boolean;
+
+  /** Dev tools config settings */
+  devToolsConfig: DevToolsConfig;
 
   /** Update position */
   setPosition: (newPosition: DevToolsPosition) => void;
@@ -54,6 +60,7 @@ export default function DevTools({
   position,
   openByDefault,
   setOpenByDefault,
+  devToolsConfig,
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(openByDefault);
   const ref = useRef<HTMLDivElement>(null);
@@ -67,6 +74,16 @@ export default function DevTools({
   });
 
   const toggleOpen = () => setIsOpen(!isOpen);
+
+  async function copyDevToolsSettingsUrlToClipboard() {
+    const url = buildUrl(window.location.href, devToolsConfig);
+    try {
+      await writeToClipboard(url);
+      alert("URL copied to clipboard");
+    } catch (err) {
+      () => alert("Failed to copy settings URL to clipboard");
+    }
+  }
 
   return (
     <section
@@ -124,6 +141,15 @@ export default function DevTools({
                 checked={devToolsConfig.autoReload}
               />
             </Field> */}
+
+            <Field>
+              <Button
+                className="block"
+                onClick={copyDevToolsSettingsUrlToClipboard}
+              >
+                Copy settings
+              </Button>
+            </Field>
 
             <Field>
               <Button type="submit" onClick={() => window.location.reload()}>
