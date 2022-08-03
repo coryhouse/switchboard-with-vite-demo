@@ -24,9 +24,6 @@ export default function AppWithDevTools() {
   );
   const [http, setHttp] = useDevToolsState<HttpSetting[]>("http", []);
 
-  const user = mockUsers.find((u) => u.id === userId);
-  if (!user) throw new Error("User not found: " + userId);
-
   const isReady = useWorker({
     userId,
     delay,
