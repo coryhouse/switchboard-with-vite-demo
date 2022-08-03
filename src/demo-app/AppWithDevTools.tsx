@@ -66,7 +66,8 @@ export default function AppWithDevTools() {
     <>
       {/* Wrap app in ErrorBoundary so DevTools continue to display upon error */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <App />
+        {/* Passing a key to force the app to completely reload when the userId changes. */}
+        <App key={userId} />
       </ErrorBoundary>
 
       <DevTools
