@@ -55,7 +55,21 @@ export const useWorker = (config: DevToolsConfig | null) => {
         );
       }),
 
-      rest.get("/todos/:userId", async (_req, res, ctx) => {
+      rest.get("/user", async (_req, res, ctx) => {
+        const setting = getHttpSetting("getUser");
+
+        const userId = configRef.current?.userId;
+        const user = mockUsers.find((u) => u.id === userId);
+        if (!user) return res(ctx.status(401));
+
+        return res(
+          ctx.delay(getDelay(setting?.delay)),
+          ctx.json(getResp(setting?.response, user)),
+          ctx.status(setting?.status ?? 200)
+        );
+      }),
+
+      rest.get("/todos", async (_req, res, ctx) => {
         const setting = getHttpSetting("getTodos");
 
         const userId = configRef.current?.userId;
