@@ -63,6 +63,7 @@ export function useDevToolsState<T>(
       const parsedObject = JSON.parse(urlValue);
       // Update localStorage with URL value too
       window.localStorage.setItem(key, JSON.stringify(parsedObject));
+
       // Clear out the URL now that we read the value and stored it in localStorage. This keeps the URL clean.
       // TODO: Make this an option
       const newUrl = getUrlWithUpdatedQuery(new URL(window.location.href), key);
