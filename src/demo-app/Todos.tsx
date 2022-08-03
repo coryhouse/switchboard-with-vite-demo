@@ -6,6 +6,7 @@ import { Todo, User } from "./types";
 import cx from "clsx";
 import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
+import { useNavigate } from "react-router-dom";
 
 type Status = "idle" | "loading" | "adding" | "toggling-complete";
 
@@ -19,10 +20,13 @@ export default function Todos() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
+  const navigate = useNavigate();
+
   // HACK: Doing this to keep the demo simple
+  // TODO: Implement protected route instead
   function getUser() {
-    const ls = localStorage.getItem("loggedInUser");
-    if (!ls) throw new Error("User not found in localStorage");
+    const ls = localStorage.getItem("userId");
+    if (!ls) return navigate("/");
     return JSON.parse(ls) as User;
   }
 
