@@ -17,6 +17,7 @@ type Todos = {
 
 export default function Todos() {
   const [status, setStatus] = useState<Status>("loading");
+  const [user, setUser] = useState<User | null>(null);
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<Error | null>(null);
