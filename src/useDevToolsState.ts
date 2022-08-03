@@ -40,18 +40,18 @@ export type DevToolsStateOptions = {
  *
  *
  * @param key The URL param to check for the default, as well as the key used to write the value to localStorage
- * @param initialValue The default value to use if the URL and localStorage both don't have a matching value for the provided key.
+ * @param defaultValue The default value to use if the URL and localStorage both don't have a matching value for the provided key.
  * */
 export function useDevToolsState<T>(
   key: string,
-  initialValue: T,
+  defaultValue: T,
   options?: DevToolsStateOptions
 ) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState<T>(() => {
     if (typeof window === "undefined") {
-      return initialValue;
+      return defaultValue;
     }
 
     // First, check the URL for a value and use it for the default if found.
@@ -72,11 +72,11 @@ export function useDevToolsState<T>(
       // Parse stored json or if none return initialValue
 
       // TODO: Use Zod to assure the querystring parses into a DevToolsConfig
-      return item ? JSON.parse(item) : initialValue;
+      return item ? JSON.parse(item) : defaultValue;
     } catch (error) {
       // If error also return initialValue
       console.log(error);
-      return initialValue;
+      return defaultValue;
     }
   });
 
@@ -93,7 +93,7 @@ export function useDevToolsState<T>(
       // Step 2: Update the URL so it reflects the new setting, and can thus be copied and shared with others
       // If the value matches the default value, then remove it from the URL (to keep the URL as lean as possible).
       // However, go ahead and put the value in the URL anyway if showDefaultValuesInTheUrl is true.
-      if (valueToStore == initialValue && !options?.showDefaultValuesInTheUrl) {
+      if (valueToStore == defaultValue && !options?.showDefaultValuesInTheUrl) {
         const newUrl = getUrlWithUpdatedQuery(
           new URL(window.location.href),
           key
@@ -113,7 +113,7 @@ export function useDevToolsState<T>(
         // If the value is the initial value, then we can omit it from localStorage.
         // But, go ahead and put it in localStorage anyway if storeDefaultValuesInLocalStorage is true.
         if (
-          valueToStore == initialValue &&
+          valueToStore == defaultValue &&
           !options?.storeDefaultValuesInLocalStorage
         ) {
           window.localStorage.removeItem(key);
@@ -126,6 +126,7 @@ export function useDevToolsState<T>(
       console.error(error);
     }
   };
+
   const isChanged = storedValue !== defaultValue;
 
   return [storedValue, setValue, isChanged] as const;
