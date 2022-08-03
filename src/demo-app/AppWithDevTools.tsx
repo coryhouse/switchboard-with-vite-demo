@@ -26,11 +26,15 @@ export default function AppWithDevTools() {
   const [http, setHttp] = useDevToolsState<HttpSetting[]>("http", []);
 
   const navigate = useNavigate();
+
+  const devToolsConfig = {
     userId,
     delay,
     http,
     openByDefault,
     position,
+  };
+
   const isReady = useWorker(devToolsConfig);
 
   function simulateLogin(userId: number) {
