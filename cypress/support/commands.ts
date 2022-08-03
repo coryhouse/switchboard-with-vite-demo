@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 import "@testing-library/cypress/add-commands";
-import { getDevToolsUrl } from "../../src/utils/url-utils";
-import { defaultConfig } from "../../src/demo-app/AppWithDevTools";
+import { buildUrl } from "../../src/utils/url-utils";
 import { DevToolsConfig } from "../../src/demo-app/types";
 
 // ***********************************************
@@ -43,13 +42,8 @@ import { DevToolsConfig } from "../../src/demo-app/types";
 Cypress.Commands.add(
   "visitUrl",
   (config: Partial<DevToolsConfig>): Cypress.Chainable => {
-    const baseUrl = new URL("http://127.0.0.1:5173/");
-
-    const url = getDevToolsUrl(baseUrl, "devtools", {
-      ...defaultConfig,
-      ...config,
-    });
-
+    const baseUrl = "http://127.0.0.1:5173/";
+    const url = buildUrl(baseUrl, config);
     return cy.visit(url);
   }
 );
