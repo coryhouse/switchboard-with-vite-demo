@@ -4,8 +4,8 @@ import { Todo } from "../types";
 // These fetch calls are intercepted by msw when mocking is enabled.
 // Mock Service Worker intercepts the call made in the browser
 // and returns a mock response instead.
-export async function getTodos(userId: number): Promise<Todo[]> {
-  const resp = await fetch(`/todos/${userId}`);
+export async function getTodos(): Promise<Todo[]> {
+  const resp = await fetch(`/todos`);
   if (!resp.ok) throw resp;
   return resp.json() as Promise<Todo[]>;
 }
