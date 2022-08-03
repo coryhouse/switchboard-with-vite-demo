@@ -28,6 +28,12 @@ export default function AppWithDevTools() {
   );
   const [http, setHttp] = useDevToolsState<HttpSetting[]>("http", []);
 
+  useEffect(() => {
+    // When the userID changes, simulate logging the user in/out.
+    // This is necessary for handling when the app is initialized via the URL.
+    userId ? simulateLogin(userId) : simulateLogout();
+  }, [userId]);
+
   const navigate = useNavigate();
 
   const devToolsConfig = {
