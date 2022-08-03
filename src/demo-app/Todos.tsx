@@ -49,7 +49,7 @@ export default function Todos() {
       }
     }
     fetchTodos();
-  }, [user.id]);
+  }, [user]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
