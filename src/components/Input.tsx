@@ -21,12 +21,13 @@ export default function Input(props: InputProps) {
   } = props;
   return (
     <span>
-      <Label className="block" htmlFor={id} changed={changed}>
+      <Label className="block" htmlFor={id}>
         {label}
       </Label>
       <input
         className={cx(
           "border-slate-400 border-solid border rounded p-1",
+          { "bg-yellow-100": changed },
           className
         )}
         type="text"
