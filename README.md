@@ -30,7 +30,13 @@ To run the demo app:
 
 ```
 npm i
-npm run dev
+npm run cy
+```
+
+To run the demo app and Cypress tests together:
+
+```
+npm run cy
 ```
 
 ## Roadmap
