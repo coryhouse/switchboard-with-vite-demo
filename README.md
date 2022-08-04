@@ -4,7 +4,7 @@ Switchr is toolkit for creating custom DevTools for your React project.
 
 ## Features
 
-This project provide 3 key tools for building your own custom DevTools:
+This project provides 3 key building blocks for creating your own custom DevTools:
 
 ### 1. `DevTools` component
 
