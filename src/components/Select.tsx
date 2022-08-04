@@ -7,10 +7,21 @@ interface SelectProps extends React.ComponentPropsWithoutRef<"select"> {
 
   /** Input label */
   label: string;
+
+  /** Specify select's width */
+  width?: "full" | "default";
 }
 
 export default function Select(props: SelectProps) {
-  const { id, onChange, changed = false, label, value, ...rest } = props;
+  const {
+    id,
+    onChange,
+    width = "default",
+    changed = false,
+    label,
+    value,
+    ...rest
+  } = props;
   return (
     <>
       <Label className="block" htmlFor={id}>
@@ -19,6 +30,7 @@ export default function Select(props: SelectProps) {
       <select
         className={clsx("border-slate-400 border-solid border p-1 rounded", {
           "bg-yellow-100": changed,
+          "w-full": width === "full",
         })}
         id={id}
         value={value}
