@@ -12,6 +12,7 @@ import ErrorFallback from "./ErrorFallback";
 import Field from "../components/Field";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { requestHandlers } from "./mocks/request-handlers";
 
 export const httpDefaults = {
   delay: 0,
@@ -48,7 +49,7 @@ export default function AppWithDevTools() {
     position,
   };
 
-  const isReady = useWorker(devToolsConfig);
+  const isReady = useWorker(devToolsConfig, requestHandlers);
 
   function simulateLogin(userId: number) {
     setUserId(userId);
