@@ -21,7 +21,7 @@ export default function Login() {
 
   return (
     <main className="grid h-screen place-content-center">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="w-72">
         <p role="alert" className="text-red-600">
           {error}
         </p>
@@ -29,6 +29,7 @@ export default function Login() {
         <Field>
           <Input
             id="email"
+            width="full"
             autoComplete="off"
             label="Email"
             value={email}
@@ -38,6 +39,7 @@ export default function Login() {
 
         <Field>
           <Input
+            width="full"
             id="password"
             type="password"
             label="Password"
