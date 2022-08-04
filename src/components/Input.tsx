@@ -7,6 +7,9 @@ interface InputProps extends React.ComponentPropsWithoutRef<"input"> {
 
   /** Set to true to highlight the label so that it is visually marked as changed from the default. */
   changed?: boolean;
+
+  /** Specify input's width */
+  width?: "full" | "default";
 }
 
 export default function Input(props: InputProps) {
@@ -17,6 +20,7 @@ export default function Input(props: InputProps) {
     value,
     changed = false,
     className,
+    width = "default",
     ...rest
   } = props;
   return (
@@ -28,6 +32,7 @@ export default function Input(props: InputProps) {
         className={cx(
           "border-slate-400 border-solid border rounded p-1",
           { "bg-yellow-100": changed },
+          { "w-full": width === "full" },
           className
         )}
         type="text"
