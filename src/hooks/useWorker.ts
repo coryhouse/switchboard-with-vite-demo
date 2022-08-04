@@ -25,7 +25,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
   }
 
   function getResp(customResponse: string | undefined, defaultResponse: any) {
-    if (customResponse && customResponse !== "default") return customResponse;
+    if (customResponse) return customResponse;
     return defaultResponse;
   }
 
