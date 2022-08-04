@@ -18,7 +18,7 @@ export default function AppWithDevTools() {
     "userId",
     ""
   );
-  const [delay, setDelay] = useDevToolsState("delay", 0);
+  const [delay, setDelay, delayChanged] = useDevToolsState("delay", 0);
   const [position, setPosition] = useDevToolsState<DevToolsPosition>(
     "position",
     "top-left"
