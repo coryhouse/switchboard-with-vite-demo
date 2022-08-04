@@ -158,7 +158,9 @@ export default function DevTools({
                 <Button
                   className="block"
                   onClick={() => {
-                    localStorage.removeItem("");
+                    // TODO: Only clear devtools-related localStorage.
+                    localStorage.clear();
+                    window.location.reload();
                   }}
                 >
                   Clear Settings
