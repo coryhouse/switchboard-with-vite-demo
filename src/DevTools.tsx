@@ -95,7 +95,7 @@ export default function DevTools({
       ref={ref}
       // TODO: Support drag and drop position.
       className={cx(
-        "fixed p-4 border shadow-lg max-h-screen overflow-auto bg-white opacity-80",
+        "fixed p-4 border shadow-xl max-h-screen overflow-auto bg-white opacity-90",
         {
           "bottom-0": position.includes("bottom"),
           "top-0": position.includes("top"),
