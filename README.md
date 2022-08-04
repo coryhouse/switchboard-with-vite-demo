@@ -1,6 +1,6 @@
-# Switchr
+# Switchr 🎛 ⚛️
 
-A toolkit for creating custom React DevTools for your project.
+Switchr is toolkit for creating custom DevTools for your React project.
 
 ## Features
 
@@ -41,7 +41,7 @@ npm run cy
 
 ## Roadmap
 
-Support more than React, potentially via plain web components.
+Support other JS frameworks beyond React.
 
 ## Potential names
 
