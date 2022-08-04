@@ -82,8 +82,9 @@ export default function AppWithDevTools() {
         devToolsConfig={devToolsConfig}
       >
         <>
-          <Field customized={userIdChanged}>
+          <Field>
             <Select
+              changed={userIdChanged}
               id="user"
               label="User"
               value={userId}
