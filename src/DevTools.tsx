@@ -23,6 +23,9 @@ export const devToolsPositions = [
 export type DevToolsPosition = typeof devToolsPositions[number];
 
 interface DevToolsProps {
+  /** Custom CSS classes to apply to the root element. */
+  className: string;
+
   /** When true, the devtools window closes automatically when any content outside the window is clicked. */
   closeOnOutsideClick?: boolean;
 
@@ -61,6 +64,7 @@ export default function DevTools({
   position,
   openByDefault,
   setOpenByDefault,
+  className,
   devToolsConfig,
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(openByDefault);
@@ -90,12 +94,16 @@ export default function DevTools({
     <section
       ref={ref}
       // TODO: Support drag and drop position.
-      className={cx("fixed p-4 border shadow-lg max-h-screen overflow-auto", {
-        "bottom-0": position.includes("bottom"),
-        "top-0": position.includes("top"),
-        "right-0": position.includes("right"),
-        "left-0": position.includes("left"),
-      })}
+      className={cx(
+        "fixed p-4 border shadow-lg max-h-screen overflow-auto bg-white opacity-80",
+        {
+          "bottom-0": position.includes("bottom"),
+          "top-0": position.includes("top"),
+          "right-0": position.includes("right"),
+          "left-0": position.includes("left"),
+        },
+        className
+      )}
     >
       {isOpen ? (
         <>
