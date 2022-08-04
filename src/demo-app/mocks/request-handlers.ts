@@ -14,11 +14,6 @@ export function requestHandlers(
     return configRef.current?.delay ?? 0;
   }
 
-  function getResp(customResponse: string | undefined, defaultResponse: any) {
-    if (customResponse) return customResponse;
-    return defaultResponse;
-  }
-
   function getHttpSetting(endpoint: Endpoint) {
     return configRef.current?.http.find((a) => a.endpoint === endpoint);
   }
@@ -51,7 +46,7 @@ export function requestHandlers(
 
       return res(
         ctx.delay(getDelay(setting?.delay)),
-        ctx.json(getResp(setting?.response, user)),
+        ctx.json(setting?.response ?? user),
         ctx.status(setting?.status ?? 200)
       );
     }),
@@ -65,7 +60,7 @@ export function requestHandlers(
 
       return res(
         ctx.delay(getDelay(setting?.delay)),
-        ctx.json(getResp(setting?.response, user.todos)),
+        ctx.json(setting?.response ?? user.todos),
         ctx.status(setting?.status ?? 200)
       );
     }),
@@ -81,7 +76,7 @@ export function requestHandlers(
       const setting = getHttpSetting("addTodo");
       return res(
         ctx.delay(getDelay(setting?.delay)),
-        ctx.json(getResp(setting?.response, defaultResp)),
+        ctx.json(setting?.response ?? defaultResp),
         ctx.status(setting?.status ?? 200)
       );
     }),
@@ -90,7 +85,7 @@ export function requestHandlers(
       const setting = getHttpSetting("toggleTodoCompleted");
       return res(
         ctx.delay(getDelay(setting?.delay)),
-        ctx.json(getResp(setting?.response, "")),
+        ctx.json(setting?.response ?? ""),
         ctx.status(setting?.status ?? 200)
       );
     }),
@@ -99,7 +94,7 @@ export function requestHandlers(
       const setting = getHttpSetting("deleteTodo");
       return res(
         ctx.delay(getDelay(setting?.delay)),
-        ctx.json(getResp(setting?.response, "")),
+        ctx.json(setting?.response ?? ""),
         ctx.status(setting?.status ?? 200)
       );
     }),
