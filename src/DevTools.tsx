@@ -104,7 +104,7 @@ export default function DevTools({
           </div>
           {children}
 
-          <details className="mt-4">
+          <details className="mt-4" open>
             <summary className="mt-4 font-bold">General</summary>
 
             <Field>
