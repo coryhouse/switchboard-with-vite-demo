@@ -18,7 +18,7 @@ This project provide 3 key tools for building your own custom DevTools:
 
 ### 2. `useDevToolState` Hook
 
-Configure state that persists between reloads via localStorage. Optionally, initialize and share settings via the URL.
+Configure state that persists between reloads via localStorage. Read optional URL settings to initialize state.
 
 ### 3. `useWorker` Hook
 
@@ -26,11 +26,16 @@ Configure mock APIs that are configurable via DevTools. Uses [msw](https://mswjs
 
 ## Quick Start
 
-Under development. Coming soon.
+To run the demo app:
+
+```
+npm i
+npm run dev
+```
 
 ## Roadmap
 
-Support more than React. Potentially rewrite in plain web components.
+Support more than React, potentially via plain web components.
 
 ## Potential names
 
