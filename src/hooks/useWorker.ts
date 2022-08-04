@@ -48,6 +48,7 @@ export const useWorker = (config: DevToolsConfig | null) => {
         );
         if (!user) return res(ctx.status(401));
 
+        // TODO: Return JWT and pass it into all calls to show a more realistic approach
         return res(
           ctx.delay(getDelay(setting?.delay)),
           ctx.json(user),
