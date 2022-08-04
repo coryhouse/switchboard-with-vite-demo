@@ -156,7 +156,7 @@ export default function DevTools({
             <div className="flex flex-row">
               <Field>
                 <Button
-                  className="block"
+                  className="mr-2"
                   onClick={copyDevToolsSettingsUrlToClipboard}
                 >
                   Copy settings
@@ -165,7 +165,7 @@ export default function DevTools({
 
               <Field>
                 <Button
-                  className="block"
+                  className="mr-2"
                   onClick={() => {
                     // TODO: Only clear devtools-related localStorage.
                     localStorage.clear();
