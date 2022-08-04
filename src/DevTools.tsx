@@ -144,20 +144,33 @@ export default function DevTools({
               />
             </Field> */}
 
-            <Field>
-              <Button
-                className="block"
-                onClick={copyDevToolsSettingsUrlToClipboard}
-              >
-                Copy settings
-              </Button>
-            </Field>
+            <div className="flex flex-row">
+              <Field>
+                <Button
+                  className="block"
+                  onClick={copyDevToolsSettingsUrlToClipboard}
+                >
+                  Copy settings
+                </Button>
+              </Field>
 
-            <Field>
-              <Button type="submit" onClick={() => window.location.reload()}>
-                Reload
-              </Button>
-            </Field>
+              <Field>
+                <Button
+                  className="block"
+                  onClick={() => {
+                    localStorage.removeItem("");
+                  }}
+                >
+                  Clear Settings
+                </Button>
+              </Field>
+
+              <Field>
+                <Button type="submit" onClick={() => window.location.reload()}>
+                  Reload
+                </Button>
+              </Field>
+            </div>
           </details>
         </>
       ) : (
