@@ -1,3 +1,4 @@
+import { httpDefaults } from "../../src/demo-app/AppWithDevTools";
 import * as mockUsers from "../../src/demo-app/mocks/users.mocks";
 
 describe("new user", () => {
@@ -51,6 +52,7 @@ describe("when marking a todo complete", () => {
       userId: mockUsers.manyTodos.id,
       http: [
         {
+          ...httpDefaults,
           delay: 3100,
           endpoint: "toggleTodoCompleted",
         },
