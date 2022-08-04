@@ -1,5 +1,6 @@
 import DeleteButton from "../components/DeleteButton";
 import Input from "../components/Input";
+import { httpDefaults } from "./AppWithDevTools";
 import { HttpSetting } from "./types";
 
 type HttpSettingFormProps = {
@@ -26,6 +27,7 @@ export default function HttpSettingForm({
       <div className="flex flex-row">
         <Input
           type="number"
+          changed={delay !== httpDefaults.delay}
           label="Delay"
           className="w-20 mr-4"
           value={delay}
@@ -45,6 +47,7 @@ export default function HttpSettingForm({
 
         <Input
           type="number"
+          changed={status !== httpDefaults.status}
           label="Status"
           className="w-20 mr-4"
           value={status}
@@ -64,6 +67,7 @@ export default function HttpSettingForm({
 
         <Input
           type="text"
+          changed={response !== httpDefaults.response}
           label="Response"
           className="w-20"
           value={response}
