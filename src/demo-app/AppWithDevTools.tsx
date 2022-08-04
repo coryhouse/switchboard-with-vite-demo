@@ -105,6 +105,7 @@ export default function AppWithDevTools() {
             <summary className="mt-4 font-bold">HTTP</summary>
             <Field>
               <Input
+                changed={delayChanged}
                 type="number"
                 label="Global Delay (ms)"
                 value={delay}
