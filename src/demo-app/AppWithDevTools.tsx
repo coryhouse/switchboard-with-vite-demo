@@ -13,6 +13,12 @@ import Field from "../components/Field";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+export const httpDefaults = {
+  delay: 0,
+  status: 200,
+  response: "",
+};
+
 export default function AppWithDevTools() {
   const [userId, setUserId, userIdChanged] = useDevToolsState<number | "">(
     "userId",
@@ -125,9 +131,9 @@ export default function AppWithDevTools() {
                     ...http,
                     {
                       endpoint: e.target.value as Endpoint,
-                      delay: 0,
-                      status: 200,
-                      response: "",
+                      delay: httpDefaults.delay,
+                      status: httpDefaults.status,
+                      response: httpDefaults.response,
                     },
                   ]);
                 }}
