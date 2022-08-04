@@ -20,10 +20,7 @@ export const httpDefaults = {
 };
 
 export default function AppWithDevTools() {
-  const [userId, setUserId, userIdChanged] = useDevToolsState<number | "">(
-    "userId",
-    ""
-  );
+  const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
   const [delay, setDelay, delayChanged] = useDevToolsState("delay", 0);
   const [position, setPosition] = useDevToolsState<DevToolsPosition>(
     "position",
@@ -91,7 +88,6 @@ export default function AppWithDevTools() {
         <>
           <Field>
             <Select
-              changed={userIdChanged}
               id="user"
               label="User"
               value={userId}
