@@ -1,6 +1,6 @@
 import cx from "clsx";
 export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
-  variant: "primary" | "secondary" | "icon";
+  variant?: "primary" | "secondary" | "icon";
 }
 
 export default function Button({
