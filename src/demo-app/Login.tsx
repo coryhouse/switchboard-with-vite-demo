@@ -29,6 +29,7 @@ export default function Login() {
         <Field>
           <Input
             id="email"
+            autoComplete="off"
             label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -38,6 +39,7 @@ export default function Login() {
         <Field>
           <Input
             id="password"
+            type="password"
             label="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -46,7 +48,7 @@ export default function Login() {
 
         <Field>
           <Button type="submit" className="bg-blue-600 text-white">
-            Login
+            Log In
           </Button>
         </Field>
       </form>
