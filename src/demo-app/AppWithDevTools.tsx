@@ -88,6 +88,7 @@ export default function AppWithDevTools() {
         <>
           <Field>
             <Select
+              width="full"
               id="user"
               label="User"
               value={userId}
@@ -109,6 +110,7 @@ export default function AppWithDevTools() {
             <summary className="mt-4 font-bold">HTTP</summary>
             <Field>
               <Input
+                width="full"
                 changed={delayChanged}
                 type="number"
                 label="Global Delay (ms)"
@@ -119,6 +121,7 @@ export default function AppWithDevTools() {
 
             <Field>
               <Select
+                width="full"
                 label="Customize Endpoint"
                 // Value need not change since the selected value disappears once selected.
                 value=""
