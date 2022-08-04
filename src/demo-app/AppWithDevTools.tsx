@@ -101,7 +101,7 @@ export default function AppWithDevTools() {
             </Select>
           </Field>
 
-          <details>
+          <details open>
             <summary className="mt-4 font-bold">HTTP</summary>
             <Field>
               <Input
