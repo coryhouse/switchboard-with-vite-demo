@@ -67,6 +67,7 @@ export default function HttpSettingForm({
           label="Response"
           className="w-20"
           value={response}
+          placeholder="Default"
           onChange={(e) =>
             setHttp((http) =>
               http.map((s) =>
