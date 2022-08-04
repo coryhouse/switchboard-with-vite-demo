@@ -131,7 +131,7 @@ export default function DevTools({
               />
             </Field>
 
-            {/* TODO: Implement */}
+            {/* TODO: Implement Auto Reload */}
             {/* <Field>
               <Checkbox
                 label="Auto Reload"
