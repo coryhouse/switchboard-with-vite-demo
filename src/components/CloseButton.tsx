@@ -1,16 +1,9 @@
 import Button, { ButtonProps } from "./Button";
-import cx from "clsx";
 
 export default function CloseButton(props: ButtonProps) {
-  const { className, ...rest } = props;
+  const { variant, ...rest } = props;
   return (
-    <Button
-      className={cx(
-        "bg-white border-none p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100",
-        className
-      )}
-      {...rest}
-    >
+    <Button variant="icon" {...rest}>
       <span className="sr-only">Close menu</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
