@@ -1,17 +1,29 @@
 import cx from "clsx";
+import Label from "./Label";
 
 interface InputProps extends React.ComponentPropsWithoutRef<"input"> {
   /** Input label */
   label: string;
+
+  /** Set to true to highlight the label so that it is visually marked as changed from the default. */
+  changed?: boolean;
 }
 
 export default function Input(props: InputProps) {
-  const { id, onChange, value, className, ...rest } = props;
+  const {
+    id,
+    onChange,
+    label,
+    value,
+    changed = false,
+    className,
+    ...rest
+  } = props;
   return (
     <span>
-      <label className="block" htmlFor={id}>
-        {props.label}
-      </label>
+      <Label className="block" htmlFor={id} changed={changed}>
+        {label}
+      </Label>
       <input
         className={cx(
           "border-slate-400 border-solid border rounded p-1",
