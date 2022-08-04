@@ -117,6 +117,7 @@ export default function DevTools({
 
             <Field>
               <Select
+                width="full"
                 label="Position"
                 value={position}
                 onChange={(e) =>
