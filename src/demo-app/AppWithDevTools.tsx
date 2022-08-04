@@ -57,6 +57,7 @@ export default function AppWithDevTools() {
 
   function simulateLogout() {
     localStorage.removeItem("userId");
+    setUserId("");
     navigate("/");
   }
 
