@@ -1,16 +1,8 @@
 import Button, { ButtonProps } from "./Button";
-import cx from "clsx";
 
 export default function DeleteButton(props: ButtonProps) {
-  const { className, ...rest } = props;
   return (
-    <Button
-      className={cx(
-        "bg-white border-none p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 w-16",
-        className
-      )}
-      {...rest}
-    >
+    <Button variant="icon" {...props}>
       <span className="sr-only">Delete</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
