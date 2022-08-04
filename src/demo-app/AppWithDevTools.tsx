@@ -49,7 +49,19 @@ export default function AppWithDevTools() {
     position,
   };
 
-  const isReady = useWorker(devToolsConfig, requestHandlers);
+  const isReady = useWorker(devToolsConfig, requestHandlers, {
+    onUnhandledRequest: ({ method, url }) => {
+      // Ignore these requests that need not be mocked
+      // TODO: Extract and accept onUnhandledRequest (and other msw APIs) as an arg
+      if (
+        url.pathname !== "/src/demo-app/CloseButton.tsx" &&
+        url.pathname !== "/src/index.css" &&
+        !url.pathname.startsWith("chrome-extension:")
+      ) {
+        throw new Error(`Unhandled ${method} request to ${url}`);
+      }
+    },
+  });
 
   function simulateLogin(userId: number) {
     setUserId(userId);
