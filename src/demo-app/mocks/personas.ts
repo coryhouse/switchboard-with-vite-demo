@@ -1,6 +1,6 @@
-import { MockUser } from "../types";
+import { Persona } from "../types";
 
-export const noTodos: MockUser = {
+export const noTodos: Persona = {
   id: 1,
   description: {
     todos: "No todos",
@@ -13,7 +13,7 @@ export const noTodos: MockUser = {
   todos: [],
 };
 
-export const manyTodos: MockUser = {
+export const manyTodos: Persona = {
   id: 2,
   description: {
     todos: "Many todos",
@@ -57,4 +57,4 @@ export const manyTodos: MockUser = {
   ],
 };
 
-export const mockUsers: MockUser[] = [noTodos, manyTodos];
+export const mockUsers: Persona[] = [noTodos, manyTodos];
