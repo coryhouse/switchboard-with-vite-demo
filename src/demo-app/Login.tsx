@@ -4,17 +4,22 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import { useNavigate } from "react-router-dom";
 import { login } from "./apis/user-apis";
+import { useUserContext } from "./contexts/UserContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { setUser } = useUserContext();
   const navigate = useNavigate();
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     const user = await login(email, password);
     if (!user) return setError("Invalid email or password.");
+    setUser(user);
+    // A real app would likely add an auth token to a cookie or localStorage.
+    // Just storing the userId in localStorage to keep the demo simple.
     localStorage.setItem("userId", JSON.stringify(user.id));
     navigate("/todos");
   }
