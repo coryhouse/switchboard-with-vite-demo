@@ -52,7 +52,6 @@ export default function AppWithDevTools() {
   const isReady = useWorker(devToolsConfig, requestHandlers, {
     onUnhandledRequest: ({ method, url }) => {
       // Ignore these requests that need not be mocked
-      // TODO: Extract and accept onUnhandledRequest (and other msw APIs) as an arg
       if (
         url.pathname !== "/src/demo-app/CloseButton.tsx" &&
         url.pathname !== "/src/index.css" &&
