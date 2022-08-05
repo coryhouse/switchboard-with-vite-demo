@@ -96,7 +96,7 @@ export default function AppWithDevTools() {
             <Select
               width="full"
               id="user"
-              label="User"
+            label="Persona"
               value={userId}
               onChange={(e) => {
                 const userId = parseInt(e.target.value);
