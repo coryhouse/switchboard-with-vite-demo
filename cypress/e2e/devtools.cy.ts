@@ -1,4 +1,4 @@
-import { devToolsPositions } from "../../src/DevTools";
+import { devToolsPositions } from "../../src/types/types";
 
 describe("devtools", () => {
   devToolsPositions.forEach((position) => {
