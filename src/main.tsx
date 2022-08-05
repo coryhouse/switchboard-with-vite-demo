@@ -1,8 +1,8 @@
+// NOTE: This file merely exists to run the demo app.
+// It is NOT part of the published package.
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./demo-app/App";
-// NOTE: This file merely exists to run the demo app.
-// It is NOT part of the publish package.
 import { ErrorBoundary } from "react-error-boundary";
 import "./index.css";
 import ErrorFallback from "./demo-app/ErrorFallback";
