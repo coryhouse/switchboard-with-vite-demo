@@ -13,6 +13,7 @@ import Field from "../components/Field";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { requestHandlers } from "./mocks/request-handlers";
+import { useUserContext } from "./contexts/UserContext";
 
 export const httpDefaults = {
   delay: 0,
@@ -21,6 +22,8 @@ export const httpDefaults = {
 };
 
 export default function AppWithDevTools() {
+  // Storing only userId in devToolsState to keep localStorage and URL minimal.
+  // Storing the entire user would simplify the UserContext integration (since it stores the full user), but would bloat localStorage and the URL.
   const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
   const [delay, setDelay, delayChanged] = useDevToolsState("delay", 0);
   const [position, setPosition] = useDevToolsState<DevToolsPosition>(
@@ -32,6 +35,12 @@ export default function AppWithDevTools() {
     true
   );
   const [http, setHttp] = useDevToolsState<HttpSetting[]>("http", []);
+
+  const { user } = useUserContext();
+
+  // If the user passed in via context changes, then someone just logged in manually on the login form instead of using the dev tools.
+  // So use the user passed in to update the userId in the dev tools state so that the devTools user dropdown matches the user in context.
+  useEffect(() => setUserId(user?.id ?? ""), [user]);
 
   useEffect(() => {
     // When the userID changes, simulate logging the user in/out.
