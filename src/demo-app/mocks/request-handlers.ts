@@ -18,6 +18,17 @@ export function requestHandlers(
     return configRef.current?.http.find((a) => a.endpoint === endpoint);
   }
 
+  // Get user by reading localStorage
+  function getUser() {
+    const userId = localStorage.getItem("userId");
+    if (userId === null) throw new Error("userId not found in localStorage");
+    if (!parseInt(userId))
+      throw new Error("userId in localStorage is not a number");
+    const user = mockUsers.find((u) => u.id === parseInt(userId));
+    if (!user) throw new Error("User not found: " + userId);
+    return user;
+  }
+
   return [
     // TODO: Extract and accept as an arg to the hook
     rest.post("/login", async (req, res, ctx) => {
@@ -53,11 +64,7 @@ export function requestHandlers(
 
     rest.get("/todos", async (_req, res, ctx) => {
       const setting = getHttpSetting("getTodos");
-
-      const userId = configRef.current?.userId;
-      const user = mockUsers.find((u) => u.id === userId);
-      if (!user) throw new Error("User not found: " + userId);
-
+      const user = getUser();
       return res(
         ctx.delay(getDelay(setting?.delay)),
         ctx.json(setting?.response ?? user.todos),
