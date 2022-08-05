@@ -81,7 +81,9 @@ export function requestHandlers(
       const user = getUser();
       if (!user) return res(ctx.status(401));
       const defaultResp: Todo = {
-        // TODO: Perhaps use max todo id + 1
+        // TODO: Read the todos from memory so the reduce call below works.
+        // They're in Todos.tsx's state, so how can we access them?
+        // const maxTodoId = user.todos.reduce((max, t) => Math.max(max, t.id), 0);
         id: getRandomNumberBelow(100000),
         completed: false,
         todo: todo as string,
