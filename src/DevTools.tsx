@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent } from "react";
+import React, { useState, useRef } from "react";
 import Button from "./components/Button";
 import cx from "clsx";
 import CloseButton from "./components/CloseButton";
