@@ -14,7 +14,7 @@ const AppWithDevTools = React.lazy(
 );
 
 // This is set in .env.local.
-// If using create - react - app, it you'd say process.env.REACT_APP_USE_DEV_TOOLS instead.
+// If using create-react-app you'd say process.env.REACT_APP_USE_DEV_TOOLS instead.
 const useDevTools = import.meta.env.VITE_USE_DEV_TOOLS === "Y";
 
 const root = ReactDOM.createRoot(
