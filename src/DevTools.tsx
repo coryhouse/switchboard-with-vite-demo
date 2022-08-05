@@ -23,7 +23,7 @@ export const devToolsPositions = [
 export type DevToolsPosition = typeof devToolsPositions[number];
 
 interface DevToolsProps {
-  /** Custom CSS classes to apply to the root element. */
+  /** CSS to apply to the root element. */
   className?: string;
 
   /** When true, the devtools window closes automatically when any content outside the window is clicked. */
