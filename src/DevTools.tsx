@@ -11,6 +11,7 @@ import Field from "./components/Field";
 import { buildUrl } from "./utils/url-utils";
 import { DevToolsConfig } from "./demo-app/types";
 import { writeToClipboard } from "./utils/clipboard-utils";
+import { useDevToolsState } from "./hooks/useDevToolsState";
 
 export const devToolsPositions = [
   "top-left",
@@ -35,23 +36,17 @@ interface DevToolsProps {
   /** Dev tools config settings */
   devToolsConfig: DevToolsConfig;
 
-  /** Update position */
-  setPosition: (newPosition: DevToolsPosition) => void;
-
-  /** DevTool window position */
-  position: DevToolsPosition;
+  /** Default position */
+  defaultPosition: DevToolsPosition;
 
   // TODO: Implement
   /** Specify a keyboard shortcut that toggles the window open/closed */
   openKeyboardShortcut?: string;
 
-  /** Set to true to open the DevTools window by default */
-  openByDefault: boolean;
+  /** Set to true to open the DevTools window by default. */
+  openByDefault?: boolean;
 
-  /** Toggle the openByDefault setting */
-  setOpenByDefault: (openByDefault: boolean) => void;
-
-  /** Content and settings to render inside the devtools */
+  /** Custom content and settings to render inside the devtools */
   children: React.ReactNode;
 }
 
@@ -60,14 +55,21 @@ export default function DevTools({
   children,
   closeOnOutsideClick = false,
   closeViaEscapeKey = false,
-  setPosition,
-  position,
-  openByDefault,
-  setOpenByDefault,
+  openByDefault = true,
+  defaultPosition,
   className,
   devToolsConfig,
 }: DevToolsProps) {
   const [isOpen, setIsOpen] = useState(openByDefault);
+  const [position, setPosition] = useDevToolsState<DevToolsPosition>(
+    "position",
+    defaultPosition
+  );
+  // Using "setting" suffix for name to avoid collision with prop that specifies the default value. This stores the selected value in devTools.
+  const [openByDefaultSetting, setOpenByDefaultSetting] = useDevToolsState(
+    "openByDefault",
+    openByDefault
+  );
   const ref = useRef<HTMLDivElement>(null);
 
   useKeypress("Escape", () => {
@@ -135,8 +137,8 @@ export default function DevTools({
               <Checkbox
                 id="openByDefault"
                 label="Open by default"
-                onChange={() => setOpenByDefault(!openByDefault)}
-                checked={openByDefault}
+                onChange={() => setOpenByDefaultSetting(!openByDefaultSetting)}
+                checked={openByDefaultSetting}
               />
             </Field>
 

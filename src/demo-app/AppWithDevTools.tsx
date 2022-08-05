@@ -1,5 +1,5 @@
 import App from "./App";
-import DevTools, { DevToolsPosition } from "../DevTools";
+import DevTools from "../DevTools";
 import { useWorker } from "../hooks/useWorker";
 import { Endpoint, endpoints, HttpSetting } from "./types";
 import Input from "../components/Input";
@@ -26,14 +26,6 @@ export default function AppWithDevTools() {
   // Storing the entire user would simplify the UserContext integration (since it stores the full user), but would bloat localStorage and the URL.
   const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
   const [delay, setDelay, delayChanged] = useDevToolsState("delay", 0);
-  const [position, setPosition] = useDevToolsState<DevToolsPosition>(
-    "position",
-    "top-left"
-  );
-  const [openByDefault, setOpenByDefault] = useDevToolsState(
-    "openByDefault",
-    true
-  );
   const [http, setHttp] = useDevToolsState<HttpSetting[]>("http", []);
 
   const { user } = useUserContext();
@@ -54,8 +46,6 @@ export default function AppWithDevTools() {
     userId,
     delay,
     http,
-    openByDefault,
-    position,
   };
 
   const isReady = useWorker(devToolsConfig, requestHandlers, {
@@ -96,13 +86,8 @@ export default function AppWithDevTools() {
       </ErrorBoundary>
 
       <DevTools
-        position={position}
-        openByDefault={openByDefault}
-        setPosition={(position: DevToolsPosition) => setPosition(position)}
-        setOpenByDefault={(newVal) => {
-          // TODO: Why isn't this getting called?
-          setOpenByDefault(newVal);
-        }}
+        defaultPosition="top-left"
+        openByDefault
         closeViaEscapeKey
         devToolsConfig={devToolsConfig}
       >
