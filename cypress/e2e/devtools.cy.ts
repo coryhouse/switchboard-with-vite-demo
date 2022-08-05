@@ -20,7 +20,7 @@ describe("devtools", () => {
     cy.findByRole("button", { name: "Close DevTools" });
   });
 
-  describe("when default to open is false", () => {
+  describe("when defaultToOpen is false", () => {
     it("is initially closed", () => {
       cy.visitUrl({
         openByDefault: false,
