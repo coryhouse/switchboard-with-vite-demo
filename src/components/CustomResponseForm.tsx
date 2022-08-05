@@ -1,40 +1,42 @@
-import DeleteButton from "../components/DeleteButton";
-import Input from "../components/Input";
-import { httpDefaults } from "./AppWithDevTools";
-import { HttpSetting } from "./types";
+import { responseDefaults } from "../DevTools";
+import { CustomResponse } from "../types/types";
+import DeleteButton from "./DeleteButton";
+import Input from "./Input";
 
-type HttpSettingFormProps = {
-  http: HttpSetting;
-  setHttp: React.Dispatch<React.SetStateAction<HttpSetting[]>>;
+type CustomResponseFormProps = {
+  customResponse: CustomResponse;
+  setCustomResponses: React.Dispatch<React.SetStateAction<CustomResponse[]>>;
 };
 
-export default function HttpSettingForm({
-  http,
-  setHttp,
-}: HttpSettingFormProps) {
-  const { endpoint, delay, status, response } = http;
+export default function CustomResponseForm({
+  customResponse,
+  setCustomResponses,
+}: CustomResponseFormProps) {
+  const { endpointName, delay, status, response } = customResponse;
 
   return (
     <fieldset className="mt-4 border p-2">
       <legend>
-        {endpoint}{" "}
+        {endpointName}{" "}
         <DeleteButton
           onClick={() =>
-            setHttp((http) => http.filter((h) => h.endpoint !== endpoint))
+            setCustomResponses((r) =>
+              r.filter((e) => e.endpointName !== endpointName)
+            )
           }
         />
       </legend>
       <div className="flex flex-row">
         <Input
           type="number"
-          changed={delay !== httpDefaults.delay}
+          changed={delay !== responseDefaults.delay}
           label="Delay"
           className="w-20 mr-4"
           value={delay}
           onChange={(e) =>
-            setHttp((http) =>
-              http.map((s) =>
-                s.endpoint === endpoint
+            setCustomResponses((r) =>
+              r.map((s) =>
+                s.endpointName === endpointName
                   ? {
                       ...s,
                       delay: parseInt(e.target.value),
@@ -47,14 +49,14 @@ export default function HttpSettingForm({
 
         <Input
           type="number"
-          changed={status !== httpDefaults.status}
+          changed={status !== responseDefaults.status}
           label="Status"
           className="w-20 mr-4"
           value={status}
           onChange={(e) =>
-            setHttp((http) =>
-              http.map((s) =>
-                s.endpoint === endpoint
+            setCustomResponses((r) =>
+              r.map((s) =>
+                s.endpointName === endpointName
                   ? {
                       ...s,
                       status: parseInt(e.target.value),
@@ -67,15 +69,15 @@ export default function HttpSettingForm({
 
         <Input
           type="text"
-          changed={response !== httpDefaults.response}
+          changed={response !== responseDefaults.response}
           label="Response"
           className="w-20"
           value={response}
           placeholder="Default"
           onChange={(e) =>
-            setHttp((http) =>
-              http.map((s) =>
-                s.endpoint === endpoint
+            setCustomResponses((r) =>
+              r.map((s) =>
+                s.endpointName === endpointName
                   ? {
                       ...s,
                       response: e.target.value,
