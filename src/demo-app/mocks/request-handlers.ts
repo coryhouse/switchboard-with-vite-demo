@@ -50,9 +50,7 @@ export function requestHandlers(
 
     rest.get("/user", async (_req, res, ctx) => {
       const setting = getHttpSetting("getUser");
-
-      const userId = configRef.current?.userId;
-      const user = mockUsers.find((u) => u.id === userId);
+      const user = getUser();
       if (!user) return res(ctx.status(401));
 
       return res(
