@@ -1,6 +1,16 @@
 import { httpDefaults } from "../../src/demo-app/AppWithDevTools";
 import * as mockUsers from "../../src/demo-app/mocks/users.mocks";
 
+describe("log in", () => {
+  it("logs the user in successfully via the form", () => {
+    cy.visitUrl({});
+    cy.findByLabelText("Email").type("cory@reactjsconsulting.com");
+    cy.findByLabelText("Password").type("123");
+    cy.findByRole("button", { name: "Log In" }).click();
+    cy.findByRole("heading", { name: /Hi Cory/ });
+  });
+});
+
 describe("new user", () => {
   it("shows a welcome message, supports adding a todo, and hides the delete feature", () => {
     cy.visitUrl({
