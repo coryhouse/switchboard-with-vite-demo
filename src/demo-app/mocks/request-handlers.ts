@@ -18,15 +18,19 @@ export function requestHandlers(
     return configRef.current?.http.find((a) => a.endpoint === endpoint);
   }
 
-  // Get user by reading localStorage
-  function getUser() {
+  function getUserFromLocalStorage() {
     const userId = localStorage.getItem("userId");
     if (userId === null) throw new Error("userId not found in localStorage");
     if (!parseInt(userId))
       throw new Error("userId in localStorage is not a number");
     const user = mockUsers.find((u) => u.id === parseInt(userId));
-    if (!user) throw new Error("User not found: " + userId);
+    if (!user) throw new Error("User not found in localStorage: " + userId);
     return user;
+  }
+
+  function getUser() {
+    const userId = configRef.current?.userId;
+    return mockUsers.find((u) => u.id === userId);
   }
 
   return [
@@ -50,7 +54,7 @@ export function requestHandlers(
 
     rest.get("/user", async (_req, res, ctx) => {
       const setting = getHttpSetting("getUser");
-      const user = getUser();
+      const user = getUserFromLocalStorage();
       if (!user) return res(ctx.status(401));
 
       return res(
@@ -63,6 +67,8 @@ export function requestHandlers(
     rest.get("/todos", async (_req, res, ctx) => {
       const setting = getHttpSetting("getTodos");
       const user = getUser();
+      if (!user) return res(ctx.status(401));
+
       return res(
         ctx.delay(getDelay(setting?.delay)),
         ctx.json(setting?.response ?? user.todos),
@@ -72,6 +78,8 @@ export function requestHandlers(
 
     rest.post("/todo", async (req, res, ctx) => {
       const { todo } = await req.json();
+      const user = getUser();
+      if (!user) return res(ctx.status(401));
       const defaultResp: Todo = {
         // TODO: Perhaps use max todo id + 1
         id: getRandomNumberBelow(100000),
