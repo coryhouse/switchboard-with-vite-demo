@@ -17,7 +17,7 @@ export const manyTodos: Persona = {
   id: 2,
   description: {
     todos: "Many todos",
-    role: "admin",
+    role: "Admin",
   },
   name: "Elon",
   email: "elon@tesla.com",
