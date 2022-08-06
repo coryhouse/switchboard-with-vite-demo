@@ -117,7 +117,6 @@ export default function DevTools<TCustomSettings>({
   });
 
   useOutsideClick(devToolsWindowRef, () => {
-    console.log("closeViaOutsideClick", closeViaOutsideClick);
     if (closeViaOutsideClick) setIsOpen(false);
   });
 
