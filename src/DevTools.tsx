@@ -9,21 +9,31 @@ import Checkbox from "./components/Checkbox";
 import Select from "./components/Select";
 import Field from "./components/Field";
 import { buildUrl } from "./utils/url-utils";
-import { DevToolsConfig } from "./demo-app/types";
+import {
+  CustomResponse,
+  HttpSettings,
+  DevToolsPosition,
+  DevToolsSettings,
+} from "./types/types";
 import { writeToClipboard } from "./utils/clipboard-utils";
 import { useDevToolsState } from "./hooks/useDevToolsState";
+import Input from "./components/Input";
+import { useWorker } from "./hooks/useWorker";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./demo-app/ErrorFallback";
+import HttpSettingForm from "./components/CustomResponseForm";
+import { endpoints } from "./demo-app/demo-app-types";
 
-export const devToolsPositions = [
-  "top-left",
-  "top-right",
-  "bottom-left",
-  "bottom-right",
-] as const;
+export const customerResponseDefaults = {
+  delay: 0,
+  status: 200,
+  response: "",
+};
 
-/** Union of devTools positions. */
-export type DevToolsPosition = typeof devToolsPositions[number];
+interface DevToolsProps<TCustomSettings> {
+  /** The app to render */
+  appSlot: React.ReactNode;
 
-interface DevToolsProps {
   /** CSS to apply to the root element. */
   className?: string;
 
@@ -33,8 +43,11 @@ interface DevToolsProps {
   /** When true, close the devtools window when the escape key is pressed */
   closeViaEscapeKey?: boolean;
 
-  /** Dev tools config settings */
-  devToolsConfig: DevToolsConfig;
+  /** Values for custom settings specified by the user. These values are passed to the mock API. */
+  customSettings: TCustomSettings;
+
+  /** HTTP settings for mock APIs and HTTP delays */
+  httpSettings: HttpSettings;
 
   /** Default position */
   defaultPosition: DevToolsPosition;
@@ -51,20 +64,26 @@ interface DevToolsProps {
 }
 
 /** This component is useful to display custom devtools settings for your project */
-export default function DevTools({
+export default function DevTools<TCustomSettings>({
+  appSlot,
   children,
   closeOnOutsideClick = false,
   closeViaEscapeKey = false,
   openByDefault = true,
   defaultPosition,
+  httpSettings,
+  customSettings,
   className,
-  devToolsConfig,
-}: DevToolsProps) {
+}: DevToolsProps<TCustomSettings>) {
   const [isOpen, setIsOpen] = useState(openByDefault);
+  const [delay, setDelay, delayChanged] = useDevToolsState("delay", 0);
   const [position, setPosition] = useDevToolsState<DevToolsPosition>(
     "position",
     defaultPosition
   );
+  const [customResponses, setCustomResponses] = useDevToolsState<
+    CustomResponse[]
+  >("customResponse", []);
   // Using "setting" suffix for name to avoid collision with prop that specifies the default value. This stores the selected value in devTools.
   const [openByDefaultSetting, setOpenByDefaultSetting] = useDevToolsState(
     "openByDefault",
@@ -83,7 +102,12 @@ export default function DevTools({
   const toggleOpen = () => setIsOpen(!isOpen);
 
   async function copyDevToolsSettingsUrlToClipboard() {
-    const url = buildUrl(window.location.href, devToolsConfig);
+    const settings: DevToolsSettings = {
+      delay,
+      customResponses,
+    };
+    // TODO: This should pass ALL DevTool settings (or at least those configured to be sharable).
+    const url = buildUrl(window.location.href, settings);
     try {
       await writeToClipboard(url);
       alert("URL copied to clipboard");
@@ -92,58 +116,127 @@ export default function DevTools({
     }
   }
 
+  const isReady = useWorker(httpSettings, {
+    delay,
+    customResponses,
+    customSettings,
+  });
+
+  if (!isReady) return <p>Initializing...</p>;
+
   return (
-    <section
-      ref={ref}
-      // TODO: Support drag and drop position.
-      className={cx(
-        "fixed p-4 border shadow-xl max-h-screen overflow-auto bg-white opacity-90",
-        {
-          "bottom-0": position.includes("bottom"),
-          "top-0": position.includes("top"),
-          "right-0": position.includes("right"),
-          "left-0": position.includes("left"),
-        },
-        className
-      )}
-    >
-      {isOpen ? (
-        <>
-          <div className="flex flex-row-reverse">
-            <CloseButton aria-label="Close DevTools" onClick={toggleOpen} />
-          </div>
-          {children}
+    <>
+      {/* Wrap app in ErrorBoundary so DevTools continue to display upon error */}
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        {/* Passing a key to force the app to completely reinitialize when the userId changes. */}
+        {appSlot}
+      </ErrorBoundary>
 
-          <details className="mt-4" open>
-            <summary className="mt-4 font-bold">General</summary>
+      <section
+        ref={ref}
+        // TODO: Support drag and drop position.
+        className={cx(
+          "fixed p-4 border shadow-xl max-h-screen overflow-auto bg-white opacity-90",
+          {
+            "bottom-0": position.includes("bottom"),
+            "top-0": position.includes("top"),
+            "right-0": position.includes("right"),
+            "left-0": position.includes("left"),
+          },
+          className
+        )}
+      >
+        {isOpen ? (
+          <>
+            <div className="flex flex-row-reverse">
+              <CloseButton aria-label="Close DevTools" onClick={toggleOpen} />
+            </div>
+            {children}
 
-            <Field>
-              <Select
-                width="full"
-                label="Position"
-                value={position}
-                onChange={(e) =>
-                  setPosition(e.target.value as DevToolsPosition)
-                }
-              >
-                <option value="top-left">Top left</option>
-                <option value="top-right">Top Right</option>
-                <option value="bottom-left">Bottom left</option>
-                <option value="bottom-right">Bottom right</option>
-              </Select>
-            </Field>
+            <details open>
+              <summary className="mt-4 font-bold">HTTP</summary>
+              <Field>
+                <Input
+                  width="full"
+                  changed={delayChanged}
+                  type="number"
+                  label="Global Delay (ms)"
+                  value={delay}
+                  onChange={(e) => setDelay(parseInt(e.target.value))}
+                />
+              </Field>
 
-            <Field>
-              <Checkbox
-                id="openByDefault"
-                label="Open by default"
-                onChange={() => setOpenByDefaultSetting(!openByDefaultSetting)}
-                checked={openByDefaultSetting}
-              />
-            </Field>
+              <Field>
+                <Select
+                  width="full"
+                  label="Customize Endpoint"
+                  // Value need not change since the selected value disappears once selected.
+                  value=""
+                  onChange={(e) => {
+                    setCustomResponses([
+                      ...customResponses,
+                      {
+                        endpointName: e.target.value,
+                        delay: customerResponseDefaults.delay,
+                        status: customerResponseDefaults.status,
+                        response: customerResponseDefaults.response,
+                      },
+                    ]);
+                  }}
+                >
+                  <option>Select Endpoint</option>
+                  {endpoints
+                    // Filter out endpoints that are already customized
+                    .filter(
+                      (e) => !customResponses.some((h) => h.endpointName === e)
+                    )
+                    .map((e) => (
+                      <option key={e}>{e}</option>
+                    ))}
+                </Select>
+              </Field>
 
-            {/* TODO: Implement Auto Reload */}
-            {/* <Field>
+              {customResponses.map((setting) => (
+                <HttpSettingForm
+                  key={setting.endpointName}
+                  customResponse={setting}
+                  setCustomResponses={setCustomResponses}
+                />
+              ))}
+            </details>
+
+            <details className="mt-4" open>
+              <summary className="mt-4 font-bold">General</summary>
+
+              <Field>
+                <Select
+                  width="full"
+                  label="Position"
+                  value={position}
+                  onChange={(e) =>
+                    setPosition(e.target.value as DevToolsPosition)
+                  }
+                >
+                  <option value="top-left">Top left</option>
+                  <option value="top-right">Top Right</option>
+                  <option value="bottom-left">Bottom left</option>
+                  <option value="bottom-right">Bottom right</option>
+                </Select>
+              </Field>
+
+              <Field>
+                <Checkbox
+                  id="openByDefault"
+                  label="Open by default"
+                  onChange={() =>
+                    setOpenByDefaultSetting(!openByDefaultSetting)
+                  }
+                  checked={openByDefaultSetting}
+                />
+              </Field>
+
+              {/* TODO: Implement Auto Reload */}
+              {/* <Field>
               <Checkbox
                 label="Auto Reload"
                 onChange={(e) => {
@@ -155,40 +248,44 @@ export default function DevTools({
               />
             </Field> */}
 
-            <div className="flex flex-row">
-              <Field>
-                <Button
-                  className="mr-2"
-                  onClick={copyDevToolsSettingsUrlToClipboard}
-                >
-                  Copy settings
-                </Button>
-              </Field>
+              <div className="flex flex-row">
+                <Field>
+                  <Button
+                    className="mr-2"
+                    onClick={copyDevToolsSettingsUrlToClipboard}
+                  >
+                    Copy settings
+                  </Button>
+                </Field>
 
-              <Field>
-                <Button
-                  className="mr-2"
-                  onClick={() => {
-                    // TODO: Only clear devtools-related localStorage.
-                    localStorage.clear();
-                    window.location.reload();
-                  }}
-                >
-                  Clear Settings
-                </Button>
-              </Field>
+                <Field>
+                  <Button
+                    className="mr-2"
+                    onClick={() => {
+                      // TODO: Only clear devtools-related localStorage.
+                      localStorage.clear();
+                      window.location.reload();
+                    }}
+                  >
+                    Clear Settings
+                  </Button>
+                </Field>
 
-              <Field>
-                <Button type="submit" onClick={() => window.location.reload()}>
-                  Reload
-                </Button>
-              </Field>
-            </div>
-          </details>
-        </>
-      ) : (
-        <OpenButton aria-label="Open DevTools" onClick={toggleOpen} />
-      )}
-    </section>
+                <Field>
+                  <Button
+                    type="submit"
+                    onClick={() => window.location.reload()}
+                  >
+                    Reload
+                  </Button>
+                </Field>
+              </div>
+            </details>
+          </>
+        ) : (
+          <OpenButton aria-label="Open DevTools" onClick={toggleOpen} />
+        )}
+      </section>
+    </>
   );
 }
