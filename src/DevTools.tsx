@@ -23,6 +23,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./demo-app/ErrorFallback";
 import HttpSettingForm from "./components/CustomResponseForm";
 import { DevToolsConfig } from "./demo-app/demo-app-types";
+import CopySettingsButton from "./components/CopySettingsButton";
 
 export const customResponseDefaults = {
   delay: 0,
@@ -142,7 +143,6 @@ export default function DevTools<TCustomSettings>({
     });
     try {
       await writeToClipboard(url);
-      alert("URL copied to clipboard");
     } catch (err) {
       () => alert("Failed to copy settings URL to clipboard");
     }
@@ -299,12 +299,10 @@ export default function DevTools<TCustomSettings>({
 
               <div className="flex flex-row">
                 <Field>
-                  <Button
+                  <CopySettingsButton
                     className="mr-2"
                     onClick={copyDevToolsSettingsUrlToClipboard}
-                  >
-                    Copy Settings
-                  </Button>
+                  />
                 </Field>
 
                 <Field>
