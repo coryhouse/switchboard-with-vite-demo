@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { setupWorker, SetupWorkerApi } from "msw";
 import { HttpSettings } from "../types/types";
 
+/** Start Mock Service Worker with the provided config and return true when ready. */
 export const useWorker = <TCustomSettings>(
   { startOptions, requestHandlers }: HttpSettings,
   config: TCustomSettings
