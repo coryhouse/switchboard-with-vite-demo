@@ -1,4 +1,4 @@
-import * as mockUsers from "../../src/demo-app/mocks/personas";
+import * as personas from "../../src/demo-app/mocks/personas";
 import { customResponseDefaults } from "../../src/DevTools";
 
 describe("log in", () => {
@@ -14,7 +14,7 @@ describe("log in", () => {
 describe("new user", () => {
   it("shows a welcome message, supports adding a todo, and hides the delete feature", () => {
     cy.visitUrl({
-      userId: mockUsers.noTodos.id,
+      userId: personas.noTodos.id,
       delay: 50,
     });
     cy.findByText("Welcome! Start entering your todos below.");
@@ -31,7 +31,7 @@ describe("existing admin user", () => {
   it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting the todo", () => {
     // Visit Elon with 50ms delay
     cy.visitUrl({
-      userId: mockUsers.manyTodos.id,
+      userId: personas.manyTodos.id,
       delay: 50,
     });
 
@@ -59,7 +59,7 @@ describe("when marking a todo complete", () => {
     });
 
     cy.visitUrl({
-      userId: mockUsers.manyTodos.id,
+      userId: personas.manyTodos.id,
       customResponses: [
         {
           ...customResponseDefaults,
