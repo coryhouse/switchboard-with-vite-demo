@@ -5,8 +5,8 @@ import { personas } from "./personas";
 
 // A function that generates mock API request handlers.
 // This function accepts the necessary data for generating custom responses in each handler.
-export function generateRequestHandlers<TRequestHandlerConfig>(
-  configRef: React.MutableRefObject<TRequestHandlerConfig | null>
+export function generateRequestHandlers(
+  configRef: React.MutableRefObject<RequestHandlerConfig | null>
 ): RequestHandler[] {
   // Returns the endpoints delay if one is specified
   // Falls back to global delay if one is specified.
@@ -34,7 +34,7 @@ export function generateRequestHandlers<TRequestHandlerConfig>(
 
   function getUser() {
     // This works, but need to fix the type specified above so TS is happy here.
-    const userId = configRef.current?.customSettings.userId;
+    const userId = configRef.current?.userId;
     debugger;
     return personas.find((u) => u.id === userId);
   }
