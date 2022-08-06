@@ -1,5 +1,5 @@
 import * as mockUsers from "../../src/demo-app/mocks/personas";
-import { customerResponseDefaults } from "../../src/DevTools";
+import { customResponseDefaults } from "../../src/DevTools";
 
 describe("log in", () => {
   it("logs the user in successfully via the form", () => {
@@ -62,7 +62,7 @@ describe("when marking a todo complete", () => {
       userId: mockUsers.manyTodos.id,
       customResponses: [
         {
-          ...customerResponseDefaults,
+          ...customResponseDefaults,
           delay: 3100,
           endpointName: "toggleTodoCompleted",
         },
