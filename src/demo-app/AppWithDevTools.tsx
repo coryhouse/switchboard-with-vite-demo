@@ -69,9 +69,6 @@ export default function AppWithDevTools() {
 
   return (
     <DevTools
-      defaultPosition="top-left"
-      openByDefault
-      closeViaEscapeKey
       httpSettings={httpSettings}
       // Passing a key to force the app to reinitialize when the userId changes.
       appSlot={<App key={userId} />}
