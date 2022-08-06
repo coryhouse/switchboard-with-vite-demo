@@ -7,8 +7,7 @@ import Field from "../components/Field";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useUserContext } from "./contexts/UserContext";
-import { HttpSettings } from "../types/types";
-import { generateRequestHandlers } from "./mocks/request-handlers";
+import { requestHandlers } from "./mocks/request-handlers";
 
 export default function AppWithDevTools() {
   // Storing only userId in devToolsState to keep localStorage and URL minimal.
@@ -16,18 +15,18 @@ export default function AppWithDevTools() {
   const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
 
   const { user } = useUserContext();
+  const navigate = useNavigate();
 
   // If the user passed in via context changes, then someone just logged in manually on the login form instead of using the dev tools.
   // So use the user passed in to update the userId in the dev tools state so that the devTools user dropdown matches the user in context.
   useEffect(() => setUserId(user?.id ?? ""), [user]);
 
-  useEffect(() => {
-    // When the userID changes, simulate logging the user in/out.
-    // This is necessary for handling when the app is initialized via the URL.
-    userId ? simulateLogin(userId) : simulateLogout();
-  }, [userId]);
-
-  const navigate = useNavigate();
+  // When the userID changes, simulate logging the user in/out.
+  // This also handles when the app is initialized via the URL.
+  useEffect(
+    () => (userId ? simulateLogin(userId) : simulateLogout()),
+    [userId]
+  );
 
   function simulateLogin(userId: number) {
     setUserId(userId);
@@ -43,33 +42,22 @@ export default function AppWithDevTools() {
     navigate("/");
   }
 
-  const httpSettings: HttpSettings = {
-    endpoints: [
-      "login",
-      "getUser",
-      "getTodos",
-      "addTodo",
-      "deleteTodo",
-      "toggleTodoCompleted",
-    ],
-    generateRequestHandlers,
-    startOptions: {
-      onUnhandledRequest: ({ method, url }) => {
-        // Ignore unhandled requests for now, but can uncomment below to throw errors for unhandled requests.
-        // if (
-        //   url.pathname !== "/src/demo-app/CloseButton.tsx" &&
-        //   url.pathname !== "/src/index.css" &&
-        //   !url.pathname.startsWith("chrome-extension:")
-        // ) {
-        //   throw new Error(`Unhandled ${method} request to ${url}`);
-        // }
-      },
-    },
-  };
-
   return (
     <DevTools
-      httpSettings={httpSettings}
+      httpSettings={{
+        requestHandlers,
+        startOptions: {
+          // Ignore unhandled requests. Uncomment below to throw errors for unhandled requests instead.
+          onUnhandledRequest: ({ method, url }) => {
+            // if (
+            //   url.pathname !== "/src/index.css" &&
+            //   !url.pathname.startsWith("chrome-extension:")
+            // ) {
+            //   throw new Error(`Unhandled ${method} request to ${url}`);
+            // }
+          },
+        },
+      }}
       // Using a key to force the app to reinitialize when the userId changes.
       appSlot={<App key={userId} />}
       customSettings={{
@@ -83,8 +71,7 @@ export default function AppWithDevTools() {
           label="Persona"
           value={userId}
           onChange={(e) => {
-            const userId = parseInt(e.target.value);
-            userId ? simulateLogin(userId) : simulateLogout();
+            setUserId(e.target.value ? parseInt(e.target.value) : "");
           }}
         >
           <option value="">Logged out</option>
