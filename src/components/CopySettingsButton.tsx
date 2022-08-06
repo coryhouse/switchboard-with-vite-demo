@@ -17,7 +17,7 @@ export default function CopySettingsButton({ onClick, ...rest }: ButtonProps) {
   }
 
   return (
-    <Button variant="primary" onClick={handleClick}>
+    <Button variant="primary" onClick={handleClick} {...rest}>
       {label}
     </Button>
   );
