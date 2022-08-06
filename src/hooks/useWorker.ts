@@ -3,7 +3,7 @@ import { setupWorker, SetupWorkerApi } from "msw";
 import { HttpSettings } from "../types/types";
 
 export const useWorker = <TCustomSettings>(
-  { startOptions, generateRequestHandlers }: HttpSettings,
+  { startOptions, requestHandlers }: HttpSettings,
   config: TCustomSettings
 ) => {
   const configRef = useRef(config);
@@ -17,7 +17,7 @@ export const useWorker = <TCustomSettings>(
   }, [config]);
 
   useEffect(() => {
-    const worker = setupWorker(...generateRequestHandlers(configRef));
+    const worker = setupWorker(...requestHandlers(configRef));
 
     const startWorker = async (worker: SetupWorkerApi) => {
       await worker.start(startOptions);
