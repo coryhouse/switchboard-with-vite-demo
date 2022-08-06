@@ -97,7 +97,7 @@ export default function DevTools<TCustomSettings>({
     CustomResponse[]
   >("customResponses", []);
 
-  const ref = useRef<HTMLDivElement>(null);
+  const devToolsWindowRef = useRef<HTMLDivElement>(null);
 
   // Returns defaults that fallback to hard-coded defaults if the user doesn't specify a preference.
   // Note that these defaults only apply if the URL and localStorage don't specify a preference.
@@ -116,7 +116,7 @@ export default function DevTools<TCustomSettings>({
     if (closeViaEscapeKey) setIsOpen(false);
   });
 
-  useOutsideClick(ref, () => {
+  useOutsideClick(devToolsWindowRef, () => {
     if (closeOnOutsideClick) setIsOpen(false);
   });
 
@@ -165,7 +165,7 @@ export default function DevTools<TCustomSettings>({
       </ErrorBoundary>
 
       <section
-        ref={ref}
+        ref={devToolsWindowRef}
         // TODO: Support drag and drop position.
         className={cx(
           "fixed p-4 border shadow-xl max-h-screen overflow-auto bg-white opacity-90",
