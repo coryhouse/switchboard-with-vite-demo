@@ -1,5 +1,3 @@
-import { DevToolsConfig } from "../demo-app/demo-app-types";
-
 /** Returns a string that contains the current URL with the specified key and value in the querystring */
 export function getUrlWithUpdatedQuery(
   url: URL,
@@ -21,7 +19,10 @@ export function getUrlWithUpdatedQuery(
  * populated property in the provided config. By convention, each property
  * name is mapped to the querystring's key.
  */
-export function buildUrl(baseUrl: string, config: Partial<DevToolsConfig>) {
+export function buildUrl<TDevToolsConfig>(
+  baseUrl: string,
+  config: Partial<TDevToolsConfig>
+) {
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries(config)) {
     if (value) params.append(key, JSON.stringify(value));
