@@ -1,14 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { setupWorker, SetupWorkerApi, RequestHandler, StartOptions } from "msw";
-import { DevToolsConfig } from "../demo-app/types";
+import { HttpSettings } from "../types/types";
 
-// TODO: Accept generic type for DevToolsConfig
-export const useWorker = (
-  config: DevToolsConfig | null,
-  requestHandlers: (
-    configRef: React.MutableRefObject<DevToolsConfig | null>
-  ) => RequestHandler[],
-  startOptions: StartOptions
+export const useWorker = <TCustomSettings>(
+  { startOptions, generateRequestHandlers }: HttpSettings,
+  config: TCustomSettings
 ) => {
   const configRef = useRef(config);
   const [isReady, setIsReady] = useState(false);
@@ -21,7 +17,7 @@ export const useWorker = (
   }, [config]);
 
   useEffect(() => {
-    const worker = setupWorker(...requestHandlers(configRef));
+    const worker = setupWorker(...generateRequestHandlers(configRef));
 
     const startWorker = async (worker: SetupWorkerApi) => {
       await worker.start(startOptions);
