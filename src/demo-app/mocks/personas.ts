@@ -57,4 +57,4 @@ export const manyTodos: Persona = {
   ],
 };
 
-export const mockUsers: Persona[] = [noTodos, manyTodos];
+export const personas: Persona[] = [noTodos, manyTodos];
