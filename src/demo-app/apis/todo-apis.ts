@@ -1,4 +1,4 @@
-import { Todo } from "../types";
+import { Todo } from "../demo-app-types";
 
 // NOTE: For simplicity, real endpoints don't actually exist in this demo.
 // These fetch calls are intercepted by msw when mocking is enabled.

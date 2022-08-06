@@ -1,4 +1,4 @@
-import { User } from "../types";
+import { User } from "../demo-app-types";
 
 export async function login(email: string, password: string) {
   const resp = await fetch("/login", {
