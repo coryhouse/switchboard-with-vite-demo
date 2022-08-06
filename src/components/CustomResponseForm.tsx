@@ -1,4 +1,4 @@
-import { customerResponseDefaults } from "../DevTools";
+import { customResponseDefaults } from "../DevTools";
 import { CustomResponse } from "../types/types";
 import DeleteButton from "./DeleteButton";
 import Input from "./Input";
@@ -29,7 +29,7 @@ export default function CustomResponseForm({
       <div className="flex flex-row">
         <Input
           type="number"
-          changed={delay !== customerResponseDefaults.delay}
+          changed={delay !== customResponseDefaults.delay}
           label="Delay"
           className="w-20 mr-4"
           value={delay}
@@ -49,7 +49,7 @@ export default function CustomResponseForm({
 
         <Input
           type="number"
-          changed={status !== customerResponseDefaults.status}
+          changed={status !== customResponseDefaults.status}
           label="Status"
           className="w-20 mr-4"
           value={status}
@@ -69,7 +69,7 @@ export default function CustomResponseForm({
 
         <Input
           type="text"
-          changed={response !== customerResponseDefaults.response}
+          changed={response !== customResponseDefaults.response}
           label="Response"
           className="w-20"
           value={response}
