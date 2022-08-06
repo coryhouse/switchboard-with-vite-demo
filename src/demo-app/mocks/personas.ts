@@ -1,4 +1,4 @@
-import { Persona } from "../types";
+import { Persona } from "../demo-app-types";
 
 export const noTodos: Persona = {
   id: 1,
