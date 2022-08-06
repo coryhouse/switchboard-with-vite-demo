@@ -61,9 +61,3 @@ export const devToolsPositions = [
 
 /** Union of devTools positions. */
 export type DevToolsPosition = typeof devToolsPositions[number];
-
-/** Settings that can be shared to initialize the DevTools via the URL */
-export type DevToolsSettings = {
-  delay: number;
-  customResponses: CustomResponse[];
-};
