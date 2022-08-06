@@ -9,7 +9,12 @@ import Checkbox from "./components/Checkbox";
 import Select from "./components/Select";
 import Field from "./components/Field";
 import { buildUrl } from "./utils/url-utils";
-import { CustomResponse, HttpSettings, DevToolsPosition } from "./types/types";
+import {
+  CustomResponse,
+  HttpSettings,
+  DevToolsPosition,
+  DevToolsDefaults,
+} from "./types/types";
 import { writeToClipboard } from "./utils/clipboard-utils";
 import { useDevToolsState } from "./hooks/useDevToolsState";
 import Input from "./components/Input";
@@ -17,6 +22,7 @@ import { useWorker } from "./hooks/useWorker";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./demo-app/ErrorFallback";
 import HttpSettingForm from "./components/CustomResponseForm";
+import { DevToolsConfig } from "./demo-app/demo-app-types";
 
 export const customResponseDefaults = {
   delay: 0,
@@ -31,27 +37,18 @@ interface DevToolsProps<TCustomSettings> {
   /** CSS to apply to the root element. */
   className?: string;
 
-  /** When true, the devtools window closes automatically when any content outside the window is clicked. */
-  closeOnOutsideClick?: boolean;
-
-  /** When true, close the devtools window when the escape key is pressed */
-  closeViaEscapeKey?: boolean;
-
   /** Values for custom settings specified by the user. These values are passed to the mock API. */
   customSettings: TCustomSettings;
+
+  /** Specify optional default values for various settings */
+  defaults?: Partial<DevToolsDefaults>;
 
   /** HTTP settings for mock APIs and HTTP delays */
   httpSettings: HttpSettings;
 
-  /** Default position */
-  defaultPosition: DevToolsPosition;
-
   // TODO: Implement
   /** Specify a keyboard shortcut that toggles the window open/closed */
   openKeyboardShortcut?: string;
-
-  /** Set to true to open the DevTools window by default. */
-  openByDefault?: boolean;
 
   /** Custom content and settings to render inside the devtools */
   children: React.ReactNode;
@@ -61,29 +58,58 @@ interface DevToolsProps<TCustomSettings> {
 export default function DevTools<TCustomSettings>({
   appSlot,
   children,
-  closeOnOutsideClick = false,
-  closeViaEscapeKey = false,
-  openByDefault = true,
-  defaultPosition,
   httpSettings,
   customSettings,
   className,
+  ...rest
 }: DevToolsProps<TCustomSettings>) {
+  const defaults = getDefaults();
+  // These settings use the useDevToolsState hook so that the settings persist in localStorage and are optionally initialized via the URL
+  const [openByDefault, setOpenByDefault] = useDevToolsState(
+    "openByDefault",
+    defaults.openByDefault
+  );
+
   const [isOpen, setIsOpen] = useState(openByDefault);
-  const [delay, setDelay, delayChanged] = useDevToolsState("delay", 0);
+
+  const [closeOnOutsideClick, setCloseOnOutsideClick] = useDevToolsState(
+    "closeOnOutsideClick",
+    defaults.closeOnOutsideClick
+  );
+
+  const [closeViaEscapeKey, setCloseViaEscapeKey] = useDevToolsState(
+    "closeViaEscapeKey",
+    defaults.closeViaEscapeKey
+  );
+
+  const [delay, setDelay, delayChanged] = useDevToolsState(
+    "delay",
+    defaults.delay
+  );
+
   const [position, setPosition] = useDevToolsState<DevToolsPosition>(
     "position",
-    defaultPosition
+    defaults.position
   );
+
   const [customResponses, setCustomResponses] = useDevToolsState<
     CustomResponse[]
   >("customResponses", []);
-  // Using "setting" suffix for name to avoid collision with prop that specifies the default value. This stores the selected value in devTools.
-  const [openByDefaultSetting, setOpenByDefaultSetting] = useDevToolsState(
-    "openByDefaultSetting",
-    openByDefault
-  );
+
   const ref = useRef<HTMLDivElement>(null);
+
+  // Returns defaults that fallback to hard-coded defaults if the user doesn't specify a preference.
+  // Note that these defaults only apply if the URL and localStorage don't specify a preference.
+  function getDefaults() {
+    const defaults: DevToolsDefaults = {
+      closeOnOutsideClick: rest.defaults?.closeOnOutsideClick ?? false,
+      closeViaEscapeKey: rest.defaults?.closeViaEscapeKey ?? true,
+      delay: rest.defaults?.delay ?? 0,
+      openByDefault: rest.defaults?.openByDefault ?? true,
+      position: rest.defaults?.position ?? "top-left",
+    };
+    return defaults;
+  }
 
   useKeypress("Escape", () => {
     if (closeViaEscapeKey) setIsOpen(false);
@@ -95,13 +121,23 @@ export default function DevTools<TCustomSettings>({
 
   const toggleOpen = () => setIsOpen(!isOpen);
 
+  // Only copy settings to the URL that have been changed from the default.
+  // This keeps the URL as short as possible.
+  function getChangedSettings() {
+    const urlConfig: Partial<DevToolsConfig> = {};
+    if (defaults.position !== position) urlConfig.position = position;
+    if (defaults.openByDefault !== openByDefault) {
+      urlConfig.openByDefault = openByDefault;
+    }
+    if (defaults.delay != delay) urlConfig.delay = delay;
+    if (customResponses.length > 0) urlConfig.customResponses = customResponses;
+    return urlConfig;
+  }
+
   async function copyDevToolsSettingsUrlToClipboard() {
-    // TODO: This should pass ALL DevTool settings (or at least those configured to be sharable).
+    const urlConfig = getChangedSettings();
     const url = buildUrl(window.location.href, {
-      delay,
-      customResponses,
-      openByDefault,
-      position,
+      ...urlConfig,
       ...customSettings,
     });
     try {
