@@ -224,10 +224,26 @@ export default function DevTools<TCustomSettings>({
                 <Checkbox
                   id="openByDefault"
                   label="Open by default"
-                  onChange={() =>
-                    setOpenByDefaultSetting(!openByDefaultSetting)
-                  }
-                  checked={openByDefaultSetting}
+                  onChange={() => setOpenByDefault(!openByDefault)}
+                  checked={openByDefault}
+                />
+              </Field>
+
+              <Field>
+                <Checkbox
+                  id="closeViaEscapeKey"
+                  label="Close via escape key"
+                  onChange={() => setCloseViaEscapeKey(!closeViaEscapeKey)}
+                  checked={closeViaEscapeKey}
+                />
+              </Field>
+
+              <Field>
+                <Checkbox
+                  id="closeOnOutsideClick"
+                  label="Close on outside click"
+                  onChange={() => setCloseOnOutsideClick(!closeOnOutsideClick)}
+                  checked={closeOnOutsideClick}
                 />
               </Field>
 
