@@ -1,4 +1,4 @@
-import { DevToolsPosition } from "../DevTools";
+import { RequestHandlerConfigBase } from "../types/types";
 
 export type NewTodo = {
   todo: string;
@@ -39,22 +39,10 @@ export const endpoints = [
 /** Union of app endpoint names. Used for DevTool labels */
 export type Endpoint = typeof endpoints[number];
 
-export type HttpSetting = {
-  /** The HTTP endpoint being mocked */
-  endpoint: Endpoint;
-
-  /** Delay the response by a specified number of milliseconds. */
-  delay?: number;
-
-  /** HTTP status code to return for this call */
-  status?: number;
-
-  /** Optional response. */
-  response?: string;
-};
-
-export interface MockUser extends User {
-  /** Describes why this mock user exists and what makes the user unique.
+/** A User with related data */
+// TODO: Separate User and Todos instead of extending User. This way the fact that a Persona is a User and a list of Todos is clearer.
+export interface Persona extends User {
+  /** Describes why this persona exists and what makes it unique.
    * Why this is an object:
    * 1. Assures new users are described clearly and consistently
    * 2. Helps avoid people changing a user without understanding why it exists as is
@@ -69,23 +57,8 @@ export interface MockUser extends User {
   todos: Todo[];
 }
 
-/** The DevTools configuration */
-export type DevToolsConfig = {
+/** Custom RequestHandler configuration settings that extend the base config */
+export interface RequestHandlerConfig extends RequestHandlerConfigBase {
   /** Current User's Id */
   userId: number | "";
-
-  /** A global delay to apply to all mock API responses */
-  delay: number;
-
-  /** HTTP settings for mock APIs */
-  http: HttpSetting[];
-
-  /** DevTool window position */
-  position: DevToolsPosition;
-
-  /** Set to true to open the DevTools window by default */
-  openByDefault: boolean;
-
-  /** Set to true to automatically hard reload the app when DevTools settings change */
-  // autoReload: boolean;
-};
+}
