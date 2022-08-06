@@ -1,4 +1,4 @@
-import { RequestHandlerConfigBase } from "../types/types";
+import { DevToolsConfigBase, RequestHandlerConfigBase } from "../types/types";
 
 export type NewTodo = {
   todo: string;
@@ -60,5 +60,10 @@ export interface Persona extends User {
 /** Custom RequestHandler configuration settings that extend the base config */
 export interface RequestHandlerConfig extends RequestHandlerConfigBase {
   /** Current User's Id */
+  userId: number | "";
+}
+
+export interface DevToolsConfig extends DevToolsConfigBase {
+  /** Current user's Id */
   userId: number | "";
 }
