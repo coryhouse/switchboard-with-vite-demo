@@ -73,9 +73,9 @@ export default function DevTools<TCustomSettings>({
 
   const [isOpen, setIsOpen] = useState(openByDefault);
 
-  const [closeOnOutsideClick, setCloseOnOutsideClick] = useDevToolsState(
-    "closeOnOutsideClick",
-    defaults.closeOnOutsideClick
+  const [closeViaOutsideClick, setCloseViaOutsideClick] = useDevToolsState(
+    "closeViaOutsideClick",
+    defaults.closeViaOutsideClick
   );
 
   const [closeViaEscapeKey, setCloseViaEscapeKey] = useDevToolsState(
@@ -103,7 +103,7 @@ export default function DevTools<TCustomSettings>({
   // Note that these defaults only apply if the URL and localStorage don't specify a preference.
   function getDefaults() {
     const defaults: DevToolsDefaults = {
-      closeOnOutsideClick: rest.defaults?.closeOnOutsideClick ?? false,
+      closeViaOutsideClick: rest.defaults?.closeViaOutsideClick ?? false,
       closeViaEscapeKey: rest.defaults?.closeViaEscapeKey ?? true,
       delay: rest.defaults?.delay ?? 0,
       openByDefault: rest.defaults?.openByDefault ?? true,
@@ -117,7 +117,8 @@ export default function DevTools<TCustomSettings>({
   });
 
   useOutsideClick(devToolsWindowRef, () => {
-    if (closeOnOutsideClick) setIsOpen(false);
+    console.log("closeViaOutsideClick", closeViaOutsideClick);
+    if (closeViaOutsideClick) setIsOpen(false);
   });
 
   const toggleOpen = () => setIsOpen(!isOpen);
@@ -277,10 +278,12 @@ export default function DevTools<TCustomSettings>({
 
               <Field>
                 <Checkbox
-                  id="closeOnOutsideClick"
+                  id="closeViaOutsideClick"
                   label="Close via outside click"
-                  onChange={() => setCloseOnOutsideClick(!closeOnOutsideClick)}
-                  checked={closeOnOutsideClick}
+                  onChange={() =>
+                    setCloseViaOutsideClick(!closeViaOutsideClick)
+                  }
+                  checked={closeViaOutsideClick}
                 />
               </Field>
 

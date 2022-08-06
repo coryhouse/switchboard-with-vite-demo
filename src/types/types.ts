@@ -65,8 +65,8 @@ export type DevToolsPosition = typeof devToolsPositions[number];
 
 /** Represents setting defaults */
 export type DevToolsDefaults = {
-  /** Set to true to enable closeOnOutside click by default */
-  closeOnOutsideClick: boolean;
+  /** Set to true to enable closing DevTools by clicking outside the DevTools window by default */
+  closeViaOutsideClick: boolean;
 
   /** When true, close the devtools window when the escape key is pressed */
   closeViaEscapeKey?: boolean;
