@@ -9,7 +9,7 @@ interface CheckboxProps extends React.ComponentPropsWithoutRef<"input"> {
 }
 
 export default function Checkbox(props: CheckboxProps) {
-  const { id, onChange, value, className, ...rest } = props;
+  const { id, onChange, value, checked, className, ...rest } = props;
   return (
     <span>
       <input
@@ -19,7 +19,7 @@ export default function Checkbox(props: CheckboxProps) {
         )}
         type="checkbox"
         id={id}
-        value={value}
+        checked={checked}
         onChange={onChange}
         {...rest}
       />
