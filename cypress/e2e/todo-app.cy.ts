@@ -1,5 +1,5 @@
-import { httpDefaults } from "../../src/demo-app/AppWithDevTools";
-import * as mockUsers from "../../src/demo-app/mocks/users.mocks";
+import * as mockUsers from "../../src/demo-app/mocks/personas";
+import { customerResponseDefaults } from "../../src/DevTools";
 
 describe("log in", () => {
   it("logs the user in successfully via the form", () => {
@@ -60,11 +60,11 @@ describe("when marking a todo complete", () => {
 
     cy.visitUrl({
       userId: mockUsers.manyTodos.id,
-      http: [
+      customResponses: [
         {
-          ...httpDefaults,
+          ...customerResponseDefaults,
           delay: 3100,
-          endpoint: "toggleTodoCompleted",
+          endpointName: "toggleTodoCompleted",
         },
       ],
     });
