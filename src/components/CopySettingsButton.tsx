@@ -13,7 +13,7 @@ export default function CopySettingsButton({ onClick, ...rest }: ButtonProps) {
     if (onClick) onClick(e);
     setTimeout(() => {
       setLabel(labelDefault);
-    }, 1000);
+    }, 2000);
   }
 
   return (
