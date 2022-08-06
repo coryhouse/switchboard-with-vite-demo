@@ -14,6 +14,7 @@ import {
   HttpSettings,
   DevToolsPosition,
   DevToolsDefaults,
+  DevToolsConfigBase,
 } from "./types/types";
 import { writeToClipboard } from "./utils/clipboard-utils";
 import { useDevToolsState } from "./hooks/useDevToolsState";
@@ -22,7 +23,6 @@ import { useWorker } from "./hooks/useWorker";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./demo-app/ErrorFallback";
 import HttpSettingForm from "./components/CustomResponseForm";
-import { DevToolsConfig } from "./demo-app/demo-app-types";
 import CopySettingsButton from "./components/CopySettingsButton";
 
 export const customResponseDefaults = {
