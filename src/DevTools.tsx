@@ -125,7 +125,7 @@ export default function DevTools<TCustomSettings>({
   // Only copy settings to the URL that have been changed from the default.
   // This keeps the URL as short as possible.
   function getChangedSettings() {
-    const urlConfig: Partial<DevToolsConfig> = {};
+    const urlConfig: Partial<DevToolsConfigBase> = {};
     if (defaults.position !== position) urlConfig.position = position;
     if (defaults.openByDefault !== openByDefault) {
       urlConfig.openByDefault = openByDefault;
