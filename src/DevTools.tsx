@@ -24,6 +24,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./demo-app/ErrorFallback";
 import HttpSettingForm from "./components/CustomResponseForm";
 import CopySettingsButton from "./components/CopySettingsButton";
+import { Handler } from "./demo-app/demo-app-types";
 
 export const customResponseDefaults = {
   delay: 0,
@@ -64,6 +65,9 @@ export default function DevTools<TCustomSettings>({
   className,
   ...rest
 }: DevToolsProps<TCustomSettings>) {
+  // Passing an empty ref since merely invoking here to get the array so we can display the list of handlers in DevTools.
+  const requestHandlers = httpSettings.requestHandlers(useRef());
+
   const defaults = getDefaults();
   // These settings use the useDevToolsState hook so that the settings persist in localStorage and are optionally initialized via the URL
   const [openByDefault, setOpenByDefault] = useDevToolsState(
@@ -202,14 +206,14 @@ export default function DevTools<TCustomSettings>({
               <Field>
                 <Select
                   width="full"
-                  label="Customize Endpoint"
+                  label="Customize Request Handler"
                   // Value need not change since the selected value disappears once selected.
                   value=""
                   onChange={(e) => {
                     setCustomResponses([
                       ...customResponses,
                       {
-                        endpointName: e.target.value,
+                        handler: e.target.value as Handler,
                         delay: customResponseDefaults.delay,
                         status: customResponseDefaults.status,
                         response: customResponseDefaults.response,
@@ -217,21 +221,25 @@ export default function DevTools<TCustomSettings>({
                     ]);
                   }}
                 >
-                  <option>Select Endpoint</option>
-                  {httpSettings.endpoints
-                    // Filter out endpoints that are already customized
+                  <option>Select Handler</option>
+                  {requestHandlers
+                    // Filter out handlers that are already customized
                     .filter(
-                      (e) => !customResponses.some((h) => h.endpointName === e)
+                      (rh) =>
+                        !customResponses.some(
+                          (r) => r.handler === rh.info.header
+                        )
                     )
-                    .map((e) => (
-                      <option key={e}>{e}</option>
+                    .sort((a, b) => a.info.header.localeCompare(b.info.header))
+                    .map((rh) => (
+                      <option key={rh.info.header}>{rh.info.header}</option>
                     ))}
                 </Select>
               </Field>
 
               {customResponses.map((setting) => (
                 <HttpSettingForm
-                  key={setting.endpointName}
+                  key={setting.handler}
                   customResponse={setting}
                   setCustomResponses={setCustomResponses}
                 />
