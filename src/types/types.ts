@@ -2,11 +2,9 @@ import { RequestHandler, StartOptions } from "msw";
 
 export type HttpSettings = {
   /** A function that accepts custom settings and returns an array of Mock Service Worker request handlers */
-  // TODO: Narrow type
-  generateRequestHandlers: (arg: any) => RequestHandler[];
-  // generateRequestHandlers: <TCustomSettings>(
-  //   configRef: React.MutableRefObject<TCustomSettings | null>
-  // ) => RequestHandler[];
+  generateRequestHandlers: <TRequestHandlerConfig>(
+    configRef: React.MutableRefObject<TRequestHandlerConfig | null>
+  ) => RequestHandler[];
 
   /** Array of endpoint names */
   endpoints: string[];
