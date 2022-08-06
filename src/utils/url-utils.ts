@@ -1,4 +1,4 @@
-import { DevToolsConfig } from "../demo-app/types";
+import { DevToolsConfig } from "../demo-app/demo-app-types";
 
 /** Returns a string that contains the current URL with the specified key and value in the querystring */
 export function getUrlWithUpdatedQuery(
