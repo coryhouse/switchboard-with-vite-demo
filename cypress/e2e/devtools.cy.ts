@@ -16,7 +16,7 @@ describe("devtools", () => {
 
   it("defaults to open", () => {
     cy.visitUrl({});
-    cy.findByLabelText("User");
+    cy.findByLabelText("Persona");
     cy.findByRole("button", { name: "Close DevTools" });
   });
 
