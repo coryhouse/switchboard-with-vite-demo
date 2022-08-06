@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { User } from "../types";
+import { User } from "../demo-app-types";
 
 const UserContext = createContext<UserContextValue | null>(null);
 
