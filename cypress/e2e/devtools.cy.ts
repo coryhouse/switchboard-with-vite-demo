@@ -29,4 +29,23 @@ describe("devtools", () => {
       cy.findByRole("button", { name: "Open devTools" });
     });
   });
+
+  describe('when the "Copy Settings" button is clicked', () => {
+    // Note: We don't need to test that the URL actually works here since all other tests do that via the visitUrl command.
+    it("should copy the settings to the clipboard", () => {
+      cy.visitUrl({
+        openByDefault: false,
+        delay: 100,
+        userId: 2,
+      });
+      cy.findByRole("button", { name: "Copy Settings" }).click();
+      // TODO: Finish this test.
+      const expectedUrl = "";
+      cy.window().then((win) => {
+        win.navigator.clipboard.readText().then((text) => {
+          expect(text).to.eq(expectedUrl);
+        });
+      });
+    });
+  });
 });
