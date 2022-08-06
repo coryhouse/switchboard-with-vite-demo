@@ -68,6 +68,9 @@ export type DevToolsDefaults = {
   /** Set to true to enable closeOnOutside click by default */
   closeOnOutsideClick: boolean;
 
+  /** When true, close the devtools window when the escape key is pressed */
+  closeViaEscapeKey?: boolean;
+
   /** The default delay for mock HTTP requests */
   delay: number;
 
