@@ -27,17 +27,18 @@ export interface User {
   isAdmin: boolean;
 }
 
-export const endpoints = [
-  "login",
-  "getUser",
-  "getTodos",
-  "addTodo",
-  "deleteTodo",
-  "toggleTodoCompleted",
+// TODO: Eliminate the need for manually maintaining this type by composing a required endpointName with each msw RequestHandler. Or perhaps generate this by parsing the RequestHandler declaration before startup.
+export const handlers = [
+  "POST /login",
+  "GET /user",
+  "GET /todos",
+  "POST /todo",
+  "DELETE /todo/:id",
+  "PUT /todo/:id",
 ] as const;
 
-/** Union of app endpoint names. Used for DevTool labels */
-export type Endpoint = typeof endpoints[number];
+/** Union of response handler names. Used for DevTool labels and within useWorker. */
+export type Handler = typeof handlers[number];
 
 /** A User with related data */
 // TODO: Separate User and Todos instead of extending User. This way the fact that a Persona is a User and a list of Todos is clearer.
