@@ -44,6 +44,7 @@ export interface DevToolsConfigBase {
   // autoReload: boolean;
 }
 
+/** Base type for RequestHandler config */
 export interface RequestHandlerConfigBase {
   /** Global HTTP delay */
   delay: number;

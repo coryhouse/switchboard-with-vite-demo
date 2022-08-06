@@ -33,9 +33,7 @@ export function generateRequestHandlers(
   }
 
   function getUser() {
-    // This works, but need to fix the type specified above so TS is happy here.
     const userId = configRef.current?.userId;
-    debugger;
     return personas.find((u) => u.id === userId);
   }
 
