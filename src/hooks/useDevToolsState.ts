@@ -98,7 +98,7 @@ export function useDevToolsState<T>(
       setStoredValue(valueToStore);
 
       // TODO: Reenable as an optional feature.
-      // Disabling for now since it likely isn't a good default behavior anyway because it muddies the URL at all times for the small benefit of sharing settings without needing to click a button.
+      // Disabling writing settings to the URL for now. It likely isn't a good default behavior anyway because it muddies the URL at all times for the small benefit of sharing settings without needing to click a button.
       // And actually, clicking the button to add to the clipboard is actually a single click, so plenty easy.
 
       // Step 2: Update the URL so it reflects the new setting, and can thus be copied and shared with others
