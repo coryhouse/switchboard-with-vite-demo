@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import { DevToolsConfig } from "../../src/demo-app/types";
+import { DevToolsConfig } from "../../src/demo-app/demo-app-types";
 
 declare global {
   namespace Cypress {
