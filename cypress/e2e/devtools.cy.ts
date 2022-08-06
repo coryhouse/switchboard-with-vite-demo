@@ -26,7 +26,7 @@ describe("devtools", () => {
         openByDefault: false,
       });
       cy.findByLabelText("User").should("not.exist");
-      cy.findByRole("button", { name: "Open devTools" });
+      cy.findByRole("button", { name: "Open DevTools" });
     });
   });
 
