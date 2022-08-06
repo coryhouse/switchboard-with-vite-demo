@@ -1,3 +1,5 @@
+import { CustomResponse } from "../types/types";
+
 /** Returns a string that contains the current URL with the specified key and value in the querystring */
 export function getUrlWithUpdatedQuery(
   url: URL,
@@ -25,7 +27,7 @@ export function buildUrl<TDevToolsConfig>(
 ) {
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries(config)) {
-    if (value) params.append(key, JSON.stringify(value));
+    params.append(key, JSON.stringify(value));
   }
   return baseUrl + "?" + params.toString();
 }
