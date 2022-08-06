@@ -119,7 +119,7 @@ export default function DevTools<TCustomSettings>({
   const isReady = useWorker(httpSettings, {
     delay,
     customResponses,
-    customSettings,
+    ...customSettings,
   });
 
   if (!isReady) return <p>Initializing...</p>;
