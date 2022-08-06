@@ -77,7 +77,7 @@ export default function DevTools<TCustomSettings>({
   );
   const [customResponses, setCustomResponses] = useDevToolsState<
     CustomResponse[]
-  >("customResponse", []);
+  >("customResponses", []);
   // Using "setting" suffix for name to avoid collision with prop that specifies the default value. This stores the selected value in devTools.
   const [openByDefaultSetting, setOpenByDefaultSetting] = useDevToolsState(
     "openByDefault",
