@@ -27,8 +27,8 @@ describe("devtools", () => {
       cy.get(".top-0");
       cy.get(".left-0");
 
-      // Should have close on outside click off by default
-      cy.findByLabelText("Close on outside click").should("not.be.checked");
+      // Should have close via outside click off by default
+      cy.findByLabelText("Close via outside click").should("not.be.checked");
 
       // Should have close via escape on by default
       cy.findByLabelText("Close via escape key").should("be.checked");
