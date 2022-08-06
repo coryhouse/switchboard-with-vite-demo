@@ -59,8 +59,8 @@ describe("devtools", () => {
         position: "top-right",
         customResponses: [
           {
-            delay: 100,
-            endpointName: "toggleTodoCompleted",
+            delay: 1,
+            handler: "DELETE /todo/:id",
             status: 201,
             response: "test",
           },
