@@ -189,10 +189,11 @@ export default function DevTools<TCustomSettings>({
               <summary className="mt-4 font-bold">HTTP</summary>
               <Field>
                 <Input
+                  id="globalDelay"
                   width="full"
                   changed={delayChanged}
                   type="number"
-                  label="Global Delay (ms)"
+                  label="Global Delay"
                   value={delay}
                   onChange={(e) => setDelay(parseInt(e.target.value))}
                 />
