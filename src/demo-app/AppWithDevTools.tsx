@@ -55,14 +55,14 @@ export default function AppWithDevTools() {
     generateRequestHandlers,
     startOptions: {
       onUnhandledRequest: ({ method, url }) => {
-        // Ignore these requests that need not be mocked
-        if (
-          url.pathname !== "/src/demo-app/CloseButton.tsx" &&
-          url.pathname !== "/src/index.css" &&
-          !url.pathname.startsWith("chrome-extension:")
-        ) {
-          throw new Error(`Unhandled ${method} request to ${url}`);
-        }
+        // Ignore unhandled requests for now, but can uncomment below to throw errors for unhandled requests.
+        // if (
+        //   url.pathname !== "/src/demo-app/CloseButton.tsx" &&
+        //   url.pathname !== "/src/index.css" &&
+        //   !url.pathname.startsWith("chrome-extension:")
+        // ) {
+        //   throw new Error(`Unhandled ${method} request to ${url}`);
+        // }
       },
     },
   };
@@ -70,7 +70,7 @@ export default function AppWithDevTools() {
   return (
     <DevTools
       httpSettings={httpSettings}
-      // Passing a key to force the app to reinitialize when the userId changes.
+      // Using a key to force the app to reinitialize when the userId changes.
       appSlot={<App key={userId} />}
       customSettings={{
         userId,
