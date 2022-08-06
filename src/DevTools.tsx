@@ -9,12 +9,7 @@ import Checkbox from "./components/Checkbox";
 import Select from "./components/Select";
 import Field from "./components/Field";
 import { buildUrl } from "./utils/url-utils";
-import {
-  CustomResponse,
-  HttpSettings,
-  DevToolsPosition,
-  DevToolsSettings,
-} from "./types/types";
+import { CustomResponse, HttpSettings, DevToolsPosition } from "./types/types";
 import { writeToClipboard } from "./utils/clipboard-utils";
 import { useDevToolsState } from "./hooks/useDevToolsState";
 import Input from "./components/Input";
@@ -22,7 +17,6 @@ import { useWorker } from "./hooks/useWorker";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./demo-app/ErrorFallback";
 import HttpSettingForm from "./components/CustomResponseForm";
-import { endpoints } from "./demo-app/demo-app-types";
 
 export const customResponseDefaults = {
   delay: 0,
@@ -187,7 +181,7 @@ export default function DevTools<TCustomSettings>({
                   }}
                 >
                   <option>Select Endpoint</option>
-                  {endpoints
+                  {httpSettings.endpoints
                     // Filter out endpoints that are already customized
                     .filter(
                       (e) => !customResponses.some((h) => h.endpointName === e)
