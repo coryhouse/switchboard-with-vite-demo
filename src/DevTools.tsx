@@ -302,7 +302,7 @@ export default function DevTools<TCustomSettings>({
                     className="mr-2"
                     onClick={copyDevToolsSettingsUrlToClipboard}
                   >
-                    Copy settings
+                    Copy Settings
                   </Button>
                 </Field>
 
