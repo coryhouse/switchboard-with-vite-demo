@@ -1,8 +1,9 @@
 import { RequestHandler, StartOptions } from "msw";
+import { Handler } from "../demo-app/demo-app-types";
 
 export type HttpSettings = {
   /** A function that accepts custom settings and returns an array of Mock Service Worker request handlers */
-  generateRequestHandlers: <TRequestHandlerConfig>(
+  requestHandlers: <TRequestHandlerConfig>(
     configRef: React.MutableRefObject<TRequestHandlerConfig | null>
   ) => RequestHandler[];
 
@@ -14,8 +15,8 @@ export type HttpSettings = {
 };
 
 export type CustomResponse = {
-  /** Endpoint name */
-  endpointName: string;
+  /** Response handler name */
+  handler: Handler;
 
   /** Delay the response by a specified number of milliseconds. */
   delay?: number;
