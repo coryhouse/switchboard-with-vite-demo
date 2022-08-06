@@ -65,7 +65,7 @@ describe("when marking a todo complete", () => {
       customResponses: [
         {
           delay: 3100,
-          endpointName: "toggleTodoCompleted",
+          handler: "PUT /todo/:id",
         },
       ],
     });
