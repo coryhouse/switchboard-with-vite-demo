@@ -36,6 +36,12 @@ export interface DevToolsConfigBase {
   /** DevTools window position */
   position: DevToolsPosition;
 
+  /** Global HTTP delay */
+  delay: number;
+
+  /** Array of custom responses */
+  customResponses: CustomResponse[];
+
   /** Set to true to automatically hard reload the app when DevTools settings change */
   // autoReload: boolean;
 }
