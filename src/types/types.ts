@@ -62,3 +62,18 @@ export const devToolsPositions = [
 
 /** Union of devTools positions. */
 export type DevToolsPosition = typeof devToolsPositions[number];
+
+/** Represents setting defaults */
+export type DevToolsDefaults = {
+  /** Set to true to enable closeOnOutside click by default */
+  closeOnOutsideClick: boolean;
+
+  /** The default delay for mock HTTP requests */
+  delay: number;
+
+  /** The default DevTools window position */
+  position: DevToolsPosition;
+
+  /** Set to true to open the DevTools window by default */
+  openByDefault: boolean;
+};
