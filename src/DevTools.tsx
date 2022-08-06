@@ -278,7 +278,7 @@ export default function DevTools<TCustomSettings>({
               <Field>
                 <Checkbox
                   id="closeOnOutsideClick"
-                  label="Close on outside click"
+                  label="Close via outside click"
                   onChange={() => setCloseOnOutsideClick(!closeOnOutsideClick)}
                   checked={closeOnOutsideClick}
                 />
