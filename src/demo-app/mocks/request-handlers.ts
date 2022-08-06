@@ -1,12 +1,12 @@
 import { RequestHandler, rest } from "msw";
 import { getRandomNumberBelow } from "../../utils/number-utils";
-import { Endpoint, RequestHandlerConfig, Todo } from "../demo-app-types";
+import { Handler, RequestHandlerConfig, Todo } from "../demo-app-types";
 import { personas } from "./personas";
 
-// A function that generates mock API request handlers.
+// A function that returns mock API request handlers.
 // This function accepts the necessary data for generating custom responses in each handler.
-export function generateRequestHandlers(
-  configRef: React.MutableRefObject<RequestHandlerConfig | null>
+export function requestHandlers(
+  configRef: React.MutableRefObject<RequestHandlerConfig>
 ): RequestHandler[] {
   // Returns the endpoints delay if one is specified
   // Falls back to global delay if one is specified.
@@ -16,9 +16,9 @@ export function generateRequestHandlers(
     return configRef.current?.delay ?? 0;
   }
 
-  function getCustomResponseSettings(endpoint: Endpoint) {
+  function getCustomResponseSettings(handler: Handler) {
     return configRef.current?.customResponses.find(
-      (r) => r.endpointName === endpoint
+      (r) => r.handler === handler
     );
   }
 
@@ -40,7 +40,7 @@ export function generateRequestHandlers(
   return [
     // TODO: Extract and accept as an arg to the hook
     rest.post("/login", async (req, res, ctx) => {
-      const setting = getCustomResponseSettings("login");
+      const setting = getCustomResponseSettings("POST /login");
       const { email, password } = await req.json();
 
       const user = personas.find(
@@ -57,7 +57,7 @@ export function generateRequestHandlers(
     }),
 
     rest.get("/user", async (_req, res, ctx) => {
-      const setting = getCustomResponseSettings("getUser");
+      const setting = getCustomResponseSettings("GET /user");
       const user = getUserFromLocalStorage();
       if (!user) return res(ctx.status(401));
 
@@ -69,7 +69,7 @@ export function generateRequestHandlers(
     }),
 
     rest.get("/todos", async (_req, res, ctx) => {
-      const setting = getCustomResponseSettings("getTodos");
+      const setting = getCustomResponseSettings("GET /todos");
       const user = getUser();
       if (!user) return res(ctx.status(401));
 
@@ -92,7 +92,7 @@ export function generateRequestHandlers(
         completed: false,
         todo: todo as string,
       };
-      const setting = getCustomResponseSettings("addTodo");
+      const setting = getCustomResponseSettings("POST /todo");
       return res(
         ctx.delay(getDelay(setting?.delay)),
         ctx.json(setting?.response ?? defaultResp),
@@ -101,7 +101,7 @@ export function generateRequestHandlers(
     }),
 
     rest.put("/todo/:id", async (_req, res, ctx) => {
-      const setting = getCustomResponseSettings("toggleTodoCompleted");
+      const setting = getCustomResponseSettings("PUT /todo/:id");
       return res(
         ctx.delay(getDelay(setting?.delay)),
         ctx.json(setting?.response ?? ""),
@@ -110,7 +110,7 @@ export function generateRequestHandlers(
     }),
 
     rest.delete("/todo/:id", async (_req, res, ctx) => {
-      const setting = getCustomResponseSettings("deleteTodo");
+      const setting = getCustomResponseSettings("DELETE /todo/:id");
       return res(
         ctx.delay(getDelay(setting?.delay)),
         ctx.json(setting?.response ?? ""),
