@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { setupWorker, SetupWorkerApi, RequestHandler, StartOptions } from "msw";
+import { setupWorker, SetupWorkerApi } from "msw";
 import { HttpSettings } from "../types/types";
 
 export const useWorker = <TCustomSettings>(
