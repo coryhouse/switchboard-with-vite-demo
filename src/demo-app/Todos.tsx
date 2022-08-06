@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { addTodo, deleteTodo, getTodos, updateTodo } from "./apis/todo-apis";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { Todo, User } from "./types";
+import { Todo, User } from "./demo-app-types";
 import cx from "clsx";
 import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
