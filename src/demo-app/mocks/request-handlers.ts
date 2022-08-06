@@ -1,10 +1,12 @@
 import { RequestHandler, rest } from "msw";
 import { getRandomNumberBelow } from "../../utils/number-utils";
-import { DevToolsConfig, Endpoint, Todo } from "../types";
-import { mockUsers } from "./users.mocks";
+import { Endpoint, RequestHandlerConfig, Todo } from "../demo-app-types";
+import { personas } from "./personas";
 
-export function requestHandlers(
-  configRef: React.MutableRefObject<DevToolsConfig | null>
+// A function that generates mock API request handlers.
+// This function accepts the necessary data for generating custom responses in each handler.
+export function generateRequestHandlers(
+  configRef: React.MutableRefObject<RequestHandlerConfig | null>
 ): RequestHandler[] {
   // Returns the endpoints delay if one is specified
   // Falls back to global delay if one is specified.
@@ -14,8 +16,10 @@ export function requestHandlers(
     return configRef.current?.delay ?? 0;
   }
 
-  function getHttpSetting(endpoint: Endpoint) {
-    return configRef.current?.http.find((a) => a.endpoint === endpoint);
+  function getCustomResponseSettings(endpoint: Endpoint) {
+    return configRef.current?.customResponses.find(
+      (r) => r.endpointName === endpoint
+    );
   }
 
   function getUserFromLocalStorage() {
@@ -23,23 +27,22 @@ export function requestHandlers(
     if (userId === null) throw new Error("userId not found in localStorage");
     if (!parseInt(userId))
       throw new Error("userId in localStorage is not a number");
-    const user = mockUsers.find((u) => u.id === parseInt(userId));
+    const user = personas.find((u) => u.id === parseInt(userId));
     if (!user) throw new Error("User not found in localStorage: " + userId);
     return user;
   }
 
   function getUser() {
-    const userId = configRef.current?.userId;
-    return mockUsers.find((u) => u.id === userId);
+    return personas.find((u) => u.id === userId);
   }
 
   return [
     // TODO: Extract and accept as an arg to the hook
     rest.post("/login", async (req, res, ctx) => {
-      const setting = getHttpSetting("login");
+      const setting = getCustomResponseSettings("login");
       const { email, password } = await req.json();
 
-      const user = mockUsers.find(
+      const user = personas.find(
         (u) => u.email === email && u.password === password
       );
       if (!user) return res(ctx.status(401));
@@ -53,7 +56,7 @@ export function requestHandlers(
     }),
 
     rest.get("/user", async (_req, res, ctx) => {
-      const setting = getHttpSetting("getUser");
+      const setting = getCustomResponseSettings("getUser");
       const user = getUserFromLocalStorage();
       if (!user) return res(ctx.status(401));
 
@@ -65,7 +68,7 @@ export function requestHandlers(
     }),
 
     rest.get("/todos", async (_req, res, ctx) => {
-      const setting = getHttpSetting("getTodos");
+      const setting = getCustomResponseSettings("getTodos");
       const user = getUser();
       if (!user) return res(ctx.status(401));
 
@@ -88,7 +91,7 @@ export function requestHandlers(
         completed: false,
         todo: todo as string,
       };
-      const setting = getHttpSetting("addTodo");
+      const setting = getCustomResponseSettings("addTodo");
       return res(
         ctx.delay(getDelay(setting?.delay)),
         ctx.json(setting?.response ?? defaultResp),
@@ -97,7 +100,7 @@ export function requestHandlers(
     }),
 
     rest.put("/todo/:id", async (req, res, ctx) => {
-      const setting = getHttpSetting("toggleTodoCompleted");
+      const setting = getCustomResponseSettings("toggleTodoCompleted");
       return res(
         ctx.delay(getDelay(setting?.delay)),
         ctx.json(setting?.response ?? ""),
@@ -106,7 +109,7 @@ export function requestHandlers(
     }),
 
     rest.delete("/todo/:id", async (req, res, ctx) => {
-      const setting = getHttpSetting("deleteTodo");
+      const setting = getCustomResponseSettings("deleteTodo");
       return res(
         ctx.delay(getDelay(setting?.delay)),
         ctx.json(setting?.response ?? ""),
