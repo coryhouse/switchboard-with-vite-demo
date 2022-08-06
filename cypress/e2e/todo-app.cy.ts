@@ -37,6 +37,9 @@ describe("existing admin user", () => {
     // First, assure existing todos display
     isInSection("Stuff to do", "Ship Model S");
 
+    // HACK: addToDo fails very occasionally because the "old" input field was replaced due to a re-render.
+    // Adding slight delay to allow for the DOM to settle first.
+    cy.wait(50);
     addTodo("Write more tests");
     toggleComplete("Write more tests");
 
@@ -91,6 +94,7 @@ function isInSection(heading: string, text: string) {
 }
 
 function addTodo(todo: string) {
+  cy.findByLabelText("What do you need to do?").should("be.empty");
   cy.findByLabelText("What do you need to do?").type(todo);
   cy.findByRole("button", { name: "Add" }).click();
 
