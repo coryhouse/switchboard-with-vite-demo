@@ -1,4 +1,4 @@
-import React, { useEffect, MouseEvent } from "react";
+import React, { useEffect } from "react";
 
 /**
  * Call a function when the user clicks outside the ref passed.
