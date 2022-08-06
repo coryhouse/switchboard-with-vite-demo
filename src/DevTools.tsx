@@ -300,7 +300,7 @@ export default function DevTools<TCustomSettings>({
               <div className="flex flex-row">
                 <Field>
                   <CopySettingsButton
-                    className="mr-2"
+                    className="mr-2 w-32"
                     onClick={copyDevToolsSettingsUrlToClipboard}
                   />
                 </Field>
