@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 import "@testing-library/cypress/add-commands";
 import { buildUrl } from "../../src/utils/url-utils";
-import { DevToolsConfig } from "../../src/demo-app/types";
+import { DevToolsConfig } from "../../src/demo-app/demo-app-types";
 
 // ***********************************************
 // This example commands.ts shows you how to
