@@ -24,7 +24,7 @@ import ErrorFallback from "./demo-app/ErrorFallback";
 import HttpSettingForm from "./components/CustomResponseForm";
 import { endpoints } from "./demo-app/demo-app-types";
 
-export const customerResponseDefaults = {
+export const customResponseDefaults = {
   delay: 0,
   status: 200,
   response: "",
@@ -177,9 +177,9 @@ export default function DevTools<TCustomSettings>({
                       ...customResponses,
                       {
                         endpointName: e.target.value,
-                        delay: customerResponseDefaults.delay,
-                        status: customerResponseDefaults.status,
-                        response: customerResponseDefaults.response,
+                        delay: customResponseDefaults.delay,
+                        status: customResponseDefaults.status,
+                        response: customResponseDefaults.response,
                       },
                     ]);
                   }}
