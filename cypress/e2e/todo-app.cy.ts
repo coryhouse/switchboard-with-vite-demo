@@ -1,5 +1,4 @@
 import * as personas from "../../src/demo-app/mocks/personas";
-import { customResponseDefaults } from "../../src/DevTools";
 
 describe("log in", () => {
   it("logs the user in successfully via the form", () => {
@@ -62,7 +61,6 @@ describe("when marking a todo complete", () => {
       userId: personas.manyTodos.id,
       customResponses: [
         {
-          ...customResponseDefaults,
           delay: 3100,
           endpointName: "toggleTodoCompleted",
         },
