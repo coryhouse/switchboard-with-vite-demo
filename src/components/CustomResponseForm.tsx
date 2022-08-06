@@ -12,22 +12,21 @@ export default function CustomResponseForm({
   customResponse,
   setCustomResponses,
 }: CustomResponseFormProps) {
-  const { endpointName, delay, status, response } = customResponse;
+  const { handler, delay, status, response } = customResponse;
 
   return (
     <fieldset className="mt-4 border p-2">
       <legend>
-        {endpointName}{" "}
+        {handler}{" "}
         <DeleteButton
           onClick={() =>
-            setCustomResponses((r) =>
-              r.filter((e) => e.endpointName !== endpointName)
-            )
+            setCustomResponses((r) => r.filter((e) => e.handler !== handler))
           }
         />
       </legend>
       <div className="flex flex-row">
         <Input
+          id={`${handler}-delay`}
           type="number"
           changed={delay !== customResponseDefaults.delay}
           label="Delay"
@@ -36,7 +35,7 @@ export default function CustomResponseForm({
           onChange={(e) =>
             setCustomResponses((r) =>
               r.map((s) =>
-                s.endpointName === endpointName
+                s.handler === handler
                   ? {
                       ...s,
                       delay: parseInt(e.target.value),
@@ -48,6 +47,7 @@ export default function CustomResponseForm({
         />
 
         <Input
+          id={`${handler}-status`}
           type="number"
           changed={status !== customResponseDefaults.status}
           label="Status"
@@ -56,7 +56,7 @@ export default function CustomResponseForm({
           onChange={(e) =>
             setCustomResponses((r) =>
               r.map((s) =>
-                s.endpointName === endpointName
+                s.handler === handler
                   ? {
                       ...s,
                       status: parseInt(e.target.value),
@@ -68,6 +68,7 @@ export default function CustomResponseForm({
         />
 
         <Input
+          id={`${handler}-custom-response`}
           type="text"
           changed={response !== customResponseDefaults.response}
           label="Response"
@@ -77,7 +78,7 @@ export default function CustomResponseForm({
           onChange={(e) =>
             setCustomResponses((r) =>
               r.map((s) =>
-                s.endpointName === endpointName
+                s.handler === handler
                   ? {
                       ...s,
                       response: e.target.value,
