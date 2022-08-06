@@ -50,7 +50,7 @@ describe("devtools", () => {
 
   describe('when the "Copy Settings" button is clicked', () => {
     // Note: We don't need to test that the URL actually works here since all other tests do that via the visitUrl command.
-    it("should copy the settings to the clipboard", () => {
+    it.only("should copy the settings to the clipboard", () => {
       // Overriding ALL settings to assure they all show up in the generated URL, and are reflected upon load.
       cy.visitUrl({
         openByDefault: false,
@@ -71,11 +71,15 @@ describe("devtools", () => {
       cy.findByRole("button", { name: "Open DevTools" }).click();
 
       cy.findByRole("button", { name: "Copy Settings" }).click();
-      cy.window().then((win) => {
-        win.navigator.clipboard.readText().then((text) => {
-          const expectedUrl =
-            "http://127.0.0.1:5173/todos?position=%22top-right%22&openByDefault=false&delay=100&customResponses=%5B%7B%22delay%22%3A100%2C%22endpointName%22%3A%22toggleTodoCompleted%22%2C%22status%22%3A201%2C%22response%22%3A%22test%22%7D%5D&userId=2";
-          expect(text).to.eq(expectedUrl);
+
+      // Should change the button's label upon click
+      cy.findByRole("button", { name: "Copied ✅" }).then(() => {
+        cy.window().then((win) => {
+          win.navigator.clipboard.readText().then((text) => {
+            const expectedUrl =
+              "http://127.0.0.1:5173/todos?position=%22top-right%22&openByDefault=false&delay=100&customResponses=%5B%7B%22delay%22%3A1%2C%22handler%22%3A%22DELETE+%2Ftodo%2F%3Aid%22%2C%22status%22%3A201%2C%22response%22%3A%22test%22%7D%5D&userId=2";
+            expect(text).to.eq(expectedUrl);
+          });
         });
       });
     });
