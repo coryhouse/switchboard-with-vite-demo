@@ -102,12 +102,14 @@ export default function DevTools<TCustomSettings>({
   const toggleOpen = () => setIsOpen(!isOpen);
 
   async function copyDevToolsSettingsUrlToClipboard() {
-    const settings: DevToolsSettings = {
+    // TODO: This should pass ALL DevTool settings (or at least those configured to be sharable).
+    const url = buildUrl(window.location.href, {
       delay,
       customResponses,
-    };
-    // TODO: This should pass ALL DevTool settings (or at least those configured to be sharable).
-    const url = buildUrl(window.location.href, settings);
+      openByDefault,
+      position,
+      ...customSettings,
+    });
     try {
       await writeToClipboard(url);
       alert("URL copied to clipboard");
