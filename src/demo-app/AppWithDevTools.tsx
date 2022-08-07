@@ -47,6 +47,9 @@ export default function AppWithDevTools() {
       httpSettings={{
         requestHandlers,
         startOptions: {
+          // Don't log mocked requests to the browser console.
+          quiet: true,
+
           // Ignore unhandled requests. Uncomment below to throw errors for unhandled requests instead.
           onUnhandledRequest: ({ method, url }) => {
             // if (
