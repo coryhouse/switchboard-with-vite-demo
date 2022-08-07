@@ -175,7 +175,7 @@ export default function DevTools<TCustomSettings>({
 
       <section
         ref={devToolsWindowRef}
-        // TODO: Support drag and drop position.
+        // TODO: Support drag and drop position and resizing.
         className={cx(
           "fixed p-4 border shadow-xl max-h-screen overflow-auto bg-white opacity-90",
           {
