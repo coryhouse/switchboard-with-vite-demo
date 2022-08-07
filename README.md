@@ -1,4 +1,6 @@
-# Switchr 🎛 ⚛️
+# SwitchBoard 🎛 ⚛️
+
+SwitchBoard is toolkit for creating custom DevTools and mock APIs for your React app.
 
 Switchr is toolkit for creating custom DevTools for your React project.
 
