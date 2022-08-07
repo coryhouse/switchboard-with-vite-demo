@@ -3,9 +3,8 @@ import { Handler } from "../demo-app/demo-app-types";
 
 export type HttpSettings = {
   /** A function that accepts custom settings and returns an array of Mock Service Worker request handlers */
-  requestHandlers: <TRequestHandlerConfig>(
-    configRef: React.MutableRefObject<TRequestHandlerConfig | null>
-  ) => RequestHandler[];
+  // TODO: Eliminate any use here.
+  requestHandlers: (configRef: React.MutableRefObject<any>) => RequestHandler[];
 
   /** Optional Mock Service worker start options */
   startOptions?: StartOptions;
