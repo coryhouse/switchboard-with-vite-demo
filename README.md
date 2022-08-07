@@ -2,11 +2,11 @@
 
 SwitchBoard is a toolkit for creating custom DevTools and mock APIs for your React app.
 
+Demo: [See SwitchBoard in action](https://switchboard-beta.vercel.app/)
+
 ## Features
 
-This project provides 3 key building blocks for creating your own custom DevTools:
-
-### 1. `DevTools` component
+This project provides a single, powerful `DevTools` component for creating your own custom DevTools:
 
 - Configurable position
 - Copy settings to URL
@@ -15,14 +15,6 @@ This project provides 3 key building blocks for creating your own custom DevTool
 - Declarative mock APIs using [msw](https://mswjs.io/)
 - Specify a global delay (to simulate a slow connection)
 - Force a specific HTTP response, delay, or status code from an endpoint
-
-### 2. `useDevToolState` Hook
-
-Configure state that persists between reloads via localStorage. Read optional URL settings to initialize state.
-
-### 3. `useWorker` Hook
-
-Configure mock APIs that are configurable via DevTools. Uses [msw](https://mswjs.io/) behind the scenes.
 
 ## Quick Start
 
@@ -42,14 +34,3 @@ npm run cy
 ## Roadmap
 
 Support other JS frameworks beyond React.
-
-## Potential names
-
-- @switchgear - reserved :)
-- @switchr - reserved :)
-
-Other org ideas, but unavailable on npm:
-
-- @switchboard
-- @velocity
-- @togglr
