@@ -38,7 +38,7 @@ export function requestHandlers(
   }
 
   return [
-    // TODO: Extract and accept as an arg to the hook
+    // TODO: Show how to extract into separate files and compose here
     rest.post("/login", async (req, res, ctx) => {
       const setting = getCustomResponseSettings("POST /login");
       const { email, password } = await req.json();
