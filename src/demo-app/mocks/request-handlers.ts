@@ -46,7 +46,13 @@ export function requestHandlers(
       const user = personas.find(
         (u) => u.email === email && u.password === password
       );
-      if (!user) return res(ctx.status(401));
+      if (!user)
+        return res(
+          ctx.status(403),
+          ctx.json({
+            errorMessage: `User not found`,
+          })
+        );
 
       // TODO: Return JWT and pass it into all calls to show a more realistic approach
       return res(
