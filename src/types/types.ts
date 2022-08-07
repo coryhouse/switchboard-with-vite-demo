@@ -7,9 +7,6 @@ export type HttpSettings = {
     configRef: React.MutableRefObject<TRequestHandlerConfig | null>
   ) => RequestHandler[];
 
-  /** Array of endpoint names */
-  endpoints: string[];
-
   /** Optional Mock Service worker start options */
   startOptions?: StartOptions;
 };
