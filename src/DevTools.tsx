@@ -29,7 +29,7 @@ import { Handler } from "./demo-app/demo-app-types";
 export const customResponseDefaults = {
   delay: 0,
   status: 200,
-  response: "",
+  response: undefined,
 };
 
 interface DevToolsProps<TCustomSettings> {
