@@ -54,7 +54,7 @@ export function requestHandlers(
           })
         );
 
-      // TODO: Return JWT and pass it into all calls to show a more realistic approach
+      // TODO: Set cookie or JWT and pass it into all calls to show a more realistic approach
       return res(
         ctx.delay(getDelay(setting?.delay)),
         ctx.json(user),
