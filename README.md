@@ -1,6 +1,6 @@
 # SwitchBoard 🎛
 
-SwitchBoard is toolkit for creating custom DevTools and mock APIs for your React app.
+SwitchBoard is a toolkit for creating custom DevTools and mock APIs for your React app.
 
 ## Features
 
