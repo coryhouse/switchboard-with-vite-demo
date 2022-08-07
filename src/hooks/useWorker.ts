@@ -7,18 +7,19 @@ export const useWorker = <TCustomSettings>(
   { startOptions, requestHandlers }: HttpSettings,
   config: TCustomSettings
 ) => {
-  const configRef = useRef(config);
+  // const configRef = useRef(config);
   const [isReady, setIsReady] = useState(false);
 
   // Store the config in a ref so the useEffect below that starts
   // the worker runs only once, yet reads the latest config values
   // as they change in the devtools.
-  useEffect(() => {
-    configRef.current = config;
-  }, [config]);
+  // useEffect(() => {
+  //   configRef.current = config;
+  // }, [config]);
 
   useEffect(() => {
-    const worker = setupWorker(...requestHandlers(configRef));
+    setIsReady(false);
+    const worker = setupWorker(...requestHandlers(config));
 
     const startWorker = async (worker: SetupWorkerApi) => {
       await worker.start(startOptions);
@@ -26,7 +27,7 @@ export const useWorker = <TCustomSettings>(
     };
 
     startWorker(worker);
-  }, []);
+  }, [config]);
 
   return isReady;
 };

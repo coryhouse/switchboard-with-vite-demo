@@ -6,20 +6,18 @@ import { personas } from "./personas";
 // A function that returns mock API request handlers.
 // This function accepts the necessary data for generating custom responses in each handler.
 export function requestHandlers(
-  configRef: React.MutableRefObject<RequestHandlerConfig>
+  config: RequestHandlerConfig
 ): RequestHandler[] {
   // Returns the endpoints delay if one is specified
   // Falls back to global delay if one is specified.
   // Returns 0 otherwise.
   function getDelay(endpointDelay?: number) {
     if (endpointDelay) return endpointDelay;
-    return configRef.current?.delay ?? 0;
+    return config.delay ?? 0;
   }
 
   function getCustomResponseSettings(handler: Handler) {
-    return configRef.current?.customResponses.find(
-      (r) => r.handler === handler
-    );
+    return config.customResponses.find((r) => r.handler === handler);
   }
 
   function getUserFromLocalStorage() {
@@ -33,8 +31,7 @@ export function requestHandlers(
   }
 
   function getUser() {
-    const userId = configRef.current?.userId;
-    return personas.find((u) => u.id === userId);
+    return personas.find((u) => u.id === config.userId);
   }
 
   return [

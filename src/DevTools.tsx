@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import Button from "./components/Button";
 import cx from "clsx";
 import CloseButton from "./components/CloseButton";
@@ -157,13 +157,17 @@ export default function DevTools<TCustomSettings>({
     }
   }
 
-  const isReady = useWorker(httpSettings, {
-    delay,
-    customResponses,
-    ...customSettings,
-  });
+  // Memoize so useWorker's useEffect doesn't re-run every time the component renders.
+  const workerCustomSettings = useMemo(
+    () => ({
+      delay,
+      customResponses,
+      ...customSettings,
+    }),
+    [customSettings, delay, customResponses]
+  );
 
-  if (!isReady) return <p>Initializing...</p>;
+  useWorker(httpSettings, workerCustomSettings);
 
   return (
     <>

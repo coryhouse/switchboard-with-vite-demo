@@ -4,7 +4,7 @@ import { Handler } from "../demo-app/demo-app-types";
 export type HttpSettings = {
   /** A function that accepts custom settings and returns an array of Mock Service Worker request handlers */
   requestHandlers: <TRequestHandlerConfig>(
-    configRef: React.MutableRefObject<TRequestHandlerConfig | null>
+    requestHandlerConfig: TRequestHandlerConfig
   ) => RequestHandler[];
 
   /** Array of endpoint names */
