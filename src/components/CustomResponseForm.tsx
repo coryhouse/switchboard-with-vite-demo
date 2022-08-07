@@ -14,6 +14,7 @@ export default function CustomResponseForm({
 }: CustomResponseFormProps) {
   const { handler, delay, status, response } = customResponse;
 
+  // TODO: Support all response properties: https://mswjs.io/docs/api/response#properties
   return (
     <fieldset className="mt-4 border p-2">
       <legend>
