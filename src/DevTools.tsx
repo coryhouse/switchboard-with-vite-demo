@@ -292,9 +292,11 @@ export default function DevTools<TCustomSettings>({
                 <Checkbox
                   id="closeViaOutsideClick"
                   label="Close via outside click"
-                  onChange={() =>
-                    setCloseViaOutsideClick(!closeViaOutsideClick)
-                  }
+                  onChange={() => {
+                    setCloseViaOutsideClick(!closeViaOutsideClick);
+                    // HACK: Forcing a reload because the setting isn't reflected until reload otherwise.
+                    window.location.reload();
+                  }}
                   checked={closeViaOutsideClick}
                 />
               </Field>
