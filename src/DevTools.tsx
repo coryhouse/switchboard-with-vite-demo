@@ -147,6 +147,11 @@ export default function DevTools<TCustomSettings>({
     });
     try {
       await writeToClipboard(url);
+      if (url.length > 2000) {
+        alert(
+          "Warning: The URL copied to your clipboard may not work in all browsers because it's over 2000 characters. To reduce the length, consider redesigning your settings state to store identifiers (such as recordId=1) instead of specifying raw data."
+        );
+      }
     } catch (err) {
       () => alert("Failed to copy settings URL to clipboard");
     }
