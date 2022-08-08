@@ -24,7 +24,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./components/ErrorFallback";
 import HttpSettingForm from "./components/CustomResponseForm";
 import CopySettingsButton from "./components/CopySettingsButton";
-import { Handler } from "./demo-app/demo-app-types";
 
 export const customResponseDefaults = {
   delay: 0,
@@ -218,7 +217,7 @@ export default function DevTools<TCustomSettings>({
                     setCustomResponses([
                       ...customResponses,
                       {
-                        handler: e.target.value as Handler,
+                        handler: e.target.value,
                         delay: customResponseDefaults.delay,
                         status: customResponseDefaults.status,
                         response: customResponseDefaults.response,
