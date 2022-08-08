@@ -1,13 +1,13 @@
 import React, { useState, useRef } from "react";
-import Button from "shared/Button";
+import Button from "./components/Button";
 import cx from "clsx";
-import CloseButton from "shared/CloseButton";
-import OpenButton from "shared/OpenButton";
+import CloseButton from "./components/CloseButton";
+import OpenButton from "./components/OpenButton";
 import useKeypress from "react-use-keypress";
 import useOutsideClick from "./hooks/useOutsideClick";
-import Checkbox from "shared/Checkbox";
-import Select from "shared/Select";
-import Field from "shared/Field";
+import Checkbox from "./components/Checkbox";
+import Select from "./components/Select";
+import Field from "./components/Field";
 import { buildUrl } from "../utils/url-utils";
 import {
   CustomResponse,
@@ -18,12 +18,12 @@ import {
 } from "./types/types";
 import { writeToClipboard } from "./utils/clipboard-utils";
 import { useDevToolsState } from "./hooks/useDevToolsState";
-import { Input } from "shared";
+import Input from "./components/Input";
 import { useWorker } from "./hooks/useWorker";
 import { ErrorBoundary } from "react-error-boundary";
-import ErrorFallback from "shared/ErrorFallback";
-import HttpSettingForm from "shared/CustomResponseForm";
-import CopySettingsButton from "shared/CopySettingsButton";
+import ErrorFallback from "./components/ErrorFallback";
+import HttpSettingForm from "./components/CustomResponseForm";
+import CopySettingsButton from "./components/CopySettingsButton";
 import { Handler } from "./demo-app/demo-app-types";
 
 export const customResponseDefaults = {
