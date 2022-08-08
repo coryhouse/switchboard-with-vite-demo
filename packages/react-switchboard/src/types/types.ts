@@ -1,5 +1,4 @@
 import { RequestHandler, StartOptions } from "msw";
-import { Handler } from "../demo-app/demo-app-types";
 
 export type HttpSettings = {
   /** A function that accepts custom settings and returns an array of Mock Service Worker request handlers */
@@ -11,8 +10,9 @@ export type HttpSettings = {
 };
 
 export type CustomResponse = {
+  // TODO: Narrow this type
   /** Response handler name */
-  handler: Handler;
+  handler: string;
 
   /** Delay the response by a specified number of milliseconds. */
   delay?: number;
