@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "declarationDir": "dist/types",
+    "declarationDir": "dist",
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
