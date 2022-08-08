@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchUser } from "./apis/user-apis";
 
 // TODO: Handle status separately for each HTTP call (perhaps via react-query)
-type Status = "idle" | "loading" | "adding" | "toggling-complete";
+type Status = "idle" | "loading" | "adding" | "toggling";
 
 type Todos = {
   userId: number;
@@ -82,7 +82,7 @@ export default function Todos() {
         setTimeout(resolve, 3000, callTimedOut);
       });
 
-      setStatus("toggling-complete");
+      setStatus("toggling");
       const result = await Promise.race([timeoutPromise, updateTodo(todo)]);
 
       if (result === callTimedOut) {
@@ -164,7 +164,7 @@ export default function Todos() {
                 ))}
               </ul>
 
-              {status === "toggling-complete" && (
+              {status === "toggling" && (
                 <div aria-live="polite" className="absolute bottom-2 right-2">
                   <span className="flex">
                     Saving...
