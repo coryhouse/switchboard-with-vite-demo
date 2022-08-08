@@ -17,19 +17,42 @@ This project provides a [powerful `DevTools` component](https://github.com/coryh
 
 ## Quick Start
 
+Coming soon - These steps don't work yet since the npm package isn't published yet.
+
+```
+npm install react-switchboard
+```
+
+Import the `DevTools` component in your app's root:
+
+```ts
+import { DevTools } from "react-switchboard";
+```
+
+```
+
+
+
+## Contributing
+
 To run the demo app:
 
 ```
+
 npm i
 npm run cy
+
 ```
 
 To run the demo app and Cypress tests together:
 
 ```
+
 npm run cy
+
 ```
 
 ## Roadmap
 
 Support other JS frameworks beyond React.
+```
