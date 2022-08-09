@@ -32,6 +32,12 @@ export default defineConfig({
     rollupOptions: {
       // Externalize deps that shouldn't be bundled into the library
       external: ["react", "react-dom"],
+      output: {
+        globals: {
+          react: "React",
+          "react-dom": "ReactDOM",
+        },
+      },
     },
   },
 });
