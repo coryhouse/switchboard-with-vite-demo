@@ -21,7 +21,7 @@ To run the demo app:
 
 ```
 npm i
-npm run cy
+npm run dev
 ```
 
 To run the demo app and Cypress tests together:

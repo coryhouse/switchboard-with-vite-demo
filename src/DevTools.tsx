@@ -165,6 +165,9 @@ export default function DevTools<TCustomSettings>({
 
   if (!isReady) return <p>Initializing...</p>;
 
+  const hasAppBehaviorChanges =
+    delay !== defaults.delay || customResponses.length > 0;
+
   return (
     <>
       {/* Wrap app in ErrorBoundary so DevTools continue to display upon error */}
@@ -179,6 +182,8 @@ export default function DevTools<TCustomSettings>({
         className={cx(
           "fixed p-4 border shadow-xl max-h-screen overflow-auto bg-white opacity-90",
           {
+            "w-16 h-16": !isOpen,
+            "bg-yellow-100": !isOpen && hasAppBehaviorChanges,
             "bottom-0": position.includes("bottom"),
             "top-0": position.includes("top"),
             "right-0": position.includes("right"),

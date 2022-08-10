@@ -2,7 +2,7 @@ import Button, { ButtonProps } from "./Button";
 
 export default function OpenButton(props: ButtonProps) {
   return (
-    <Button variant="icon" {...props}>
+    <Button variant="expander" {...props}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6"
