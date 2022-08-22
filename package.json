@@ -2,11 +2,6 @@
   "name": "react-switchboard-monorepo",
   "version": "0.0.1-beta.6",
   "scripts": {},
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
   "dependencies": {},
   "devDependencies": {
     "turbo": "^1.4.2"
