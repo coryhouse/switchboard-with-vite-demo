@@ -62,6 +62,7 @@ export function useDevToolsState<T>(
       // TODO: Validate the object
       const parsedObject = JSON.parse(urlValue);
       // Update localStorage with URL value too
+      // TODO: Use localforage instead.
       window.localStorage.setItem(key, JSON.stringify(parsedObject));
 
       // Clear out the URL now that we read the value and stored it in localStorage. This keeps the URL clean.
