@@ -32,4 +32,6 @@ npm run cy
 
 ## Roadmap
 
-Support other JS frameworks beyond React.
+- Show integration with react-query
+- Support page-specific settings
+- Support other JS frameworks
