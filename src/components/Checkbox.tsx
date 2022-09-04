@@ -1,8 +1,9 @@
+import { ReactNode } from "react";
 import cx from "clsx";
 
 interface CheckboxProps extends React.ComponentPropsWithoutRef<"input"> {
   /** Input label */
-  label: string;
+  label: ReactNode;
 
   /** Required for a11y */
   id: string;
