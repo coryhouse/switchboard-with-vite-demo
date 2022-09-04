@@ -32,6 +32,12 @@ export const customResponseDefaults = {
   response: undefined,
 };
 
+interface KeyboardShortcut {
+  key: string | string[];
+  alt?: boolean;
+  ctrl?: boolean;
+}
+
 interface DevToolsProps<TCustomSettings> {
   /** The app to render */
   appSlot: React.ReactNode;
@@ -48,9 +54,8 @@ interface DevToolsProps<TCustomSettings> {
   /** HTTP settings for mock APIs and HTTP delays */
   httpSettings: HttpSettings;
 
-  // TODO: Implement
   /** Specify a keyboard shortcut that toggles the window open/closed */
-  openKeyboardShortcut?: string;
+  openKeyboardShortcut?: KeyboardShortcut;
 
   /** Custom content and settings to render inside the devtools */
   children: React.ReactNode;
@@ -62,6 +67,7 @@ export default function DevTools<TCustomSettings>({
   children,
   httpSettings,
   customSettings,
+  openKeyboardShortcut,
   className,
   ...rest
 }: DevToolsProps<TCustomSettings>) {
@@ -118,6 +124,12 @@ export default function DevTools<TCustomSettings>({
 
   useKeypress("Escape", () => {
     if (closeViaEscapeKey) setIsOpen(false);
+  });
+
+  useKeypress(openKeyboardShortcut ? openKeyboardShortcut.key : [], (e) => {
+    if (openKeyboardShortcut?.alt && !e.altKey) return;
+    if (openKeyboardShortcut?.ctrl && !e.ctrlKey) return;
+    setIsOpen((current) => !current);
   });
 
   useOutsideClick(devToolsWindowRef, () => {

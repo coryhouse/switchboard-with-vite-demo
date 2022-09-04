@@ -63,6 +63,7 @@ export default function AppWithDevTools() {
       }}
       // Using a key to force the app to reinitialize when the userId changes.
       appSlot={<App key={userId} />}
+      openKeyboardShortcut={{ key: "ArrowDown", alt: true }}
       customSettings={{
         userId,
       }}
