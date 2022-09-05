@@ -1,7 +1,7 @@
 import * as personas from "../../src/demo-app/mocks/personas";
 
 describe("log in / log out", () => {
-  it("logs the user in successfully via the form, and out via the logout link", () => {
+  it("logs the user in successfully via the form, and logs the user out via the logout link", () => {
     cy.visitUrl({});
     cy.findByLabelText("Email").type("cory@reactjsconsulting.com");
     cy.findByLabelText("Password").type("123");
