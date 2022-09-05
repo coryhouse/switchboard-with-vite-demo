@@ -1,12 +1,15 @@
 import * as personas from "../../src/demo-app/mocks/personas";
 
-describe("log in", () => {
-  it("logs the user in successfully via the form", () => {
+describe("log in / log out", () => {
+  it("logs the user in successfully via the form, and out via the logout link", () => {
     cy.visitUrl({});
     cy.findByLabelText("Email").type("cory@reactjsconsulting.com");
     cy.findByLabelText("Password").type("123");
     cy.findByRole("button", { name: "Log In" }).click();
     cy.findByRole("heading", { name: /Hi Cory/ });
+    cy.findByRole("link", { name: "Logout" }).click();
+    // Now should be back on login page.
+    cy.findByRole("heading", { name: "Log In" });
   });
 });
 
