@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { addTodo, deleteTodo, getTodos, updateTodo } from "./apis/todo-apis";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { Todo, User } from "./demo-app-types";
+import { Todo } from "./demo-app-types";
 import cx from "clsx";
 import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
-import { useNavigate } from "react-router-dom";
-import { fetchUser } from "./apis/user-apis";
+import { useUserContext } from "./contexts/UserContext";
 
 // TODO: Handle status separately for each HTTP call (perhaps via react-query)
 type Status = "idle" | "loading" | "adding" | "toggling";
@@ -18,24 +17,11 @@ type Todos = {
 
 export default function Todos() {
   const [status, setStatus] = useState<Status>("loading");
-  const [user, setUser] = useState<User | null>(null);
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // HACK: A real app would typically have a cookie/jwt as an auth token,
-    // and would implement protected route above this page instead.
-    async function loadUserSession() {
-      const userId = localStorage.getItem("userId");
-      if (!userId) return navigate("/");
-      const user = await fetchUser();
-      setUser(user);
-    }
-    loadUserSession();
-  }, [navigate]);
+  const { user, logout } = useUserContext();
 
   useEffect(() => {
     async function fetchTodos() {
@@ -133,7 +119,6 @@ export default function Todos() {
               Add{status === "adding" && "ing..."}
             </Button>
           </form>
-
           {todos.length > 0 && (
             <>
               <h2 className="text-2xl pt-4">Stuff to do</h2>
