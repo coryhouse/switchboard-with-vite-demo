@@ -16,9 +16,9 @@ export default function useUserSync(
   const navigate = useNavigate();
 
   // If the user passed in via context changes, then someone just logged in
-  // manually on the login form instead of using the dev tools. So use the user
-  // passed in to update the userId in the dev tools state so that the devTools
-  // user dropdown matches the user in context.
+  // manually on the login form instead of using the DevTools. So use the user
+  // passed in to update the userId in the DevTools state so that the DevTools
+  // user dropdown matches the user in UserContext.
   //
   // This check happens as part of the render because we don't want the
   // effect below to run while the states are out of sync with each other.
