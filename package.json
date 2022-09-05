@@ -23,7 +23,9 @@
     "coverage": "vitest run --coverage",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx .",
     "cy:open": "cypress open",
-    "cy": "start-server-and-test dev 5173 cy:open"
+    "cy:run": "cypress run",
+    "cy": "start-server-and-test dev 5173 cy:open",
+    "cy:ci": "cross-env VITE_USE_DEV_TOOLS=Y start-server-and-test dev 5173 cy:run"
   },
   "dependencies": {
     "clsx": "^1.2.1",
@@ -48,6 +50,7 @@
     "@vitejs/plugin-react": "^2.0.0",
     "@vitest/ui": "^0.18.1",
     "autoprefixer": "^10.4.7",
+    "cross-env": "^7.0.3",
     "cypress": "^10.3.1",
     "eslint": "^8.23.0",
     "eslint-plugin-react": "^7.31.6",

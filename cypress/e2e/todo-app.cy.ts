@@ -7,7 +7,7 @@ describe("log in / log out", () => {
     cy.findByLabelText("Password").type("123");
     cy.findByRole("button", { name: "Log In" }).click();
     cy.findByRole("heading", { name: /Hi Cory/ });
-    cy.findByRole("link", { name: "Logout" }).click();
+    cy.findByRole("link", { name: "Logout" }).click({ force: true });
     // Now should be back on login page.
     cy.findByRole("heading", { name: "Log In" });
   });
