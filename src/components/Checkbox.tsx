@@ -10,7 +10,7 @@ interface CheckboxProps extends React.ComponentPropsWithoutRef<"input"> {
 }
 
 export default function Checkbox(props: CheckboxProps) {
-  const { id, onChange, value, checked, className, ...rest } = props;
+  const { id, onChange, checked, className, ...rest } = props;
   return (
     <span>
       <input

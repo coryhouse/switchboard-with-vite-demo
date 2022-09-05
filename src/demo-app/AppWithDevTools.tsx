@@ -4,43 +4,14 @@ import Select from "../components/Select";
 import { personas } from "./mocks/personas";
 import { useDevToolsState } from "../hooks/useDevToolsState";
 import Field from "../components/Field";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useUserContext } from "./contexts/UserContext";
 import { requestHandlers } from "./mocks/request-handlers";
+import useUserSync from "./useUserSync";
 
 export default function AppWithDevTools() {
   // Storing only userId in devToolsState to keep localStorage and URL minimal.
   // Storing the entire persona would bloat localStorage and the URL.
   const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
-
-  const { user } = useUserContext();
-  const navigate = useNavigate();
-
-  // If the user passed in via context changes, then someone just logged in manually on the login form instead of using the dev tools.
-  // So use the user passed in to update the userId in the dev tools state so that the devTools user dropdown matches the user in context.
-  useEffect(() => setUserId(user?.id ?? ""), [user]);
-
-  // When the userID changes, simulate logging the user in/out.
-  // This also handles when the app is initialized via the URL.
-  useEffect(
-    () => (userId ? simulateLogin(userId) : simulateLogout()),
-    [userId]
-  );
-
-  function simulateLogin(userId: number) {
-    setUserId(userId);
-    const user = personas.find((u) => u.id === userId);
-    if (!user) throw new Error("Can't find user: " + userId);
-    localStorage.setItem("userId", JSON.stringify(userId));
-    navigate("/todos");
-  }
-
-  function simulateLogout() {
-    localStorage.removeItem("userId");
-    setUserId("");
-    navigate("/");
-  }
+  useUserSync(userId, setUserId);
 
   return (
     <DevTools
@@ -51,6 +22,7 @@ export default function AppWithDevTools() {
           quiet: true,
 
           // Ignore unhandled requests. Uncomment below to throw errors for unhandled requests instead.
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           onUnhandledRequest: ({ method, url }) => {
             // if (
             //   url.pathname !== "/src/index.css" &&

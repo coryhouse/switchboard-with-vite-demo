@@ -1,9 +1,9 @@
 import Button, { ButtonProps } from "./Button";
 
 export default function CloseButton(props: ButtonProps) {
-  const { variant, ...rest } = props;
+  const { variant = "icon", ...rest } = props;
   return (
-    <Button variant="icon" {...rest}>
+    <Button variant={variant} {...rest}>
       <span className="sr-only">Close menu</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"

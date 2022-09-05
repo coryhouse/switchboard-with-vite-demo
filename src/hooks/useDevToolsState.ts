@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { getUrlWithUpdatedQuery } from "../utils/url-utils";
 
 export type DevToolsStateOptions = {
@@ -83,61 +83,64 @@ export function useDevToolsState<T>(
       return item ? JSON.parse(item) : defaultValue;
     } catch (error) {
       // If error also return initialValue
-      console.log(error);
+      console.error(error);
       return defaultValue;
     }
   });
 
   // Return a wrapped version of useState's setter function that persists the new value to localStorage.
-  const setValue = (value: T | ((val: T) => T)) => {
-    try {
-      // Allow value to be a function so we have same API as useState
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
+  const setValue = useCallback(
+    (value: T | ((val: T) => T)) => {
+      try {
+        // Allow value to be a function so we have same API as useState
+        const valueToStore =
+          value instanceof Function ? value(storedValue) : value;
 
-      // Step 1: Save state, so React re-renders
-      setStoredValue(valueToStore);
+        // Step 1: Save state, so React re-renders
+        setStoredValue(valueToStore);
 
-      // TODO: Reenable as an optional feature.
-      // Disabling writing settings to the URL for now. It likely isn't a good default behavior anyway because it muddies the URL at all times for the small benefit of sharing settings without needing to click a button.
-      // And actually, clicking the button to add to the clipboard is actually a single click, so plenty easy.
+        // TODO: Reenable as an optional feature.
+        // Disabling writing settings to the URL for now. It likely isn't a good default behavior anyway because it muddies the URL at all times for the small benefit of sharing settings without needing to click a button.
+        // And actually, clicking the button to add to the clipboard is actually a single click, so plenty easy.
 
-      // Step 2: Update the URL so it reflects the new setting, and can thus be copied and shared with others
-      // If the value matches the default value, then remove it from the URL (to keep the URL as lean as possible).
-      // However, go ahead and put the value in the URL anyway if showDefaultValuesInTheUrl is true.
-      // if (valueToStore == defaultValue && !options?.showDefaultValuesInTheUrl) {
-      //   const newUrl = getUrlWithUpdatedQuery(
-      //     new URL(window.location.href),
-      //     key
-      //   );
-      //   window.history.pushState("", "DevTools state update", newUrl);
-      // } else {
-      //   const newUrl = getUrlWithUpdatedQuery(
-      //     new URL(window.location.href),
-      //     key,
-      //     valueToStore
-      //   );
-      //   window.history.pushState("", "DevTools state update", newUrl);
-      // }
+        // Step 2: Update the URL so it reflects the new setting, and can thus be copied and shared with others
+        // If the value matches the default value, then remove it from the URL (to keep the URL as lean as possible).
+        // However, go ahead and put the value in the URL anyway if showDefaultValuesInTheUrl is true.
+        // if (valueToStore == defaultValue && !options?.showDefaultValuesInTheUrl) {
+        //   const newUrl = getUrlWithUpdatedQuery(
+        //     new URL(window.location.href),
+        //     key
+        //   );
+        //   window.history.pushState("", "DevTools state update", newUrl);
+        // } else {
+        //   const newUrl = getUrlWithUpdatedQuery(
+        //     new URL(window.location.href),
+        //     key,
+        //     valueToStore
+        //   );
+        //   window.history.pushState("", "DevTools state update", newUrl);
+        // }
 
-      // Step 3: Save to local storage, so the settings persist after the window is closed
-      if (typeof window !== "undefined") {
-        // If the value is the initial value, then we can omit it from localStorage.
-        // But, go ahead and put it in localStorage anyway if storeDefaultValuesInLocalStorage is true.
-        if (
-          valueToStore == defaultValue &&
-          !options?.storeDefaultValuesInLocalStorage
-        ) {
-          window.localStorage.removeItem(key);
-        } else {
-          window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        // Step 3: Save to local storage, so the settings persist after the window is closed
+        if (typeof window !== "undefined") {
+          // If the value is the initial value, then we can omit it from localStorage.
+          // But, go ahead and put it in localStorage anyway if storeDefaultValuesInLocalStorage is true.
+          if (
+            valueToStore == defaultValue &&
+            !options?.storeDefaultValuesInLocalStorage
+          ) {
+            window.localStorage.removeItem(key);
+          } else {
+            window.localStorage.setItem(key, JSON.stringify(valueToStore));
+          }
         }
+      } catch (error) {
+        // TODO: Improve error handling
+        console.error(error);
       }
-    } catch (error) {
-      // TODO: Improve error handling
-      console.error(error);
-    }
-  };
+    },
+    [defaultValue, key, options?.storeDefaultValuesInLocalStorage, storedValue]
+  );
 
   const isChanged = storedValue !== defaultValue;
 

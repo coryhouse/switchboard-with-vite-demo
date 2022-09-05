@@ -26,6 +26,8 @@ export const useWorker = <TCustomSettings>(
     };
 
     startWorker(worker);
+    // HACK: These dependencies need to be made stable
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return isReady;
