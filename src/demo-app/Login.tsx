@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <main className="grid h-screen place-content-center">
       <form onSubmit={onSubmit} className="w-72">
-        <h1 className="text-3xl">Log in</h1>
+        <h1 className="text-3xl">Log In</h1>
         <p role="alert" className="text-red-600">
           {error}
         </p>
