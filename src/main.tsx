@@ -25,8 +25,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <UserContextProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <UserContextProvider>
           {useDevTools ? (
             <Suspense fallback="Loading with devtools...">
               <AppWithDevTools />
@@ -34,8 +34,8 @@ root.render(
           ) : (
             <App />
           )}
-        </BrowserRouter>
-      </UserContextProvider>
+        </UserContextProvider>
+      </BrowserRouter>
     </ErrorBoundary>
   </React.StrictMode>
 );

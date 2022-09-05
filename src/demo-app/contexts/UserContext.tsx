@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { User } from "../demo-app-types";
 
 const UserContext = createContext<UserContextValue | null>(null);
@@ -6,6 +7,7 @@ const UserContext = createContext<UserContextValue | null>(null);
 type UserContextValue = {
   user: User | null;
   setUser: (user: User | null) => void;
+  logout: () => void;
 };
 
 type UserContextProviderProps = {
@@ -14,9 +16,16 @@ type UserContextProviderProps = {
 
 export function UserContextProvider({ children }: UserContextProviderProps) {
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
+
+  function logout() {
+    setUser(null);
+    localStorage.removeItem("userId");
+    navigate("/");
+  }
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, logout }}>
       {children}
     </UserContext.Provider>
   );
