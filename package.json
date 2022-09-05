@@ -25,7 +25,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy": "start-server-and-test dev 5173 cy:open",
-    "cy:ci": "start-server-and-test dev 5173 cy:run"
+    "cy:ci": "cross-env VITE_USE_DEV_TOOLS=Y start-server-and-test dev 5173 cy:run"
   },
   "dependencies": {
     "clsx": "^1.2.1",
