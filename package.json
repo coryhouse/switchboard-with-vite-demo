@@ -21,6 +21,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx .",
     "cy:open": "cypress open",
     "cy": "start-server-and-test dev 5173 cy:open"
   },
