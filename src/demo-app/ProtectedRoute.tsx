@@ -13,9 +13,8 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { setUser } = useUserContext();
 
   useEffect(() => {
-    // HACK: A real app would typically have a cookie/jwt as an auth token,
-    // and would implement protected route above this page instead.
     async function loadUserSession() {
+      // HACK: A real app would typically have a cookie/jwt as an auth token
       const userId = localStorage.getItem("userId");
       if (!userId) return navigate("/");
       const user = await fetchUser();
