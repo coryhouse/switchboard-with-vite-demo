@@ -4,6 +4,7 @@ import { Handler } from "../demo-app/demo-app-types";
 export type HttpSettings = {
   /** A function that accepts custom settings and returns an array of Mock Service Worker request handlers */
   // TODO: Eliminate any use here.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   requestHandlers: (configRef: React.MutableRefObject<any>) => RequestHandler[];
 
   /** Optional Mock Service worker start options */

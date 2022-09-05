@@ -35,7 +35,7 @@ export default function Todos() {
       setUser(user);
     }
     loadUserSession();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     async function fetchTodos() {

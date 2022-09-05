@@ -1,10 +1,8 @@
-import { CustomResponse } from "../types/types";
-
 /** Returns a string that contains the current URL with the specified key and value in the querystring */
 export function getUrlWithUpdatedQuery(
   url: URL,
   key: string,
-  value: any = null
+  value: unknown = null
 ) {
   const urlWithoutQuerystring = url.href.split("?")[0];
   const params = new URLSearchParams(url.search);
