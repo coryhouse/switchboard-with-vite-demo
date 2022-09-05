@@ -23,7 +23,9 @@
     "coverage": "vitest run --coverage",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx .",
     "cy:open": "cypress open",
-    "cy": "start-server-and-test dev 5173 cy:open"
+    "cy:run": "cypress run",
+    "cy": "start-server-and-test dev 5173 cy:open",
+    "cy:ci": "start-server-and-test dev 5173 cy:run"
   },
   "dependencies": {
     "clsx": "^1.2.1",
