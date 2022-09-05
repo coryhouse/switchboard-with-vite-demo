@@ -7,4 +7,5 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
+  video: false,
 });
