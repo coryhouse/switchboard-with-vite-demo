@@ -105,7 +105,12 @@ export default function Todos() {
         <Spinner />
       ) : (
         <>
-          <h1 className="text-3xl pb-4">Hi {user.name} 👋</h1>
+          <div className="flex items-center pb-4">
+            <h1 className="text-3xl inline-block">Hi {user.name} 👋</h1>{" "}
+            <a href="#" className="text-blue-600 pl-4" onClick={logout}>
+              Logout
+            </a>
+          </div>
 
           {todos.length === 0 && (
             <p className="mb-4">Welcome! Start entering your todos below.</p>
