@@ -3,13 +3,26 @@ import * as personas from "../../src/demo-app/mocks/personas";
 describe("log in / log out", () => {
   it("logs the user in successfully via the form, and logs the user out via the logout link", () => {
     cy.visitUrl({});
-    cy.findByLabelText("Email").type("cory@reactjsconsulting.com");
-    cy.findByLabelText("Password").type("123");
+
+    const { email, password, id } = personas.noTodos;
+
+    // The DevTools persona selector should initially reflect that the user is logged out.
+    cy.findByLabelText("Persona").should("have.value", "");
+
+    cy.findByLabelText("Email").type(email);
+    cy.findByLabelText("Password").type(password);
     cy.findByRole("button", { name: "Log In" }).click();
     cy.findByRole("heading", { name: /Hi Cory/ });
+
+    // The DevTools persona selector should now reflect that the user is logged in.
+    cy.findByLabelText("Persona").should("have.value", id);
+
     cy.findByRole("link", { name: "Logout" }).click({ force: true });
     // Now should be back on login page.
     cy.findByRole("heading", { name: "Log In" });
+
+    // And the DevTools persona selector should reflect that the user is logged out.
+    cy.findByLabelText("Persona").should("have.value", "");
   });
 });
 
