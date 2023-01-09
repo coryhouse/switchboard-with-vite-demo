@@ -6,6 +6,7 @@ import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
 import { useUserContext } from "./contexts/UserContext";
 import { useTodos } from "../hooks/useTodos";
+import SpinnerMessage from "../components/SpinnerMessage";
 
 type Todos = {
   userId: number;
@@ -29,7 +30,7 @@ export default function Todos() {
             </a>
           </div>
 
-          {todos.data?.length === 0 && (
+          {todos.data.length === 0 && (
             <p className="mb-4">Welcome! Start entering your todos below.</p>
           )}
 
@@ -106,16 +107,15 @@ export default function Todos() {
                 ))}
               </ul>
 
-              {toggleTodo.isLoading ||
-                deleteTodo.isLoading ||
-                (addTodo.isLoading && (
-                  <div aria-live="polite" className="absolute bottom-2 right-2">
-                    <span className="flex">
-                      Saving...
-                      <Spinner className="ml-4" />
-                    </span>
-                  </div>
-                ))}
+              {toggleTodo.isLoading && (
+                <SpinnerMessage>Loading...</SpinnerMessage>
+              )}
+
+              {deleteTodo.isLoading && (
+                <SpinnerMessage>Deleting...</SpinnerMessage>
+              )}
+
+              {addTodo.isLoading && <SpinnerMessage>Saving...</SpinnerMessage>}
             </>
           )}
         </>
