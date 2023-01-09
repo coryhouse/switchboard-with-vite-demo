@@ -1,10 +1,10 @@
-import * as mockPersonas from "../../src/demo-app/mocks/data/personas.mocks";
+import * as personas from "../../src/demo-app/mocks/data/personas.mocks";
 
 describe("log in / log out", () => {
   it("logs the user in successfully via the form, and logs the user out via the logout link", () => {
     cy.visitUrl({});
 
-    const { email, password, id } = mockPersonas.noTodos.response;
+    const { email, password, id } = personas.noTodos.response;
 
     // The DevTools persona selector should initially reflect that the user is logged out.
     cy.findByLabelText("Persona").should("have.value", "");
@@ -29,7 +29,7 @@ describe("log in / log out", () => {
 describe("new user", () => {
   it("shows a welcome message, supports adding a todo, and hides the delete feature", () => {
     cy.visitUrl({
-      userId: mockPersonas.noTodos.id,
+      userId: personas.noTodos.id,
       delay: 1000,
     });
     cy.findByText("Welcome! Start entering your todos below.");
@@ -46,16 +46,13 @@ describe("existing admin user", () => {
   it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting the todo", () => {
     // Visit Elon with 50ms delay
     cy.visitUrl({
-      userId: mockPersonas.manyTodos.id,
+      userId: personas.manyTodos.id,
       delay: 50,
     });
 
     // First, assure existing todos display
     isInSection("Stuff to do", "Ship Model S");
 
-    // HACK: addToDo fails very occasionally because the "old" input field was replaced due to a re-render.
-    // Adding slight delay to allow for the DOM to settle first.
-    cy.wait(50);
     addTodo("Write more tests");
     toggleComplete("Write more tests");
 
@@ -77,7 +74,7 @@ describe("when marking a todo complete", () => {
     });
 
     cy.visitUrl({
-      userId: mockPersonas.manyTodos.id,
+      userId: personas.manyTodos.id,
       customResponses: [
         {
           delay: 3100,
