@@ -74,7 +74,7 @@ export default function Todos() {
 
   return (
     <main className="grid h-screen place-content-center">
-      {!todosQuery.data ? (
+      {!user || !todosQuery.data ? (
         <Spinner />
       ) : (
         <>
