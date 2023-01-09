@@ -18,7 +18,7 @@ export async function getTodos(): Promise<Todo[]> {
 export async function addTodo(todo: string): Promise<Todo> {
   return ky
     .post("/todo", {
-      json: todo,
+      json: { todo },
       ...config,
     })
     .json();
