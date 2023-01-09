@@ -4,7 +4,10 @@ import ky from "ky";
 // Global ky config
 const config = {
   // Disable retries
-  retry: 0,
+  retry: {
+    limit: 0,
+  },
+  timeout: 2000,
 };
 
 // NOTE: For simplicity, real endpoints don't actually exist in this demo.

@@ -63,8 +63,8 @@ describe("existing admin user", () => {
 });
 
 describe("when marking a todo complete", () => {
-  it("times out the request and throws an error if the call takes longer than 3 seconds", () => {
-    const expectedError = "Oops! Updating the todo failed.";
+  it("times out the request and throws an error if the call takes longer than 2 seconds", () => {
+    const expectedError = "Request timed out";
 
     Cypress.on("uncaught:exception", (err) => {
       // Returning false here prevents Cypress from failing the test
@@ -77,7 +77,7 @@ describe("when marking a todo complete", () => {
       userId: personas.manyTodos.id,
       customResponses: [
         {
-          delay: 3100,
+          delay: 2500,
           handler: "PUT /todo/:id",
         },
       ],
