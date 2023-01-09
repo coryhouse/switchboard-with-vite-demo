@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { addTodo, deleteTodo, getTodos, updateTodo } from "./apis/todo-apis";
+import { useState } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { Todo } from "./demo-app-types";
@@ -7,72 +6,22 @@ import cx from "clsx";
 import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
 import { useUserContext } from "./contexts/UserContext";
-import { useQuery } from "@tanstack/react-query";
-
-// TODO: Handle status separately for each HTTP call (perhaps via react-query)
-type Status = "idle" | "loading" | "adding" | "toggling";
+import { useTodos } from "../hooks/useTodos";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Todos = {
   userId: number;
 };
 
 export default function Todos() {
-  const [status, setStatus] = useState<Status>("loading");
   const [todo, setTodo] = useState("");
-  const [error, setError] = useState<Error | null>(null);
-
-  const todosQuery = useQuery(["todos"], getTodos);
-
   const { user, logout } = useUserContext();
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    try {
-      setStatus("adding");
-      const savedTodo = await addTodo(todo);
-      setTodos((currentTodos) => [...currentTodos, savedTodo]);
-      setTodo("");
-    } catch (err) {
-      setError(err as Error);
-    } finally {
-      setStatus("idle");
-    }
-  }
-
-  async function toggleComplete(todo: Todo) {
-    try {
-      // Optimistically mark completed. Don't wait for HTTP call
-      setTodos(
-        todos.map((t) => {
-          return t.id === todo.id ? { ...todo, completed: !todo.completed } : t;
-        })
-      );
-
-      const callTimedOut = "Call timed out";
-
-      // Use this to timeout the call below after 3 seconds.
-      const timeoutPromise = new Promise((resolve) => {
-        setTimeout(resolve, 3000, callTimedOut);
-      });
-
-      setStatus("toggling");
-      const result = await Promise.race([timeoutPromise, updateTodo(todo)]);
-
-      if (result === callTimedOut) {
-        throw new Error("Oops! Updating the todo failed.");
-      }
-
-      setStatus("idle");
-    } catch (err) {
-      setError(err as Error);
-    }
-  }
-
-  if (error) throw error;
+  const queryClient = useQueryClient();
+  const { todos, addTodo, toggleTodo, deleteTodo } = useTodos();
 
   return (
     <main className="grid h-screen place-content-center">
-      {!user || !todosQuery.data ? (
+      {!user || !todos.data ? (
         <Spinner />
       ) : (
         <>
@@ -83,11 +32,20 @@ export default function Todos() {
             </a>
           </div>
 
-          {todosQuery.data?.length === 0 && (
+          {todos.data?.length === 0 && (
             <p className="mb-4">Welcome! Start entering your todos below.</p>
           )}
 
-          <form onSubmit={onSubmit}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              addTodo.mutate(todo, {
+                onSuccess: () => {
+                  setTodo("");
+                },
+              });
+            }}
+          >
             <Input
               id="todo"
               label="What do you need to do?"
@@ -104,18 +62,21 @@ export default function Todos() {
               Add{status === "adding" && "ing..."}
             </Button>
           </form>
-          {todosQuery.data.length > 0 && (
+          {todos.data.length > 0 && (
             <>
               <h2 className="text-2xl pt-4">Stuff to do</h2>
               <ul>
-                {todosQuery.data.map((t) => (
+                {todos.data.map((t) => (
                   <li key={t.id} className="flex items-center">
                     {user.isAdmin && (
                       <DeleteButton
                         aria-label={`Delete ${t.todo}`}
-                        onClick={async () => {
-                          await deleteTodo(t.id);
-                          setTodos(todos.filter(({ id }) => id !== t.id));
+                        onClick={() => {
+                          // Optimistically delete from UI. Don't wait for HTTP call
+                          queryClient.setQueryData<Todo[]>(["todos"], (todos) =>
+                            todos?.filter(({ id }) => id !== t.id)
+                          );
+                          deleteTodo.mutate(t.id);
                         }}
                       />
                     )}
@@ -124,7 +85,17 @@ export default function Todos() {
                       type="checkbox"
                       checked={t.completed}
                       className="mr-1"
-                      onChange={() => toggleComplete(t)}
+                      onChange={() => {
+                        // Optimistically mark completed. Don't wait for HTTP call
+                        queryClient.setQueryData<Todo[]>(["todos"], (todos) =>
+                          todos?.map((t) => {
+                            return t.id === t.id
+                              ? { ...t, completed: !t.completed }
+                              : t;
+                          })
+                        );
+                        toggleTodo.mutate(t);
+                      }}
                     />
                     <label
                       htmlFor={t.id.toString()}
@@ -139,14 +110,16 @@ export default function Todos() {
                 ))}
               </ul>
 
-              {status === "toggling" && (
-                <div aria-live="polite" className="absolute bottom-2 right-2">
-                  <span className="flex">
-                    Saving...
-                    <Spinner className="ml-4" />
-                  </span>
-                </div>
-              )}
+              {toggleTodo.isLoading ||
+                deleteTodo.isLoading ||
+                (addTodo.isLoading && (
+                  <div aria-live="polite" className="absolute bottom-2 right-2">
+                    <span className="flex">
+                      Saving...
+                      <Spinner className="ml-4" />
+                    </span>
+                  </div>
+                ))}
             </>
           )}
         </>
