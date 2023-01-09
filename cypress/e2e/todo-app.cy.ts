@@ -1,10 +1,10 @@
-import * as personas from "../../src/demo-app/mocks/personas";
+import * as mockPersonas from "../../src/demo-app/mocks/data/personas.mocks";
 
 describe("log in / log out", () => {
   it("logs the user in successfully via the form, and logs the user out via the logout link", () => {
     cy.visitUrl({});
 
-    const { email, password, id } = personas.noTodos;
+    const { email, password, id } = mockPersonas.noTodos.response;
 
     // The DevTools persona selector should initially reflect that the user is logged out.
     cy.findByLabelText("Persona").should("have.value", "");
@@ -29,7 +29,7 @@ describe("log in / log out", () => {
 describe("new user", () => {
   it("shows a welcome message, supports adding a todo, and hides the delete feature", () => {
     cy.visitUrl({
-      userId: personas.noTodos.id,
+      userId: mockPersonas.noTodos.id,
       delay: 1000,
     });
     cy.findByText("Welcome! Start entering your todos below.");
@@ -46,7 +46,7 @@ describe("existing admin user", () => {
   it("shows existing todos on initial load, supports adding a todo, toggling complete, and deleting the todo", () => {
     // Visit Elon with 50ms delay
     cy.visitUrl({
-      userId: personas.manyTodos.id,
+      userId: mockPersonas.manyTodos.id,
       delay: 50,
     });
 
@@ -77,7 +77,7 @@ describe("when marking a todo complete", () => {
     });
 
     cy.visitUrl({
-      userId: personas.manyTodos.id,
+      userId: mockPersonas.manyTodos.id,
       customResponses: [
         {
           delay: 3100,
