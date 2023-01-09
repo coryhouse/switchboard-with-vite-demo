@@ -1,13 +1,11 @@
 import { useState } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { Todo } from "./demo-app-types";
 import cx from "clsx";
 import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
 import { useUserContext } from "./contexts/UserContext";
 import { useTodos } from "../hooks/useTodos";
-import { useQueryClient } from "@tanstack/react-query";
 
 type Todos = {
   userId: number;
@@ -16,8 +14,7 @@ type Todos = {
 export default function Todos() {
   const [todo, setTodo] = useState("");
   const { user, logout } = useUserContext();
-  const queryClient = useQueryClient();
-  const { todos, addTodo, toggleTodo, deleteTodo } = useTodos();
+  const { todos, addTodo, toggleTodo, deleteTodo, setTodos } = useTodos();
 
   return (
     <main className="grid h-screen place-content-center">
@@ -40,7 +37,8 @@ export default function Todos() {
             onSubmit={(e) => {
               e.preventDefault();
               addTodo.mutate(todo, {
-                onSuccess: () => {
+                onSuccess: (savedTodo) => {
+                  setTodos([...todos.data, savedTodo]);
                   setTodo("");
                 },
               });
@@ -56,10 +54,10 @@ export default function Todos() {
             <Button
               type="submit"
               className={cx("ml-1 bg-blue-600 text-white", {
-                "bg-slate-300": status === "adding",
+                "bg-slate-300": addTodo.isLoading,
               })}
             >
-              Add{status === "adding" && "ing..."}
+              Add{addTodo.isLoading && "ing..."}
             </Button>
           </form>
           {todos.data.length > 0 && (
@@ -73,9 +71,7 @@ export default function Todos() {
                         aria-label={`Delete ${t.todo}`}
                         onClick={() => {
                           // Optimistically delete from UI. Don't wait for HTTP call
-                          queryClient.setQueryData<Todo[]>(["todos"], (todos) =>
-                            todos?.filter(({ id }) => id !== t.id)
-                          );
+                          setTodos(todos.data.filter(({ id }) => id !== t.id));
                           deleteTodo.mutate(t.id);
                         }}
                       />
@@ -87,11 +83,11 @@ export default function Todos() {
                       className="mr-1"
                       onChange={() => {
                         // Optimistically mark completed. Don't wait for HTTP call
-                        queryClient.setQueryData<Todo[]>(["todos"], (todos) =>
-                          todos?.map((t) => {
-                            return t.id === t.id
-                              ? { ...t, completed: !t.completed }
-                              : t;
+                        setTodos(
+                          todos.data.map((todo) => {
+                            return todo.id === t.id
+                              ? { ...todo, completed: !todo.completed }
+                              : todo;
                           })
                         );
                         toggleTodo.mutate(t);

@@ -5,6 +5,7 @@ import {
   getTodos,
   updateTodo,
 } from "../demo-app/apis/todo-apis";
+import { Todo } from "../demo-app/demo-app-types";
 
 const queryKey = ["todos"];
 
@@ -20,19 +21,11 @@ export function useTodos() {
   const addTodoMutation = useMutation({
     mutationFn: addTodo,
     useErrorBoundary: true,
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey });
-    },
   });
 
   const toggleTodoMutation = useMutation({
     mutationFn: updateTodo,
     useErrorBoundary: true,
-    onSuccess: () => {
-      // Invalidate and refetch
-      // queryClient.invalidateQueries({ queryKey });
-    },
   });
 
   const deleteTodoMutation = useMutation({
@@ -40,10 +33,15 @@ export function useTodos() {
     useErrorBoundary: true,
   });
 
+  function setTodos(todos: Todo[]) {
+    queryClient.setQueryData(queryKey, todos);
+  }
+
   return {
     todos: getTodosQuery,
     addTodo: addTodoMutation,
     toggleTodo: toggleTodoMutation,
     deleteTodo: deleteTodoMutation,
+    setTodos,
   };
 }
