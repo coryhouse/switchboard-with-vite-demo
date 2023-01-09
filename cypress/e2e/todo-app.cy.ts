@@ -1,10 +1,10 @@
-import * as personas from "../../src/demo-app/mocks/personas";
+import * as personas from "../../src/demo-app/mocks/data/personas.mocks";
 
 describe("log in / log out", () => {
   it("logs the user in successfully via the form, and logs the user out via the logout link", () => {
     cy.visitUrl({});
 
-    const { email, password, id } = personas.noTodos;
+    const { email, password, id } = personas.noTodos.response;
 
     // The DevTools persona selector should initially reflect that the user is logged out.
     cy.findByLabelText("Persona").should("have.value", "");
@@ -53,9 +53,6 @@ describe("existing admin user", () => {
     // First, assure existing todos display
     isInSection("Stuff to do", "Ship Model S");
 
-    // HACK: addToDo fails very occasionally because the "old" input field was replaced due to a re-render.
-    // Adding slight delay to allow for the DOM to settle first.
-    cy.wait(50);
     addTodo("Write more tests");
     toggleComplete("Write more tests");
 

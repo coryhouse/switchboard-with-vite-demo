@@ -43,17 +43,6 @@ export type Handler = typeof handlers[number];
 /** A User with related data */
 // TODO: Separate User and Todos instead of extending User. This way the fact that a Persona is a User and a list of Todos is clearer.
 export interface Persona extends User {
-  /** Describes why this persona exists and what makes it unique.
-   * Why this is an object:
-   * 1. Assures new users are described clearly and consistently
-   * 2. Helps avoid people changing a user without understanding why it exists as is
-   * 3. Helps avoid creating multiple users with the same config.
-   */
-  description: {
-    todos: string;
-    role: string;
-  };
-
   /** Array of todos */
   todos: Todo[];
 }

@@ -1,10 +1,10 @@
 import App from "./App";
 import DevTools from "../DevTools";
 import Select from "../components/Select";
-import { personas } from "./mocks/personas";
+import { mockPersonas } from "./mocks/data/personas.mocks";
 import { useDevToolsState } from "../hooks/useDevToolsState";
 import Field from "../components/Field";
-import { requestHandlers } from "./mocks/request-handlers";
+import { requestHandlers } from "./mocks/handlers/handlers";
 import useUserSync from "./useUserSync";
 
 export default function AppWithDevTools() {
@@ -51,9 +51,9 @@ export default function AppWithDevTools() {
           }}
         >
           <option value="">Logged out</option>
-          {personas.map((u) => (
-            <option value={u.id} key={u.id}>
-              {u.name} ({u.description.role}, {u.description.todos})
+          {mockPersonas.map(({ id, description, response }) => (
+            <option value={id} key={id}>
+              {response.name} ({description.role}, {description.todos})
             </option>
           ))}
         </Select>
