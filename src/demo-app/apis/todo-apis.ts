@@ -1,41 +1,36 @@
 import { Todo } from "../demo-app-types";
+import ky from "ky";
+
+// Global ky config
+const config = {
+  // Disable retries
+  retry: {
+    limit: 0,
+  },
+  timeout: 2000,
+};
 
 // NOTE: For simplicity, real endpoints don't actually exist in this demo.
 // These fetch calls are intercepted by msw when mocking is enabled.
 // Mock Service Worker intercepts the call made in the browser
 // and returns a mock response instead.
 export async function getTodos(): Promise<Todo[]> {
-  const resp = await fetch(`/todos`);
-  if (!resp.ok) throw resp;
-  return resp.json() as Promise<Todo[]>;
+  return ky.get(`/todos`, config).json();
 }
 
 export async function addTodo(todo: string): Promise<Todo> {
-  const resp = await fetch("/todo", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ todo }),
-  });
-  if (!resp.ok) throw resp;
-  return resp.json() as Promise<Todo>;
+  return ky
+    .post("/todo", {
+      json: { todo },
+      ...config,
+    })
+    .json();
 }
 
 export async function updateTodo(todo: Todo): Promise<void> {
-  const resp = await fetch(`/todo/${todo.id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ todo }),
-  });
-  if (!resp.ok) throw resp;
+  return ky.put(`/todo/${todo.id}`, { json: todo, ...config }).json();
 }
 
 export async function deleteTodo(todoId: number): Promise<void> {
-  const resp = await fetch(`/todo/${todoId}`, {
-    method: "DELETE",
-  });
-  if (!resp.ok) throw resp;
+  return ky.delete(`/todo/${todoId}`, config).json();
 }
