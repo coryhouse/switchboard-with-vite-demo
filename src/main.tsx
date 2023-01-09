@@ -8,11 +8,14 @@ import "./index.css";
 import ErrorFallback from "./demo-app/ErrorFallback";
 import { BrowserRouter } from "react-router-dom";
 import { UserContextProvider } from "./demo-app/contexts/UserContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Lazy load so it's not part of the prod bundle.
 const AppWithDevTools = React.lazy(
   () => import(/* webpackChunkName: "devtools" */ "./demo-app/AppWithDevTools")
 );
+
+const queryClient = new QueryClient();
 
 // This is set in .env.local.
 // If using create-react-app you'd say process.env.REACT_APP_USE_DEV_TOOLS instead.
@@ -25,17 +28,19 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <BrowserRouter>
-        <UserContextProvider>
-          {useDevTools ? (
-            <Suspense fallback="Loading with devtools...">
-              <AppWithDevTools />
-            </Suspense>
-          ) : (
-            <App />
-          )}
-        </UserContextProvider>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <UserContextProvider>
+            {useDevTools ? (
+              <Suspense fallback="Loading with devtools...">
+                <AppWithDevTools />
+              </Suspense>
+            ) : (
+              <App />
+            )}
+          </UserContextProvider>
+        </BrowserRouter>
+      </QueryClientProvider>
     </ErrorBoundary>
   </React.StrictMode>
 );
