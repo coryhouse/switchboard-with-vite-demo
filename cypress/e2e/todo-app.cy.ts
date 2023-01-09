@@ -30,7 +30,7 @@ describe("new user", () => {
   it("shows a welcome message, supports adding a todo, and hides the delete feature", () => {
     cy.visitUrl({
       userId: personas.noTodos.id,
-      delay: 50,
+      delay: 1000,
     });
     cy.findByText("Welcome! Start entering your todos below.");
 
