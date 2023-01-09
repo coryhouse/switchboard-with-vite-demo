@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { addTodo, deleteTodo, getTodos, updateTodo } from "./apis/todo-apis";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -7,6 +7,7 @@ import cx from "clsx";
 import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
 import { useUserContext } from "./contexts/UserContext";
+import { useQuery } from "@tanstack/react-query";
 
 // TODO: Handle status separately for each HTTP call (perhaps via react-query)
 type Status = "idle" | "loading" | "adding" | "toggling";
@@ -18,25 +19,11 @@ type Todos = {
 export default function Todos() {
   const [status, setStatus] = useState<Status>("loading");
   const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
-  const { user, logout } = useUserContext();
+  const todosQuery = useQuery(["todos"], getTodos);
 
-  useEffect(() => {
-    async function fetchTodos() {
-      setStatus("loading");
-      try {
-        const resp = await getTodos();
-        setTodos(resp);
-      } catch (err) {
-        setError(err as Error);
-      } finally {
-        setStatus("idle");
-      }
-    }
-    fetchTodos();
-  }, [user]);
+  const { user, logout } = useUserContext();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -87,7 +74,7 @@ export default function Todos() {
 
   return (
     <main className="grid h-screen place-content-center">
-      {status === "loading" ? (
+      {!todosQuery.data ? (
         <Spinner />
       ) : (
         <>
@@ -98,7 +85,7 @@ export default function Todos() {
             </a>
           </div>
 
-          {todos.length === 0 && (
+          {todosQuery.data?.length === 0 && (
             <p className="mb-4">Welcome! Start entering your todos below.</p>
           )}
 
@@ -119,11 +106,11 @@ export default function Todos() {
               Add{status === "adding" && "ing..."}
             </Button>
           </form>
-          {todos.length > 0 && (
+          {todosQuery.data.length > 0 && (
             <>
               <h2 className="text-2xl pt-4">Stuff to do</h2>
               <ul>
-                {todos.map((t) => (
+                {todosQuery.data.map((t) => (
                   <li key={t.id} className="flex items-center">
                     {user.isAdmin && (
                       <DeleteButton
