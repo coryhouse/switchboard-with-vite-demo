@@ -69,8 +69,6 @@ export default function Todos() {
   }
 
   if (error) throw error;
-  // TODO: Eliminate this when the statuses are separated above
-  if (!user) return <Spinner />;
 
   return (
     <main className="grid h-screen place-content-center">
