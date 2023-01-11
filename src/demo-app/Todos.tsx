@@ -127,8 +127,12 @@ export default function Todos() {
                       <DeleteButton
                         aria-label={`Delete ${t.todo}`}
                         onClick={async () => {
-                          await deleteTodo(t.id);
-                          setTodos(todos.filter(({ id }) => id !== t.id));
+                          try {
+                            await deleteTodo(t.id);
+                            setTodos(todos.filter(({ id }) => id !== t.id));
+                          } catch (err) {
+                            setError(new Error("Delete failed"));
+                          }
                         }}
                       />
                     )}
