@@ -7,7 +7,7 @@ import { mockPersonas } from "./mocks/data/personas.mocks";
  * This hook keeps the app user in sync with the DevTool user, since either
  * aspect of the app can push a change that the other half must react to.
  * */
-export default function useUserSync(
+export default function useSyncUser(
   userId: number | "",
   setUserId: Dispatch<SetStateAction<number | "">>
 ) {
