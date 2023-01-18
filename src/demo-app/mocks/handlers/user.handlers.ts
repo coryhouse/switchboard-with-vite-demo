@@ -1,12 +1,12 @@
 import { rest } from "msw";
-import { RequestHandlerConfig } from "../../demo-app-types";
+import { HandlerConfig } from "../../demo-app-types";
 import {
   getCustomResponseSettings,
   getDelay,
   getUserFromLocalStorage,
 } from "../mock-utils";
 
-export function getUserHandlers(config: RequestHandlerConfig) {
+export function getUserHandlers(config: HandlerConfig) {
   return [
     rest.get("/user", async (_req, res, ctx) => {
       const setting = getCustomResponseSettings(config, "GET /user");

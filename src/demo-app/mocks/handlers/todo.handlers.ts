@@ -1,11 +1,9 @@
 import { getRandomNumberBelow } from "../../../utils/number-utils";
 import { RequestHandler, rest } from "msw";
-import { RequestHandlerConfig, Todo } from "../../demo-app-types";
+import { HandlerConfig, Todo } from "../../demo-app-types";
 import { getCustomResponseSettings, getDelay, getUser } from "../mock-utils";
 
-export function getTodoHandlers(
-  config: RequestHandlerConfig
-): RequestHandler[] {
+export function getTodoHandlers(config: HandlerConfig): RequestHandler[] {
   return [
     rest.get("/todos", async (_req, res, ctx) => {
       const setting = getCustomResponseSettings(config, "GET /todos");

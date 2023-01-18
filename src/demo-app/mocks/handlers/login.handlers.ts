@@ -1,9 +1,9 @@
 import { rest } from "msw";
-import { RequestHandlerConfig } from "../../demo-app-types";
+import { HandlerConfig } from "../../demo-app-types";
 import { getCustomResponseSettings, getDelay } from "../mock-utils";
 import { mockPersonas } from "../data/personas.mocks";
 
-export function getLoginHandlers(config: RequestHandlerConfig) {
+export function getLoginHandlers(config: HandlerConfig) {
   return [
     rest.post("/login", async (req, res, ctx) => {
       const setting = getCustomResponseSettings(config, "POST /login");
