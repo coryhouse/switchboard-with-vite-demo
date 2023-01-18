@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { setupWorker, SetupWorkerApi } from "msw";
+import { useRef, useState } from "react";
+import { setupWorker } from "msw";
 import { HttpSettings } from "../types/types";
 
 /** Start Mock Service Worker with the provided config and return true when ready. */
@@ -7,28 +7,21 @@ export const useWorker = <TCustomSettings>(
   { startOptions, requestHandlers }: HttpSettings,
   config: TCustomSettings
 ) => {
-  const configRef = useRef(config);
+  const isStarted = useRef(false);
   const [isReady, setIsReady] = useState(false);
+  const workerRef = useRef(setupWorker(...requestHandlers(config)));
 
-  // Store the config in a ref so the useEffect below that starts
-  // the worker runs only once, yet reads the latest config values
-  // as they change in the devtools.
-  useEffect(() => {
-    configRef.current = config;
-  }, [config]);
+  if (!isStarted.current) {
+    isStarted.current = true;
+    workerRef.current.start(startOptions).then(() => setIsReady(true));
+  }
 
-  useEffect(() => {
-    const worker = setupWorker(...requestHandlers(configRef));
-
-    const startWorker = async (worker: SetupWorkerApi) => {
-      await worker.start(startOptions);
-      setIsReady(true);
-    };
-
-    startWorker(worker);
-    // HACK: These dependencies need to be made stable
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Make the `worker` and `rest` references available globally,
+  // so they can be accessed in both runtime and test suites.
+  // window.msw = {
+  //   worker,
+  //   rest,
+  // };
 
   return isReady;
 };

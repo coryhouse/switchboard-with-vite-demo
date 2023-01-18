@@ -7,7 +7,7 @@ import { mockPersonas } from "./mocks/data/personas.mocks";
  * This hook keeps the app user in sync with the DevTool user, since either
  * aspect of the app can push a change that the other half must react to.
  * */
-export default function useUserSync(
+export default function useSyncUser(
   userId: number | "",
   setUserId: Dispatch<SetStateAction<number | "">>
 ) {
@@ -29,7 +29,7 @@ export default function useUserSync(
     setPreviousUser(user);
   }
 
-  // When the userID changes, simulate logging the user in/out.
+  // When the userId changes, simulate logging the user in/out.
   // This also handles when the app is initialized via the URL.
   useEffect(() => {
     function simulateLogin(userId: number) {

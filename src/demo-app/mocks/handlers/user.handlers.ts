@@ -1,22 +1,20 @@
 import { rest } from "msw";
-import { RequestHandlerConfig } from "../../demo-app-types";
+import { HandlerConfig } from "../../demo-app-types";
 import {
   getCustomResponseSettings,
   getDelay,
   getUserFromLocalStorage,
 } from "../mock-utils";
 
-export function getUserHandlers(
-  configRef: React.MutableRefObject<RequestHandlerConfig>
-) {
+export function getUserHandlers(config: HandlerConfig) {
   return [
     rest.get("/user", async (_req, res, ctx) => {
-      const setting = getCustomResponseSettings(configRef, "GET /user");
+      const setting = getCustomResponseSettings(config, "GET /user");
       const user = getUserFromLocalStorage();
       if (!user) return res(ctx.status(401));
 
       return res(
-        ctx.delay(getDelay(configRef, setting?.delay)),
+        ctx.delay(getDelay(config, setting?.delay)),
         ctx.json(setting?.response ?? user.response),
         ctx.status(setting?.status ?? 200)
       );

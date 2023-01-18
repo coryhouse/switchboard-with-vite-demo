@@ -5,13 +5,13 @@ import { mockPersonas } from "./mocks/data/personas.mocks";
 import { useDevToolsState } from "../hooks/useDevToolsState";
 import Field from "../components/Field";
 import { requestHandlers } from "./mocks/handlers/handlers";
-import useUserSync from "./useUserSync";
+import useSyncUser from "./useSyncUser";
 
 export default function AppWithDevTools() {
   // Storing only userId in devToolsState to keep localStorage and URL minimal.
   // Storing the entire persona would bloat localStorage and the URL.
   const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
-  useUserSync(userId, setUserId);
+  useSyncUser(userId, setUserId);
 
   return (
     <DevTools
