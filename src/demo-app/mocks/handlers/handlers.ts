@@ -7,11 +7,11 @@ import { getUserHandlers } from "./user.handlers";
 // Returns mock API request handlers.
 // Accepts config for generating customizable responses in each handler.
 export function requestHandlers(
-  configRef: React.MutableRefObject<RequestHandlerConfig>
+  config: RequestHandlerConfig
 ): RequestHandler[] {
   return [
-    ...getLoginHandlers(configRef),
-    ...getTodoHandlers(configRef),
-    ...getUserHandlers(configRef),
+    ...getLoginHandlers(config),
+    ...getTodoHandlers(config),
+    ...getUserHandlers(config),
   ];
 }
