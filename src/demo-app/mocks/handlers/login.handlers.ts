@@ -3,12 +3,10 @@ import { RequestHandlerConfig } from "../../demo-app-types";
 import { getCustomResponseSettings, getDelay } from "../mock-utils";
 import { mockPersonas } from "../data/personas.mocks";
 
-export function getLoginHandlers(
-  configRef: React.MutableRefObject<RequestHandlerConfig>
-) {
+export function getLoginHandlers(config: RequestHandlerConfig) {
   return [
     rest.post("/login", async (req, res, ctx) => {
-      const setting = getCustomResponseSettings(configRef, "POST /login");
+      const setting = getCustomResponseSettings(config, "POST /login");
       const { email, password } = await req.json();
 
       const user = mockPersonas.find(
@@ -24,7 +22,7 @@ export function getLoginHandlers(
 
       // TODO: Set cookie or JWT and pass it into all calls to show a more realistic approach
       return res(
-        ctx.delay(getDelay(configRef, setting?.delay)),
+        ctx.delay(getDelay(config, setting?.delay)),
         ctx.json(user.response),
         ctx.status(setting?.status ?? 200)
       );

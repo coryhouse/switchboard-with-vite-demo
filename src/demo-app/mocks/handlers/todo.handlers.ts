@@ -4,16 +4,16 @@ import { RequestHandlerConfig, Todo } from "../../demo-app-types";
 import { getCustomResponseSettings, getDelay, getUser } from "../mock-utils";
 
 export function getTodoHandlers(
-  configRef: React.MutableRefObject<RequestHandlerConfig>
+  config: RequestHandlerConfig
 ): RequestHandler[] {
   return [
     rest.get("/todos", async (_req, res, ctx) => {
-      const setting = getCustomResponseSettings(configRef, "GET /todos");
-      const user = getUser(configRef);
+      const setting = getCustomResponseSettings(config, "GET /todos");
+      const user = getUser(config);
       if (!user) return res(ctx.status(401));
 
       return res(
-        ctx.delay(getDelay(configRef, setting?.delay)),
+        ctx.delay(getDelay(config, setting?.delay)),
         ctx.json(setting?.response ?? user.response.todos),
         ctx.status(setting?.status ?? 200)
       );
@@ -21,7 +21,7 @@ export function getTodoHandlers(
 
     rest.post("/todo", async (req, res, ctx) => {
       const { todo } = await req.json();
-      const user = getUser(configRef);
+      const user = getUser(config);
       if (!user) return res(ctx.status(401));
       const defaultResp: Todo = {
         // TODO: Read the todos from memory so the reduce call below works.
@@ -31,27 +31,27 @@ export function getTodoHandlers(
         completed: false,
         todo: todo as string,
       };
-      const setting = getCustomResponseSettings(configRef, "POST /todo");
+      const setting = getCustomResponseSettings(config, "POST /todo");
       return res(
-        ctx.delay(getDelay(configRef, setting?.delay)),
+        ctx.delay(getDelay(config, setting?.delay)),
         ctx.json(setting?.response ?? defaultResp),
         ctx.status(setting?.status ?? 200)
       );
     }),
 
     rest.put("/todo/:id", async (_req, res, ctx) => {
-      const setting = getCustomResponseSettings(configRef, "PUT /todo/:id");
+      const setting = getCustomResponseSettings(config, "PUT /todo/:id");
       return res(
-        ctx.delay(getDelay(configRef, setting?.delay)),
+        ctx.delay(getDelay(config, setting?.delay)),
         ctx.json(setting?.response ?? ""),
         ctx.status(setting?.status ?? 200)
       );
     }),
 
     rest.delete("/todo/:id", async (_req, res, ctx) => {
-      const setting = getCustomResponseSettings(configRef, "DELETE /todo/:id");
+      const setting = getCustomResponseSettings(config, "DELETE /todo/:id");
       return res(
-        ctx.delay(getDelay(configRef, setting?.delay)),
+        ctx.delay(getDelay(config, setting?.delay)),
         ctx.json(setting?.response ?? ""),
         ctx.status(setting?.status ?? 200)
       );
