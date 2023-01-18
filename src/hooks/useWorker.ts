@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { setupWorker } from "msw";
 import { HttpSettings } from "../types/types";
 
@@ -9,8 +9,6 @@ export const useWorker = <TCustomSettings>(
 ) => {
   const [isReady, setIsReady] = useState(false);
   const workerRef = useRef(setupWorker(...requestHandlers(config)));
-  // Store the previous config in a ref so we can compare it to the current config, so we know if the config has changed.
-  const prevConfig = useRef(config);
 
   if (!isReady) {
     workerRef.current.start(startOptions).then(() => setIsReady(true));
