@@ -7,20 +7,21 @@ export const useWorker = <TCustomSettings>(
   { startOptions, requestHandlers }: HttpSettings,
   config: TCustomSettings
 ) => {
+  const isStarted = useRef(false);
   const [isReady, setIsReady] = useState(false);
   const workerRef = useRef(setupWorker(...requestHandlers(config)));
 
-  if (!isReady) {
+  if (!isStarted.current) {
+    isStarted.current = true;
     workerRef.current.start(startOptions).then(() => setIsReady(true));
   }
 
-  useEffect(() => {
-    // If the config changed, apply it.
-    if (prevConfig.current !== config) {
-      prevConfig.current === config;
-      workerRef.current.use(...requestHandlers(config));
-    }
-  }, [config, requestHandlers, startOptions]);
+  // Make the `worker` and `rest` references available globally,
+  // so they can be accessed in both runtime and test suites.
+  // window.msw = {
+  //   worker,
+  //   rest,
+  // };
 
   return isReady;
 };
