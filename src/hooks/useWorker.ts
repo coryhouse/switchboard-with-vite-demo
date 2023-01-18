@@ -7,23 +7,21 @@ export const useWorker = <TCustomSettings>(
   { startOptions, requestHandlers }: HttpSettings,
   config: TCustomSettings
 ) => {
-  const workerRef = useRef(setupWorker(...requestHandlers(config)));
   const [isReady, setIsReady] = useState(false);
-  // Store the previous config in a ref so we can compare it to the current config
-  // This way, we know if the config has changed.
-  const prevConfig = useRef<TCustomSettings | undefined>(undefined);
+  const workerRef = useRef(setupWorker(...requestHandlers(config)));
+  // Store the previous config in a ref so we can compare it to the current config, so we know if the config has changed.
+  const prevConfig = useRef(config);
 
   if (!isReady) {
-    workerRef.current.start(startOptions).then(() => {
-      setIsReady(true);
-    });
+    workerRef.current.start(startOptions).then(() => setIsReady(true));
   }
 
   useEffect(() => {
-    // This only needs to re-run if the config has changed so the new settings apply.
-    if (prevConfig.current === config) return;
-    prevConfig.current === config;
-    workerRef.current.use(...requestHandlers(config));
+    // If the config changed, apply it.
+    if (prevConfig.current !== config) {
+      prevConfig.current === config;
+      workerRef.current.use(...requestHandlers(config));
+    }
   }, [config, requestHandlers, startOptions]);
 
   return isReady;
