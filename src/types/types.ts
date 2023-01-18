@@ -43,7 +43,7 @@ export interface DevToolsConfigBase {
 }
 
 /** Base type for RequestHandler config */
-export interface RequestHandlerConfigBase {
+export interface HandlerConfigBase {
   /** Global HTTP delay */
   delay: number;
 
