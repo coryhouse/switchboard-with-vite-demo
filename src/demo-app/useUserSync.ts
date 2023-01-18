@@ -29,7 +29,7 @@ export default function useUserSync(
     setPreviousUser(user);
   }
 
-  // When the userID changes, simulate logging the user in/out.
+  // When the userId changes, simulate logging the user in/out.
   // This also handles when the app is initialized via the URL.
   useEffect(() => {
     function simulateLogin(userId: number) {
