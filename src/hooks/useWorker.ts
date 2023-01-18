@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { setupWorker, SetupWorkerApi } from "msw";
+import { setupWorker } from "msw";
 import { HttpSettings } from "../types/types";
 
 /** Start Mock Service Worker with the provided config and return true when ready. */
@@ -8,6 +8,7 @@ export const useWorker = <TCustomSettings>(
   config: TCustomSettings
 ) => {
   const configRef = useRef(config);
+  const workerRef = useRef(setupWorker(...requestHandlers(config)));
   const [isReady, setIsReady] = useState(false);
 
   // Store the config in a ref so the useEffect below that starts
@@ -17,18 +18,25 @@ export const useWorker = <TCustomSettings>(
     configRef.current = config;
   }, [config]);
 
-  useEffect(() => {
-    const worker = setupWorker(...requestHandlers(configRef));
+  // Store the previous config in a ref so we can compare it to the current config
+  // This way, we know if the config has changed.
+  const prevConfig = useRef<TCustomSettings | undefined>(undefined);
 
-    const startWorker = async (worker: SetupWorkerApi) => {
-      await worker.start(startOptions);
+  if (!isReady) {
+    workerRef.current.start(startOptions).then(() => {
       setIsReady(true);
-    };
+    });
+  }
 
-    startWorker(worker);
-    // HACK: These dependencies need to be made stable
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useEffect(
+    function updateWorker() {
+      // This only needs to re-run if the config has changed so the new settings apply.
+      if (prevConfig.current === config) return;
+      prevConfig.current === config;
+      workerRef.current.use(...requestHandlers(config));
+    },
+    [config, requestHandlers, startOptions]
+  );
 
   return isReady;
 };
