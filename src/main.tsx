@@ -1,5 +1,4 @@
-// NOTE: This file merely exists to run the demo app.
-// It is NOT part of the published package.
+// NOTE: This file merely exists to run the demo app. It's NOT part of the published package.
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./demo-app/App";
