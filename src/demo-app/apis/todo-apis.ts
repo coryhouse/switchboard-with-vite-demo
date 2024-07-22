@@ -6,18 +6,20 @@ import { Todo } from "../demo-app-types";
 // and returns a mock response instead.
 import ky, { KyResponse } from "ky";
 
+const timeout = 2000;
+
 export async function getTodos(): Promise<Todo[]> {
-  return ky.get(`/todos`).json<Todo[]>();
+  return ky.get(`/todos`, { timeout }).json<Todo[]>();
 }
 
 export async function addTodo(todo: string): Promise<Todo> {
-  return ky.post("/todo", { json: { todo } }).json<Todo>();
+  return ky.post("/todo", { timeout, json: { todo } }).json<Todo>();
 }
 
 export async function updateTodo(todo: Todo): Promise<KyResponse> {
-  return ky.put(`/todo/${todo.id}`, { json: { todo } });
+  return ky.put(`/todo/${todo.id}`, { timeout, json: { todo } });
 }
 
 export async function deleteTodo(todoId: number): Promise<KyResponse> {
-  return ky.delete(`/todo/${todoId}`);
+  return ky.delete(`/todo/${todoId}`, { timeout });
 }
