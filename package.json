@@ -15,7 +15,7 @@
     }
   },
   "scripts": {
-    "dev": "cross-env VITE_USE_DEV_TOOLS=Y vite",
+    "dev": "cross-env VITE_USE_DEV_TOOLS=Y vite --strictPort --port 3000",
     "build": "vite build && tsc",
     "preview": "vite preview",
     "test": "vitest",
@@ -24,8 +24,8 @@
     "lint": "eslint src/**/* --ext .ts,.tsx,.js,.jsx",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "cy": "start-server-and-test dev 5173 cy:open",
-    "cy:ci": "start-server-and-test dev 5173 cy:run"
+    "cy": "start-server-and-test dev 3000 cy:open",
+    "cy:ci": "start-server-and-test dev 3000 cy:run"
   },
   "dependencies": {
     "clsx": "^2.1.1",
