@@ -1,5 +1,4 @@
-// NOTE: This file merely exists to run the demo app.
-// It is NOT part of the published package.
+// NOTE: This file merely exists to run the demo app. It's NOT part of the published package.
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./demo-app/App";
@@ -8,6 +7,7 @@ import "./index.css";
 import ErrorFallback from "./demo-app/ErrorFallback";
 import { BrowserRouter } from "react-router-dom";
 import { UserContextProvider } from "./demo-app/contexts/UserContext";
+import { Toaster } from "sonner";
 
 // Lazy load so it's not part of the prod bundle.
 const AppWithDevTools = React.lazy(
@@ -15,7 +15,6 @@ const AppWithDevTools = React.lazy(
 );
 
 // This is set in .env.local.
-// If using create-react-app you'd say process.env.REACT_APP_USE_DEV_TOOLS instead.
 const useDevTools = import.meta.env.VITE_USE_DEV_TOOLS === "Y";
 
 const root = ReactDOM.createRoot(
@@ -27,6 +26,7 @@ root.render(
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <BrowserRouter>
         <UserContextProvider>
+          <Toaster richColors position="top-right" />
           {useDevTools ? (
             <Suspense fallback="Loading with devtools...">
               <AppWithDevTools />

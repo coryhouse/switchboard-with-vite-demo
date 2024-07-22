@@ -7,9 +7,10 @@ import cx from "clsx";
 import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
 import { useUserContext } from "./contexts/UserContext";
+import { toast } from "sonner";
 
 // TODO: Handle status separately for each HTTP call (perhaps via react-query)
-type Status = "idle" | "loading" | "adding" | "toggling";
+type Status = "idle" | "loading" | "adding";
 
 type Todos = {
   userId: number;
@@ -61,19 +62,11 @@ export default function Todos() {
         })
       );
 
-      const callTimedOut = "Call timed out";
-
-      // Use this to timeout the call below after 3 seconds.
-      const timeoutPromise = new Promise((resolve) => {
-        setTimeout(resolve, 3000, callTimedOut);
+      toast.promise(updateTodo(todo), {
+        loading: "Toggling...",
+        success: () => "Toggled",
+        error: "Toggling the todo failed.",
       });
-
-      setStatus("toggling");
-      const result = await Promise.race([timeoutPromise, updateTodo(todo)]);
-
-      if (result === callTimedOut) {
-        throw new Error("Oops! Updating the todo failed.");
-      }
 
       setStatus("idle");
     } catch (err) {
@@ -84,7 +77,7 @@ export default function Todos() {
   if (error) throw error;
 
   return (
-    <main className="grid h-screen place-content-center">
+    <main className="grid place-content-center mt-4">
       {!user || status === "loading" ? (
         <Spinner />
       ) : (
@@ -118,8 +111,8 @@ export default function Todos() {
             </Button>
           </form>
           {todos.length > 0 && (
-            <>
-              <h2 className="text-2xl pt-4">Stuff to do</h2>
+            <section>
+              <h2 className="text-2xl pt-4 sr-only">Stuff to do</h2>
               <ul>
                 {todos.map((t) => (
                   <li key={t.id} className="flex items-center">
@@ -128,8 +121,14 @@ export default function Todos() {
                         aria-label={`Delete ${t.todo}`}
                         onClick={async () => {
                           try {
-                            await deleteTodo(t.id);
-                            setTodos(todos.filter(({ id }) => id !== t.id));
+                            toast.promise(deleteTodo(t.id), {
+                              loading: "Deleting...",
+                              success: () => {
+                                setTodos(todos.filter(({ id }) => id !== t.id));
+                                return "Todo deleted";
+                              },
+                              error: "Error",
+                            });
                           } catch (err) {
                             setError(new Error("Delete failed"));
                           }
@@ -155,16 +154,7 @@ export default function Todos() {
                   </li>
                 ))}
               </ul>
-
-              {status === "toggling" && (
-                <div aria-live="polite" className="absolute bottom-2 right-2">
-                  <span className="flex">
-                    Saving...
-                    <Spinner className="ml-4" />
-                  </span>
-                </div>
-              )}
-            </>
+            </section>
           )}
         </>
       )}

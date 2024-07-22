@@ -5,11 +5,15 @@ import { MockResponse } from "../mocks.types";
  * Why this is an object:
  * 1. Assures mock data is described clearly and consistently
  * 2. Avoids developers changing mock data without understanding why it exists as is
- * 3. Avoids developers creating multiple users with the same config.
+ * 3. Avoids developers creating multiple mock users with the same config.
+ * 4. Supports searching or filtering the list programmatically since the metadata is structured.
  */
 type Description = {
+  /** Describe this user's mock todo data */
   todos: string;
-  role: string;
+
+  /** Describe this user's role  */
+  role: "user" | "admin";
 };
 
 type MockPersona = MockResponse<Persona, Description>;
@@ -18,7 +22,7 @@ export const noTodos: MockPersona = {
   id: 1,
   description: {
     todos: "No todos",
-    role: "User",
+    role: "user",
   },
   response: {
     id: 1,
@@ -34,7 +38,7 @@ export const manyTodos: MockPersona = {
   id: 2,
   description: {
     todos: "Many todos",
-    role: "Admin",
+    role: "admin",
   },
   response: {
     id: 2,
@@ -70,11 +74,11 @@ export const manyTodos: MockPersona = {
       },
       {
         id: 6,
-        todo: "Buy Twitter?",
+        todo: "Buy Twitter",
         completed: false,
       },
     ],
   },
 };
 
-export const mockPersonas: MockPersona[] = [noTodos, manyTodos];
+export const mockPersonas: MockPersona[] = [noTodos, manyTodos] as const;

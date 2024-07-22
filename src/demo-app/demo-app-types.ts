@@ -1,14 +1,17 @@
+import { z } from "zod";
 import { DevToolsConfigBase, RequestHandlerConfigBase } from "../types/types";
 
 export type NewTodo = {
   todo: string;
 };
 
-export type Todo = {
-  id: number;
-  todo: string;
-  completed: boolean;
-};
+export const todoSchema = z.object({
+  id: z.number(),
+  todo: z.string(),
+  completed: z.boolean(),
+});
+
+export type Todo = z.infer<typeof todoSchema>;
 
 export interface User {
   /** User's ID */
@@ -38,7 +41,7 @@ export const handlers = [
 ] as const;
 
 /** Union of response handler names. Used for DevTool labels and within useWorker. */
-export type Handler = typeof handlers[number];
+export type Handler = (typeof handlers)[number];
 
 /** A User with related data */
 // TODO: Separate User and Todos instead of extending User. This way the fact that a Persona is a User and a list of Todos is clearer.
