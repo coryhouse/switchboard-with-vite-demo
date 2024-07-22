@@ -69,7 +69,7 @@ test.describe("existing admin user", () => {
     await toggleComplete(page, "Write more tests");
 
     // Now delete the todo added above
-    await page.getByText("Delete Write more tests").click();
+    await page.getByRole("button", { name: "Delete Write more tests" }).click();
     await expect(page.getByText("Write more tests")).not.toBeVisible();
   });
 });
