@@ -9,8 +9,11 @@ import { MockResponse } from "../mocks.types";
  * 4. Supports searching or filtering the list programmatically since the metadata is structured.
  */
 type Description = {
+  /** Describe this user's mock todo data */
   todos: string;
-  role: string;
+
+  /** Describe this user's role  */
+  role: "user" | "admin";
 };
 
 type MockPersona = MockResponse<Persona, Description>;
@@ -19,7 +22,7 @@ export const noTodos: MockPersona = {
   id: 1,
   description: {
     todos: "No todos",
-    role: "User",
+    role: "user",
   },
   response: {
     id: 1,
@@ -35,7 +38,7 @@ export const manyTodos: MockPersona = {
   id: 2,
   description: {
     todos: "Many todos",
-    role: "Admin",
+    role: "admin",
   },
   response: {
     id: 2,
