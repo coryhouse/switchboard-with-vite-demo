@@ -24,10 +24,10 @@ npm i
 npm run dev
 ```
 
-To run the demo app and Cypress tests together:
+To run the demo app and Playwright tests together:
 
 ```
-npm run cy
+npx playwright test
 ```
 
 ## Roadmap
