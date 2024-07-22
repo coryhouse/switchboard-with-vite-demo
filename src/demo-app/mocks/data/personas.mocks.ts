@@ -5,7 +5,8 @@ import { MockResponse } from "../mocks.types";
  * Why this is an object:
  * 1. Assures mock data is described clearly and consistently
  * 2. Avoids developers changing mock data without understanding why it exists as is
- * 3. Avoids developers creating multiple users with the same config.
+ * 3. Avoids developers creating multiple mock users with the same config.
+ * 4. Supports searching or filtering the list programmatically since the metadata is structured.
  */
 type Description = {
   todos: string;
@@ -70,11 +71,11 @@ export const manyTodos: MockPersona = {
       },
       {
         id: 6,
-        todo: "Buy Twitter?",
+        todo: "Buy Twitter",
         completed: false,
       },
     ],
   },
 };
 
-export const mockPersonas: MockPersona[] = [noTodos, manyTodos];
+export const mockPersonas: MockPersona[] = [noTodos, manyTodos] as const;
