@@ -10,7 +10,7 @@ import { useUserContext } from "./contexts/UserContext";
 import { toast } from "sonner";
 
 // TODO: Handle status separately for each HTTP call (perhaps via react-query)
-type Status = "idle" | "loading" | "adding" | "toggling";
+type Status = "idle" | "loading" | "adding";
 
 type Todos = {
   userId: number;
@@ -68,8 +68,6 @@ export default function Todos() {
       const timeoutPromise = new Promise((resolve) => {
         setTimeout(resolve, 3000, callTimedOut);
       });
-
-      setStatus("toggling");
 
       toast.promise(Promise.race([timeoutPromise, updateTodo(todo)]), {
         loading: "Toggling...",
@@ -168,15 +166,6 @@ export default function Todos() {
                   </li>
                 ))}
               </ul>
-
-              {status === "toggling" && (
-                <div aria-live="polite" className="absolute bottom-2 right-2">
-                  <span className="flex">
-                    Saving...
-                    <Spinner className="ml-4" />
-                  </span>
-                </div>
-              )}
             </section>
           )}
         </>
