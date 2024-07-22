@@ -23,14 +23,14 @@ export default function AppWithDevTools() {
 
           // Ignore unhandled requests. Uncomment below to throw errors for unhandled requests instead.
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          onUnhandledRequest: ({ method, url }) => {
-            // if (
-            //   url.pathname !== "/src/index.css" &&
-            //   !url.pathname.startsWith("chrome-extension:")
-            // ) {
-            //   throw new Error(`Unhandled ${method} request to ${url}`);
-            // }
-          },
+          // onUnhandledRequest: ({ method, url }) => {
+          // if (
+          //   url.pathname !== "/src/index.css" &&
+          //   !url.pathname.startsWith("chrome-extension:")
+          // ) {
+          //   throw new Error(`Unhandled ${method} request to ${url}`);
+          // }
+          // },
         },
       }}
       // Using a key to force the app to reinitialize when the userId changes.
