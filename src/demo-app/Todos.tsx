@@ -129,9 +129,14 @@ export default function Todos() {
                         aria-label={`Delete ${t.todo}`}
                         onClick={async () => {
                           try {
-                            toast.success("Todo deleted");
-                            await deleteTodo(t.id);
-                            setTodos(todos.filter(({ id }) => id !== t.id));
+                            toast.promise(deleteTodo(t.id), {
+                              loading: "Deleting...",
+                              success: () => {
+                                setTodos(todos.filter(({ id }) => id !== t.id));
+                                return "Todo deleted";
+                              },
+                              error: "Error",
+                            });
                           } catch (err) {
                             setError(new Error("Delete failed"));
                           }
