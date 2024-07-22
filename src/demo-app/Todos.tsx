@@ -70,11 +70,17 @@ export default function Todos() {
       });
 
       setStatus("toggling");
-      const result = await Promise.race([timeoutPromise, updateTodo(todo)]);
 
-      if (result === callTimedOut) {
-        throw new Error("Oops! Updating the todo failed.");
-      }
+      toast.promise(Promise.race([timeoutPromise, updateTodo(todo)]), {
+        loading: "Toggling...",
+        success: (data) => {
+          if (data === callTimedOut) {
+            throw new Error();
+          }
+          return "Toggled";
+        },
+        error: "Toggling the todo failed.",
+      });
 
       setStatus("idle");
     } catch (err) {
