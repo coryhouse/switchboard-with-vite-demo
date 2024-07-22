@@ -1,5 +1,6 @@
 import test, { expect, Page } from "@playwright/test";
 import * as personas from "../src/demo-app/mocks/data/personas.mocks";
+import { buildUrl } from "../src/utils/url-utils";
 
 test.describe("log in / log out", () => {
   test("logs the user in successfully via the form, and logs the user out via the logout link", async ({
@@ -33,10 +34,12 @@ test.describe("new user", () => {
   test("shows a welcome message, supports adding a todo, and hides the delete feature", async ({
     page,
   }) => {
-    page.goto("/", {
-      userId: personas.noTodos.id,
-      delay: 1000,
-    });
+    page.goto(
+      buildUrl("/", {
+        userId: personas.noTodos.id,
+        delay: 1000,
+      })
+    );
     page.getByText("Welcome! Start entering your todos below.");
 
     await addTodo(page, "Write more tests");
@@ -52,10 +55,12 @@ test.describe("existing admin user", () => {
     page,
   }) => {
     // Load Elon with 50ms delay
-    page.goto("/", {
-      userId: personas.manyTodos.id,
-      delay: 50,
-    });
+    page.goto(
+      buildUrl("/", {
+        userId: personas.manyTodos.id,
+        delay: 50,
+      })
+    );
 
     // First, assure existing todos display
     await isInSection(page, "Stuff to do", "Ship Model S");
@@ -64,8 +69,8 @@ test.describe("existing admin user", () => {
     await toggleComplete(page, "Write more tests");
 
     // Now delete the todo added above
-    page.getByText("Delete Write more tests").click();
-    page.getByText("Write more tests").should("not.exist");
+    await page.getByText("Delete Write more tests").click();
+    await expect(page.getByText("Write more tests")).not.toBeVisible();
   });
 });
 
@@ -82,15 +87,17 @@ test.describe("when marking a todo complete", () => {
       return true;
     });
 
-    page.goto("/", {
-      userId: personas.manyTodos.id,
-      customResponses: [
-        {
-          delay: 3100,
-          handler: "PUT /todo/:id",
-        },
-      ],
-    });
+    page.goto(
+      buildUrl("/", {
+        userId: personas.manyTodos.id,
+        customResponses: [
+          {
+            delay: 3100,
+            handler: "PUT /todo/:id",
+          },
+        ],
+      })
+    );
 
     toggleComplete(page, "Ship Cybertruck");
     page.getByText(expectedError);
@@ -107,13 +114,10 @@ test.describe("when adding a todo", () => {
 // ------------------------------------------
 
 // Use parent to search within the heading's <section>
-function isInSection(page: Page, heading: string, text: string) {
-  page
-    .getByRole("heading", { name: heading })
-    .parent()
-    .within(() => {
-      page.getByText(text);
-    });
+async function isInSection(page: Page, headingText: string, text: string) {
+  const heading = page.getByRole("heading", { name: headingText });
+  const section = page.locator("section").filter({ has: heading });
+  await expect(section.getByText(text)).toBeVisible();
 }
 
 async function addTodo(page: Page, todo: string) {
