@@ -2,11 +2,13 @@ import test, { expect } from "@playwright/test";
 import { devToolsPositions } from "../src/types/types";
 import { buildUrl } from "../src/utils/url-utils";
 
+const baseUrl = "http://localhost:5173/";
+
 test.describe("devtools", () => {
   test.describe("position", () => {
     devToolsPositions.forEach((position) => {
       test(`displays in the ${position}`, async ({ page }) => {
-        await page.goto(position);
+        await page.goto(buildUrl(baseUrl, { position }));
 
         if (position.includes("top")) page.locator(".top-0");
         if (position.includes("bottom")) page.locator(".bottom-0");
@@ -20,7 +22,7 @@ test.describe("devtools", () => {
     test("uses fallback defaults when no optional default overrides are provided", async ({
       page,
     }) => {
-      await page.goto("/");
+      await page.goto(baseUrl);
       await expect(page.getByLabel("Persona")).toBeVisible();
 
       // Should default to open
@@ -50,7 +52,7 @@ test.describe("devtools", () => {
 
   test.describe("when defaultToOpen is false", () => {
     test("is initially closed", async ({ page }) => {
-      page.goto(buildUrl("http://localhost:5173/", { openByDefault: false }));
+      page.goto(buildUrl(baseUrl, { openByDefault: false }));
       await expect(page.getByLabel("User")).not.toBeVisible();
       await expect(
         page.getByRole("button", { name: "Open DevTools" })
@@ -66,7 +68,7 @@ test.describe("devtools", () => {
     }) => {
       // Overriding ALL settings to assure they all show up in the generated URL, and are reflected upon load.
       page.goto(
-        buildUrl("http://localhost:5173/", {
+        buildUrl(baseUrl, {
           openByDefault: false,
           delay: 100,
           userId: 2,
