@@ -1,7 +1,8 @@
 import { getRandomNumberBelow } from "../../../utils/number-utils";
 import { RequestHandler, delay, http } from "msw";
-import { RequestHandlerConfig, Todo, todoSchema } from "../../demo-app-types";
+import { RequestHandlerConfig, Todo } from "../../demo-app-types";
 import { getCustomResponseSettings, getDelay, getUser } from "../mock-utils";
+import { z } from "zod";
 
 export function getTodoHandlers(
   configRef: React.MutableRefObject<RequestHandlerConfig>
@@ -27,7 +28,10 @@ export function getTodoHandlers(
     }),
 
     http.post("/todo", async ({ request }) => {
-      const { todo } = todoSchema.parse(await request.json());
+      const todoResponseSchema = z.object({
+        todo: z.string(),
+      });
+      const { todo } = todoResponseSchema.parse(await request.json());
       const user = getUser(configRef);
       if (!user)
         return new Response(null, {
