@@ -136,11 +136,11 @@ async function addTodo(page: Page, todo: string) {
 }
 
 async function toggleComplete(page: Page, todo: string) {
-  // Mark as complete and assure it's marked with a line through
+  // Mark complete and assure it's marked with a line through
   await page.getByText(todo).click();
   await expect(page.getByText(todo)).toHaveClass(/line-through/);
 
-  // Mark as incomplete and assure line-through is removed.
+  // Mark incomplete and assure line-through is removed.
   await page.getByText(todo).click();
   await expect(page.getByText(todo)).not.toHaveClass(/line-through/);
 }
