@@ -7,7 +7,7 @@ export default function ErrorFallback({
 }: FallbackProps) {
   return (
     <div role="alert" className="grid h-screen place-content-center">
-      <p>Something went wrong.</p>
+      <h1 className="font-bold text-xl">Something went wrong.</h1>
       <pre>{error.message}</pre>
       <Button
         className="bg-blue-600 text-white mt-4"
