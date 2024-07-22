@@ -118,7 +118,7 @@ export default function Todos() {
             </Button>
           </form>
           {todos.length > 0 && (
-            <>
+            <section>
               <h2 className="text-2xl pt-4">Stuff to do</h2>
               <ul>
                 {todos.map((t) => (
@@ -164,7 +164,7 @@ export default function Todos() {
                   </span>
                 </div>
               )}
-            </>
+            </section>
           )}
         </>
       )}
