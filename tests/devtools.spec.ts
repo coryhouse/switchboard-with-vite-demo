@@ -85,10 +85,14 @@ test.describe("devtools", () => {
       // Grant clipboard permissions to browser context
       await context.grantPermissions(["clipboard-read", "clipboard-write"]);
 
+      const copySettingsButton = page.getByRole("button", {
+        name: "Copy Settings",
+      });
+
       // Must open via click since the URL above specifies DevTools should be closed by default.
       await page.getByRole("button", { name: "Open DevTools" }).click();
 
-      await page.getByRole("button", { name: "Copy Settings" }).click();
+      await copySettingsButton.click();
 
       // Should change the button's label upon click
       await expect(
@@ -104,6 +108,9 @@ test.describe("devtools", () => {
       expect(clipboardContent).toEqual(
         "http://localhost:3000/todos?position=%22top-right%22&openByDefault=false&delay=100&customResponses=%5B%7B%22delay%22%3A1%2C%22handler%22%3A%22DELETE+%2Ftodo%2F%3Aid%22%2C%22status%22%3A201%2C%22response%22%3A%22test%22%7D%5D&userId=2"
       );
+
+      // Should change the button's label back to "Copy Settings" after a few seconds
+      await expect(copySettingsButton).toBeVisible();
     });
   });
 });
