@@ -7,6 +7,7 @@ import cx from "clsx";
 import Spinner from "./Spinner";
 import DeleteButton from "../components/DeleteButton";
 import { useUserContext } from "./contexts/UserContext";
+import { toast } from "sonner";
 
 // TODO: Handle status separately for each HTTP call (perhaps via react-query)
 type Status = "idle" | "loading" | "adding" | "toggling";
@@ -128,6 +129,7 @@ export default function Todos() {
                         aria-label={`Delete ${t.todo}`}
                         onClick={async () => {
                           try {
+                            toast.success("Todo deleted");
                             await deleteTodo(t.id);
                             setTodos(todos.filter(({ id }) => id !== t.id));
                           } catch (err) {
