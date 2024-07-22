@@ -113,12 +113,14 @@ test.describe("when adding a todo", () => {
 // Use parent to search within the heading's <section>
 async function isInSection(page: Page, headingText: string, text: string) {
   const heading = page.getByRole("heading", { name: headingText });
+  await expect(heading).toBeVisible();
   const section = page.locator("section").filter({ has: heading });
   await expect(section.getByText(text)).toBeVisible();
 }
 
 async function addTodo(page: Page, todo: string) {
   const todoInput = page.getByLabel("What do you need to do?");
+  await expect(todoInput).toBeVisible();
   await expect(todoInput).toHaveValue("");
   await todoInput.fill(todo);
   await page.getByRole("button", { name: "Add" }).click();
