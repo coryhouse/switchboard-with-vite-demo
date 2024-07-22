@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { setupWorker, SetupWorkerApi } from "msw/browser";
+import { SetupWorker, setupWorker } from "msw/browser";
 import { HttpSettings } from "../types/types";
 
 /** Start Mock Service Worker with the provided config and return true when ready. */
@@ -20,7 +20,7 @@ export const useWorker = <TCustomSettings>(
   useEffect(() => {
     const worker = setupWorker(...requestHandlers(configRef));
 
-    const startWorker = async (worker: SetupWorkerApi) => {
+    const startWorker = async (worker: SetupWorker) => {
       await worker.start(startOptions);
       setIsReady(true);
     };
