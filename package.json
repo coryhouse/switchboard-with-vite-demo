@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "ky": "^1.4.0",
     "react": ">16",
     "react-dom": ">16",
     "react-router-dom": "^6.25.1",
