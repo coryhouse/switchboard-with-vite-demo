@@ -1,4 +1,4 @@
-import { rest } from "msw";
+import { delay, http } from "msw";
 import { RequestHandlerConfig } from "../../demo-app-types";
 import {
   getCustomResponseSettings,
@@ -10,16 +10,19 @@ export function getUserHandlers(
   configRef: React.MutableRefObject<RequestHandlerConfig>
 ) {
   return [
-    rest.get("/user", async (_req, res, ctx) => {
+    http.get("/user", async () => {
       const setting = getCustomResponseSettings(configRef, "GET /user");
       const user = getUserFromLocalStorage();
-      if (!user) return res(ctx.status(401));
+      if (!user)
+        return new Response(null, {
+          status: 401,
+        });
 
-      return res(
-        ctx.delay(getDelay(configRef, setting?.delay)),
-        ctx.json(setting?.response ?? user.response),
-        ctx.status(setting?.status ?? 200)
-      );
+      await delay(getDelay(configRef, setting?.delay));
+      return new Response(setting?.response ?? JSON.stringify(user.response), {
+        status: setting?.status ?? 200,
+        headers: { "Content-Type": "application/json" },
+      });
     }),
   ];
 }
