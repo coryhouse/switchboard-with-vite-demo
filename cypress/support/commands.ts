@@ -42,7 +42,7 @@ import { DevToolsConfig } from "../../src/demo-app/demo-app-types";
 Cypress.Commands.add(
   "visitUrl",
   (config: Partial<DevToolsConfig>): Cypress.Chainable => {
-    const baseUrl = "http://localhost:5173/";
+    const baseUrl = "http://localhost:3000/";
     const url = buildUrl(baseUrl, config);
     return cy.visit(url);
   }
