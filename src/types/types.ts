@@ -1,5 +1,6 @@
-import { RequestHandler, StartOptions } from "msw";
+import { RequestHandler } from "msw";
 import { Handler } from "../demo-app/demo-app-types";
+import { StartOptions } from "msw/browser";
 
 export type HttpSettings = {
   /** A function that accepts custom settings and returns an array of Mock Service Worker request handlers */
@@ -59,7 +60,7 @@ export const devToolsPositions = [
 ] as const;
 
 /** Union of devTools positions. */
-export type DevToolsPosition = typeof devToolsPositions[number];
+export type DevToolsPosition = (typeof devToolsPositions)[number];
 
 /** Represents setting defaults */
 export type DevToolsDefaults = {
