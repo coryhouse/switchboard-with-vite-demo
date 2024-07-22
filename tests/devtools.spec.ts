@@ -82,13 +82,13 @@ test.describe("devtools", () => {
         })
       );
 
+      // Grant clipboard permissions to browser context
+      await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+
       // Must open via click since the URL above specifies DevTools should be closed by default.
       await page.getByRole("button", { name: "Open DevTools" }).click();
 
       await page.getByRole("button", { name: "Copy Settings" }).click();
-
-      // Grant clipboard permissions to browser context
-      await context.grantPermissions(["clipboard-read", "clipboard-write"]);
 
       // Should change the button's label upon click
       await expect(
