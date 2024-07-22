@@ -62,21 +62,9 @@ export default function Todos() {
         })
       );
 
-      const callTimedOut = "Call timed out";
-
-      // Use this to timeout the call below after 3 seconds.
-      const timeoutPromise = new Promise((resolve) => {
-        setTimeout(resolve, 3000, callTimedOut);
-      });
-
-      toast.promise(Promise.race([timeoutPromise, updateTodo(todo)]), {
+      toast.promise(updateTodo(todo), {
         loading: "Toggling...",
-        success: (data) => {
-          if (data === callTimedOut) {
-            throw new Error();
-          }
-          return "Toggled";
-        },
+        success: () => "Toggled",
         error: "Toggling the todo failed.",
       });
 
