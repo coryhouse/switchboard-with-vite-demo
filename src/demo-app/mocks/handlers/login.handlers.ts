@@ -1,33 +1,41 @@
-import { rest } from "msw";
+import { delay, http } from "msw";
 import { RequestHandlerConfig } from "../../demo-app-types";
 import { getCustomResponseSettings, getDelay } from "../mock-utils";
 import { mockPersonas } from "../data/personas.mocks";
+import { z } from "zod";
+
+const loginResponseSchema = z.object({
+  email: z.string(),
+  password: z.string(),
+});
 
 export function getLoginHandlers(
   configRef: React.MutableRefObject<RequestHandlerConfig>
 ) {
   return [
-    rest.post("/login", async (req, res, ctx) => {
+    http.post("/login", async ({ request }) => {
       const setting = getCustomResponseSettings(configRef, "POST /login");
-      const { email, password } = await req.json();
+      const { email, password } = loginResponseSchema.parse(
+        await request.json()
+      );
 
       const user = mockPersonas.find(
         ({ response: r }) => r.email === email && r.password === password
       );
       if (!user)
-        return res(
-          ctx.status(403),
-          ctx.json({
-            errorMessage: `User not found`,
-          })
+        return new Response(
+          JSON.stringify({ errorMessage: `User not found` }),
+          {
+            status: 403,
+          }
         );
 
       // TODO: Set cookie or JWT and pass it into all calls to show a more realistic approach
-      return res(
-        ctx.delay(getDelay(configRef, setting?.delay)),
-        ctx.json(user.response),
-        ctx.status(setting?.status ?? 200)
-      );
+      await delay(getDelay(configRef, setting?.delay));
+      return new Response(JSON.stringify(user.response), {
+        status: setting?.status ?? 200,
+        headers: { "Content-Type": "application/json" },
+      });
     }),
   ];
 }
