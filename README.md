@@ -1,6 +1,6 @@
 # SwitchBoard 🎛
 
-SwitchBoard is a toolkit for creating custom DevTools and mock APIs for your React app.
+Toolkit for creating custom DevTools and mock APIs for your React app.
 
 [See SwitchBoard in action](https://switchboard-beta.vercel.app/) 🚀
 
@@ -13,14 +13,14 @@ This project provides a [powerful `DevTools` component](https://github.com/coryh
 - Declare custom HTTP response, delay, or status code from each endpoint
 - Copy settings to URL for sharing with others
 - Specify custom settings tailored to your app
-- All settings are saved in localStorage (so they're available next time you open the DevTools)
+- Settings are saved in localStorage (so they're available next time you open the DevTools, and persist across tabs)
 
 ## Quick Start
 
 To run the demo app:
 
 ```
-npm i
+npm install
 npm run dev
 ```
 
