@@ -37,7 +37,7 @@ test.describe("new user", () => {
     page.goto(
       buildUrl("/", {
         userId: personas.noTodos.id,
-        delay: 1000,
+        delay: 250, // just long enough that we can check for the loading indicator
       })
     );
     page.getByText("Welcome! Start entering your todos below.");
@@ -77,27 +77,24 @@ test.describe("existing admin user", () => {
 });
 
 test.describe("when marking a todo complete", () => {
-  test("times out the request and throws an error if the call takes longer than 3 seconds", async ({
+  test("times out the request and throws an error if the call takes longer than 2 seconds", async ({
     page,
   }) => {
-    const expectedError = "Oops! Updating the todo failed.";
-
     page.goto(
       buildUrl("/", {
         userId: personas.manyTodos.id,
         customResponses: [
           {
-            delay: 3100,
+            delay: 2100,
             handler: "PUT /todo/:id",
           },
         ],
       })
     );
 
-    expect(await toggleComplete(page, "Ship Cybertruck")).toThrow(
-      expectedError
-    );
-    await expect(page.getByText(expectedError)).toBeVisible();
+    await page.getByText("Ship Cybertruck").click();
+    await expect(page.getByText("Toggling...")).toBeVisible();
+    await expect(page.getByText("Toggling the todo failed.")).toBeVisible(); // Should show an error message after the timeout is reached.
   });
 });
 
