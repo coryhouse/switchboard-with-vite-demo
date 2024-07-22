@@ -80,13 +80,6 @@ test.describe("when marking a todo complete", () => {
   }) => {
     const expectedError = "Oops! Updating the todo failed.";
 
-    Cypress.on("uncaught:exception", (err) => {
-      // Returning false here prevents Cypress from failing the test
-      // So check for the expected error message.
-      if (err.message.includes(expectedError)) return false;
-      return true;
-    });
-
     page.goto(
       buildUrl("/", {
         userId: personas.manyTodos.id,
@@ -99,8 +92,10 @@ test.describe("when marking a todo complete", () => {
       })
     );
 
-    toggleComplete(page, "Ship Cybertruck");
-    page.getByText(expectedError);
+    expect(await toggleComplete(page, "Ship Cybertruck")).toThrow(
+      expectedError
+    );
+    await expect(page.getByText(expectedError)).toBeVisible();
   });
 });
 
