@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { setupWorker, SetupWorkerApi } from "msw";
+import { setupWorker, SetupWorkerApi } from "msw/browser";
 import { HttpSettings } from "../types/types";
 
 /** Start Mock Service Worker with the provided config and return true when ready. */
