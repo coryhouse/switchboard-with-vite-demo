@@ -38,7 +38,7 @@ test.describe("devtools", () => {
       ).not.toBeChecked();
 
       // Should have close via escape on by default
-      await expect(page.getByLabel("Close via escape key")).not.toBeChecked();
+      await expect(page.getByLabel("Close via escape key")).toBeChecked();
 
       // Should have 0 Global delay by default
       await expect(page.getByLabel("Global Delay")).toHaveAttribute(
