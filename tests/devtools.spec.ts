@@ -17,26 +17,34 @@ test.describe("devtools", () => {
   });
 
   test.describe("defaults", () => {
-    test("uses fallback defaults when no optional default overrides are provided", ({
+    test("uses fallback defaults when no optional default overrides are provided", async ({
       page,
     }) => {
-      page.goto("/");
-      page.getByLabel("Persona");
+      await page.goto("/");
+      await expect(page.getByLabel("Persona")).toBeVisible();
+
       // Should default to open
-      page.getByRole("button", { name: "Close DevTools" });
+      await expect(
+        page.getByRole("button", { name: "Close DevTools" })
+      ).toBeVisible();
 
       // Should display in top left by default
-      page.locator(".top-0");
-      page.locator(".left-0");
+      await expect(page.locator(".top-0")).toHaveCount(1);
+      await expect(page.locator(".left-0")).toHaveCount(1);
 
       // Should have close via outside click off by default
-      expect(page.getByLabel("Close via outside click")).not.toBeChecked();
+      await expect(
+        page.getByLabel("Close via outside click")
+      ).not.toBeChecked();
 
       // Should have close via escape on by default
-      expect(page.getByLabel("Close via escape key")).not.toBeChecked();
+      await expect(page.getByLabel("Close via escape key")).not.toBeChecked();
 
       // Should have 0 Global delay by default
-      expect(page.getByLabel("Global Delay")).toHaveAttribute("value", "0");
+      await expect(page.getByLabel("Global Delay")).toHaveAttribute(
+        "value",
+        "0"
+      );
     });
   });
 
@@ -52,7 +60,10 @@ test.describe("devtools", () => {
 
   test.describe('when the "Copy Settings" button is clicked', () => {
     // Note: We don't need to test that the URL actually works here since all other tests do that via the visitUrl command.
-    test.only("should copy the settings to the clipboard", async ({ page }) => {
+    test.only("should copy the settings to the clipboard", async ({
+      page,
+      context,
+    }) => {
       // Overriding ALL settings to assure they all show up in the generated URL, and are reflected upon load.
       page.goto(
         buildUrl("http://localhost:5173/", {
@@ -76,16 +87,23 @@ test.describe("devtools", () => {
 
       await page.getByRole("button", { name: "Copy Settings" }).click();
 
+      // Grant clipboard permissions to browser context
+      await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+
       // Should change the button's label upon click
-      page.getByRole("button", { name: "Copied ✅" }).then(() => {
-        cy.window().then((win) => {
-          win.navigator.clipboard.readText().then((text) => {
-            const expectedUrl =
-              "http://127.0.0.1:5173/todos?position=%22top-right%22&openByDefault=false&delay=100&customResponses=%5B%7B%22delay%22%3A1%2C%22handler%22%3A%22DELETE+%2Ftodo%2F%3Aid%22%2C%22status%22%3A201%2C%22response%22%3A%22test%22%7D%5D&userId=2";
-            expect(text).to.eq(expectedUrl);
-          });
-        });
-      });
+      await expect(
+        page.getByRole("button", { name: "Copied ✅" })
+      ).toBeVisible();
+
+      // Get clipboard content after the link/button has been clicked
+      const handle = await page.evaluateHandle(() =>
+        navigator.clipboard.readText()
+      );
+      const clipboardContent = await handle.jsonValue();
+
+      expect(clipboardContent).toEqual(
+        "http://127.0.0.1:5173/todos?position=%22top-right%22&openByDefault=false&delay=100&customResponses=%5B%7B%22delay%22%3A1%2C%22handler%22%3A%22DELETE+%2Ftodo%2F%3Aid%22%2C%22status%22%3A201%2C%22response%22%3A%22test%22%7D%5D&userId=2"
+      );
     });
   });
 });
