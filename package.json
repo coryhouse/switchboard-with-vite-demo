@@ -39,7 +39,6 @@
   "devDependencies": {
     "@playwright/test": "^1.45.2",
     "@tanstack/react-query": "^5.51.11",
-    "@testing-library/cypress": "^10.0.2",
     "@testing-library/dom": "^10.3.2",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
@@ -53,7 +52,6 @@
     "@vitest/ui": "^2.0.3",
     "autoprefixer": "^10.4.19",
     "cross-env": "^7.0.3",
-    "cypress": "^13.13.1",
     "eslint": "^8.31.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
