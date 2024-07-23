@@ -32,6 +32,7 @@ npx playwright test
 
 ## Roadmap
 
+- Create monorepo to separate the library from the demo app
 - Show integration with react-query
 - Support page-specific settings
 - Support other JS frameworks
