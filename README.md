@@ -32,6 +32,8 @@ npx playwright test
 
 ## Roadmap
 
+- Use URL to configure msw scenarios instead of state
+- Group devtools settings under a single encoded object, and encode via an efficient library like
 - Create monorepo to separate the library from the demo app
 - Show integration with react-query
 - Support page-specific settings
