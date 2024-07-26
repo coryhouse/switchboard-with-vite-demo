@@ -22,7 +22,7 @@ export const Default: Story = {
     customSettings: {},
     defaults: {},
     httpSettings: {
-      requestHandlers: [],
+      requestHandlers: () => [],
     },
     ErrorFallback: ErrorFallback,
   },

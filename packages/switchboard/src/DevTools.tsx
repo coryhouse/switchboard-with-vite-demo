@@ -58,8 +58,8 @@ interface DevToolsProps<TCustomSettings> {
   /** Specify a keyboard shortcut that toggles the window open/closed */
   openKeyboardShortcut?: KeyboardShortcut;
 
-  /** Custom content and settings to render inside the devtools */
-  children: React.ReactNode;
+  /** Optional custom content and settings to render inside the devtools */
+  children?: React.ReactNode;
 
   /** Component to render when an error occurs in the app root. **/
   ErrorFallback: ComponentType<FallbackProps>;
@@ -83,29 +83,29 @@ export default function DevTools<TCustomSettings, THandler>({
   // These settings use the useDevToolsState hook so that the settings persist in localStorage and are optionally initialized via the URL
   const [openByDefault, setOpenByDefault] = useDevToolsState(
     "openByDefault",
-    defaults.openByDefault
+    defaults.openByDefault,
   );
 
   const [isOpen, setIsOpen] = useState(openByDefault);
 
   const [closeViaOutsideClick, setCloseViaOutsideClick] = useDevToolsState(
     "closeViaOutsideClick",
-    defaults.closeViaOutsideClick
+    defaults.closeViaOutsideClick,
   );
 
   const [closeViaEscapeKey, setCloseViaEscapeKey] = useDevToolsState(
     "closeViaEscapeKey",
-    defaults.closeViaEscapeKey
+    defaults.closeViaEscapeKey,
   );
 
   const [delay, setDelay, delayChanged] = useDevToolsState(
     "delay",
-    defaults.delay
+    defaults.delay,
   );
 
   const [position, setPosition] = useDevToolsState<DevToolsPosition>(
     "position",
-    defaults.position
+    defaults.position,
   );
 
   const [customResponses, setCustomResponses] = useDevToolsState<
@@ -166,7 +166,7 @@ export default function DevTools<TCustomSettings, THandler>({
       await writeToClipboard(url);
       if (url.length > maxUrlLength) {
         alert(
-          `Warning: The URL copied to your clipboard may not work in all browsers because it's over ${maxUrlLength} characters. To reduce the length, consider redesigning your settings state to store identifiers (such as recordId=1) instead of specifying raw data.`
+          `Warning: The URL copied to your clipboard may not work in all browsers because it's over ${maxUrlLength} characters. To reduce the length, consider redesigning your settings state to store identifiers (such as recordId=1) instead of specifying raw data.`,
         );
       }
     } catch (err) {
@@ -205,7 +205,7 @@ export default function DevTools<TCustomSettings, THandler>({
             "right-0": position.includes("right"),
             "left-0": position.includes("left"),
           },
-          className
+          className,
         )}
       >
         {isOpen ? (
@@ -253,8 +253,8 @@ export default function DevTools<TCustomSettings, THandler>({
                     .filter(
                       (rh) =>
                         !customResponses.some(
-                          (r) => r.handler === rh.info.header
-                        )
+                          (r) => r.handler === rh.info.header,
+                        ),
                     )
                     .sort((a, b) => a.info.header.localeCompare(b.info.header))
                     .map((rh) => (
