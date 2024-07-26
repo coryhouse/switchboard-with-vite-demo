@@ -1,11 +1,8 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig((options) => ({
-  entryPoints: [
-    "src/DevTools.tsx",
-    "src/useDevToolsState.ts",
-    "src/urlUtils.ts",
-  ],
+  entry: ["src/DevTools.tsx", "src/useDevToolsState.ts", "src/urlUtils.ts"],
+  clean: true,
   format: ["cjs", "esm"],
   dts: true,
   sourcemap: true,
