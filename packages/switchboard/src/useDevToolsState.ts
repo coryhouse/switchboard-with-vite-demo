@@ -1,5 +1,17 @@
 import { useCallback, useState } from "react";
-import { getUrlWithUpdatedQuery } from "./urlUtils";
+
+/** Returns a string that contains the current URL with the specified key and value in the querystring */
+function getUrlWithUpdatedQuery(url: URL, key: string, value: unknown = null) {
+  const urlWithoutQuerystring = url.href.split("?")[0];
+  const params = new URLSearchParams(url.search);
+  // Remove existing querystring if it exists. Here's why:
+  // 1. This assures the newly generated URL doesn't contain the param twice.
+  // 2. We only add the param if a value is provided,
+  // so removing it cleans up the URL if no value has been provided for the key.
+  params.delete(key);
+  if (value) params.append(key, JSON.stringify(value));
+  return urlWithoutQuerystring + "?" + params.toString();
+}
 
 export type DevToolsStateOptions = {
   /** Set to true to show values that match the default value in the URL.

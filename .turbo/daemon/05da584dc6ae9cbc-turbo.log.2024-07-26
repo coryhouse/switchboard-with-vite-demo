@@ -126,3 +126,49 @@
 2024-07-26T17:44:42.785498Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
 2024-07-26T17:49:15.505514Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("tailwind.config.cjs"), AnchoredSystemPathBuf("apps/demo/tailwind.config.cjs")}
 2024-07-26T17:49:15.505543Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("switchboard-demo"), path: AnchoredSystemPathBuf("apps/demo") }}))
+2024-07-26T17:50:52.951635Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/40.cookie")}
+2024-07-26T17:50:52.951645Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-07-26T17:50:53.451196Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/switchboard/tsup.config.bundled_imbmly3swpf.mjs"), AnchoredSystemPathBuf("packages/shared/tsup.config.bundled_inwsdwaejnc.mjs")}
+2024-07-26T17:50:53.451206Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("switchboard"), path: AnchoredSystemPathBuf("packages/switchboard") }, WorkspacePackage { name: Other("@repo/shared"), path: AnchoredSystemPathBuf("packages/shared") }}))
+2024-07-26T17:50:53.507287Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-07-26T17:50:53.555380Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-07-26T17:51:45.051268Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("turbo.json")}
+2024-07-26T17:51:45.051278Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(All)
+2024-07-26T17:51:56.559243Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/41.cookie"), AnchoredSystemPathBuf(".turbo/cookies/42.cookie")}
+2024-07-26T17:51:56.559821Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-07-26T17:51:56.649947Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/43.cookie"), AnchoredSystemPathBuf("packages/switchboard/.turbo"), AnchoredSystemPathBuf(".turbo/cookies/44.cookie")}
+2024-07-26T17:51:56.649957Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("switchboard"), path: AnchoredSystemPathBuf("packages/switchboard") }}))
+2024-07-26T17:51:56.649973Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-07-26T17:51:56.950897Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/switchboard/tsup.config.bundled_n0oluzyzl5.mjs"), AnchoredSystemPathBuf("packages/shared/tsup.config.bundled_vx0ritttqm.mjs")}
+2024-07-26T17:51:56.950908Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@repo/shared"), path: AnchoredSystemPathBuf("packages/shared") }, WorkspacePackage { name: Other("switchboard"), path: AnchoredSystemPathBuf("packages/switchboard") }}))
+2024-07-26T17:51:57.002685Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-07-26T17:51:57.002703Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-07-26T17:52:22.449498Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/46.cookie"), AnchoredSystemPathBuf(".turbo/cookies/45.cookie")}
+2024-07-26T17:52:22.449508Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-07-26T17:52:22.549428Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/47.cookie"), AnchoredSystemPathBuf(".turbo/cookies/48.cookie")}
+2024-07-26T17:52:22.549439Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-07-26T17:54:08.150048Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("playwright.config.ts"), AnchoredSystemPathBuf("apps/demo/playwright.config.ts")}
+2024-07-26T17:54:08.150061Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("switchboard-demo"), path: AnchoredSystemPathBuf("apps/demo") }}))
+2024-07-26T17:55:46.648346Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/switchboard/src/urlUtils.ts")}
+2024-07-26T17:55:46.648355Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("switchboard"), path: AnchoredSystemPathBuf("packages/switchboard") }}))
+2024-07-26T17:56:01.848397Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/switchboard/src/useDevToolsState.ts")}
+2024-07-26T17:56:01.848406Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("switchboard"), path: AnchoredSystemPathBuf("packages/switchboard") }}))
+2024-07-26T17:57:18.147615Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/49.cookie")}
+2024-07-26T17:57:18.147625Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-07-26T17:57:18.248238Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/50.cookie"), AnchoredSystemPathBuf(".turbo/cookies/51.cookie")}
+2024-07-26T17:57:18.248247Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-07-26T17:57:18.651457Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/switchboard/tsup.config.bundled_bs3a2u0ptgi.mjs")}
+2024-07-26T17:57:18.651474Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("switchboard"), path: AnchoredSystemPathBuf("packages/switchboard") }}))
+2024-07-26T17:57:18.701839Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-07-26T17:57:20.847468Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cache/b4ea938900b3ae9b.tar.zst"), AnchoredSystemPathBuf(".turbo/cookies/52.cookie"), AnchoredSystemPathBuf(".turbo/cookies/53.cookie"), AnchoredSystemPathBuf(".turbo/cache/b4ea938900b3ae9b-meta.json")}
+2024-07-26T17:57:20.847502Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-07-26T17:57:44.447664Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/demo/tests/todo-app.spec.ts")}
+2024-07-26T17:57:44.447679Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("switchboard-demo"), path: AnchoredSystemPathBuf("apps/demo") }}))
+2024-07-26T17:57:44.447705Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-07-26T17:59:31.846241Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/switchboard/src/clipboardUtils.ts"), AnchoredSystemPathBuf("packages/switchboard/src/utils/clipboardUtils.ts")}
+2024-07-26T17:59:31.846249Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("switchboard"), path: AnchoredSystemPathBuf("packages/switchboard") }}))
+2024-07-26T17:59:36.446170Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/switchboard/src/utils")}
+2024-07-26T17:59:36.446181Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("switchboard"), path: AnchoredSystemPathBuf("packages/switchboard") }}))
+2024-07-26T17:59:36.446197Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-07-26T18:05:05.244849Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/switchboard/src/DevTools.tsx")}
+2024-07-26T18:05:05.244867Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("switchboard"), path: AnchoredSystemPathBuf("packages/switchboard") }}))

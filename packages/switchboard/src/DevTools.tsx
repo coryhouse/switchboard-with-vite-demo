@@ -16,7 +16,7 @@ import {
   DevToolsDefaults,
   DevToolsConfigBase,
 } from "./types/types";
-import { writeToClipboard } from "./utils/clipboardUtils";
+import { writeToClipboard } from "./clipboardUtils";
 import { useDevToolsState } from "./useDevToolsState";
 import Input from "@repo/shared/input";
 import { useWorker } from "./useWorker";
