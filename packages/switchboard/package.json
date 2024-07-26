@@ -1,0 +1,66 @@
+{
+  "name": "switchboard",
+  "version": "0.0.1",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./DevTools": {
+      "types": "./DevTools.tsx",
+      "import": "./dist/DevTools.mjs",
+      "require": "./dist/DevTools.js"
+    },
+    "./useDevToolsState": {
+      "types": "./useDevToolsState.ts",
+      "import": "./dist/useDevToolsState.mjs",
+      "require": "./dist/useDevToolsState.js"
+    },
+    "./urlUtils": {
+      "types": "./urlUtils.ts",
+      "import": "./dist/urlUtils.mjs",
+      "require": "./dist/urlUtils.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint src/**/* --ext .ts,.tsx,.js,.jsx"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "react": ">16",
+    "react-dom": ">16",
+    "react-error-boundary": "^4.0.13",
+    "react-use-keypress": "^1.3.1",
+    "tailwindcss": "^3.4.6"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.2",
+    "@repo/shared": "workspace:*",
+    "@types/node": "^20.14.11",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
+    "autoprefixer": "^10.4.19",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.31.0",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "jsdom": "^24.1.1",
+    "msw": "^2.3.2",
+    "postcss": "^8.4.39",
+    "rollup": "^4.19.0",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "sass": "^1.77.8",
+    "tsup": "^8.2.2",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "react": ">16",
+    "react-dom": ">16"
+  }
+}
