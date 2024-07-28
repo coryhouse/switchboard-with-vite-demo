@@ -16,34 +16,39 @@
       "require": "./dist/delete-button.js"
     },
     "./field": {
-      "types": "./components/field.tsx",
+      "types": "./src/field.tsx",
       "import": "./dist/field.mjs",
       "require": "./dist/field.js"
     },
     "./input": {
-      "types": "./components/input.tsx",
+      "types": "./src/input.tsx",
       "import": "./dist/input.mjs",
       "require": "./dist/input.js"
     },
     "./label": {
-      "types": "./components/label.tsx",
+      "types": "./src/label.tsx",
       "import": "./dist/label.mjs",
       "require": "./dist/label.js"
     },
     "./select": {
-      "types": "./components/select.tsx",
+      "types": "./src/select.tsx",
       "import": "./dist/select.mjs",
       "require": "./dist/select.js"
+    },
+    "./shared.css": {
+      "import": "./dist/shared.css",
+      "require": "./dist/shared.css"
     }
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && pnpm run build:tailwind",
     "dev": "tsup --watch",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
     "lint": "eslint src/**/* --ext .ts,.tsx,.js,.jsx",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "build:tailwind": "tailwindcss -o dist/shared.css"
   },
   "dependencies": {
     "clsx": "^2.1.1",
