@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/react";
 import "../dist/switchboard.css";
+import "@repo/shared/shared.css";
 
 const preview: Preview = {
   parameters: {
