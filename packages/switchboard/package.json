@@ -1,6 +1,7 @@
 {
   "name": "switchboard",
   "version": "0.0.1",
+  "type": "module",
   "files": [
     "dist"
   ],
@@ -22,11 +23,12 @@
     }
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && pnpm run build:tailwind",
     "dev": "tsup --watch",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
+    "lint": "eslint src/**/* --ext .ts,.tsx,.js,.jsx",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build:tailwind": "tailwindcss -o dist/switchboard.css"
