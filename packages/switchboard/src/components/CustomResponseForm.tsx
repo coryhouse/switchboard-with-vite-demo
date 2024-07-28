@@ -1,7 +1,7 @@
 import { customResponseDefaults } from "../DevTools";
 import { CustomResponse } from "../types/types";
-import DeleteButton from "@repo/shared/delete-button";
-import Input from "@repo/shared/input";
+import DeleteButton from "../../../shared/src/delete-button";
+import Input from "../../../shared/src/input";
 
 type CustomResponseFormProps<THandler> = {
   customResponse: CustomResponse<THandler>;
@@ -43,8 +43,8 @@ export default function CustomResponseForm<THandler>({
                       ...s,
                       delay: parseInt(e.target.value),
                     }
-                  : s
-              )
+                  : s,
+              ),
             )
           }
         />
@@ -64,8 +64,8 @@ export default function CustomResponseForm<THandler>({
                       ...s,
                       status: parseInt(e.target.value),
                     }
-                  : s
-              )
+                  : s,
+              ),
             )
           }
         />
@@ -86,8 +86,8 @@ export default function CustomResponseForm<THandler>({
                       ...s,
                       response: e.target.value,
                     }
-                  : s
-              )
+                  : s,
+              ),
             )
           }
         />

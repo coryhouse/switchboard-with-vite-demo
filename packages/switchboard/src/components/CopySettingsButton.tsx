@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "@repo/shared/button";
+import Button from "../../../shared/src/button";
 
 // TODO: need this export?
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

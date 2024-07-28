@@ -1,4 +1,4 @@
-import Button, { ButtonProps } from "@repo/shared/button";
+import Button, { ButtonProps } from "../../../shared/src/button";
 
 export default function OpenButton(props: ButtonProps) {
   return (

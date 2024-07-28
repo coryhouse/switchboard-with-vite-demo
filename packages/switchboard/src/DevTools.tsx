@@ -1,13 +1,13 @@
 import React, { useState, useRef, ComponentType } from "react";
-import Button from "@repo/shared/button";
+import Button from "../../shared/src/button";
 import cx from "clsx";
 import CloseButton from "./components/CloseButton";
 import OpenButton from "./components/OpenButton";
 import useKeypress from "react-use-keypress";
 import useOutsideClick from "./useOutsideClick";
 import Checkbox from "./components/Checkbox";
-import Select from "@repo/shared/select";
-import Field from "@repo/shared/field";
+import Select from "../../shared/src/select";
+import Field from "../../shared/src/field";
 import { buildUrl } from "./urlUtils";
 import {
   CustomResponse,
@@ -18,7 +18,7 @@ import {
 } from "./types/types";
 import { writeToClipboard } from "./clipboardUtils";
 import { useDevToolsState } from "./useDevToolsState";
-import Input from "@repo/shared/input";
+import Input from "../../shared/src/input";
 import { useWorker } from "./useWorker";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import HttpSettingForm from "./components/CustomResponseForm";
@@ -180,7 +180,7 @@ export default function DevTools<TCustomSettings, THandler>({
     ...customSettings,
   });
 
-  if (!isReady) return <p>Initializing...</p>;
+  // if (!isReady) return <p>Initializing...</p>;
 
   const hasAppBehaviorChanges =
     delay !== defaults.delay || customResponses.length > 0;
