@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react";
-import "../dist/build.css";
+import "../dist/switchboard.css";
 
 const preview: Preview = {
   parameters: {
