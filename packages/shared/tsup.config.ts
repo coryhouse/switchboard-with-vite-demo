@@ -2,12 +2,12 @@ import { defineConfig } from "tsup";
 
 export default defineConfig((options) => ({
   entryPoints: [
-    "components/button.tsx",
-    "components/delete-button.tsx",
-    "components/field.tsx",
-    "components/input.tsx",
-    "components/label.tsx",
-    "components/select.tsx",
+    "src/button.tsx",
+    "src/delete-button.tsx",
+    "src/field.tsx",
+    "src/input.tsx",
+    "src/label.tsx",
+    "src/select.tsx",
   ],
   format: ["cjs", "esm"],
   dts: true,
