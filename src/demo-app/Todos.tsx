@@ -90,13 +90,13 @@ export default function Todos() {
           </div>
 
           {todos.length === 0 && (
-            <p className="mb-4">Welcome! Start entering your todos below.</p>
+            <p className="mb-4">Welcome! Enter todos below.</p>
           )}
 
           <form onSubmit={onSubmit}>
             <Input
               id="todo"
-              label="What do you need to do?"
+              label="Task"
               type="text"
               value={todo}
               onChange={(e) => setTodo(e.target.value)}
