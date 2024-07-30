@@ -2,7 +2,7 @@ import App from "./App";
 import DevTools from "../DevTools";
 import Select from "../components/Select";
 import { mockPersonas } from "./mocks/data/personas.mocks";
-import { useDevToolsState } from "../hooks/useDevToolsState";
+import { useDevToolsState } from "react-switchboard";
 import Field from "../components/Field";
 import { requestHandlers } from "./mocks/handlers/handlers";
 import useUserSync from "./useUserSync";
