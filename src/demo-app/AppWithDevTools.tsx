@@ -98,7 +98,7 @@ export default function AppWithDevTools() {
                 addTodo(simulateAdd);
               }}
             >
-              Add
+              Add Todo
             </Button>
           </Field>
         )}
@@ -119,7 +119,7 @@ export default function AppWithDevTools() {
                 setSimulateDelete("");
               }}
             >
-              Delete
+              Delete Todo
             </Button>
           </Field>
         )}

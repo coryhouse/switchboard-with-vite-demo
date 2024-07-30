@@ -59,7 +59,7 @@ test.describe("devtools", () => {
   });
 
   test.describe('when the "Copy Settings" button is clicked', () => {
-    // Note: We don't need to test that the URL actually works here since all other tests do that via the visitUrl command.
+    // Note: We don't need to test that the URL actually works here since all other tests do that via buildUrl.
     test("should copy the settings to the clipboard", async ({
       page,
       context,
