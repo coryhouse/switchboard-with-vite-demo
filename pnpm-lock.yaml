@@ -23,6 +23,9 @@ importers:
       react-router-dom:
         specifier: ^6.25.1
         version: 6.25.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-switchboard:
+        specifier: /Users/coryhouse/Projects/react-switchboard/react-switchboard-0.0.15.tgz
+        version: file:../react-switchboard/react-switchboard-0.0.15.tgz(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4)
       react-use-keypress:
         specifier: ^1.3.1
         version: 1.3.1(react@18.3.1)
@@ -246,6 +249,9 @@ packages:
 
   '@bundled-es-modules/statuses@1.0.1':
     resolution: {integrity: sha512-yn7BklA5acgcBr+7w064fGV+SGIFySjCKpqjcWgBAIfrAkY+4GQTJJHQMeT3V/sgz23VTEVV8TtOmkvJAhFVfg==}
+
+  '@bundled-es-modules/tough-cookie@0.1.6':
+    resolution: {integrity: sha512-dvMHbL464C0zI+Yqxbz6kZ5TOEp7GLW+pry/RWndAR8MJQAXZ2rPmIs8tziTZjeIyhSNZgZbCePtfSbdWqStJw==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -671,6 +677,9 @@ packages:
 
   '@types/statuses@2.0.5':
     resolution: {integrity: sha512-jmIUGWrAiwu3dZpxntxieC+1n/5c3mjrImkmOSQ2NC5uP6cYO4aAZDdSmRcI5C1oiTmqlZGHC+/NmJrKogbP5A==}
+
+  '@types/tough-cookie@4.0.5':
+    resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
 
   '@types/wrap-ansi@3.0.0':
     resolution: {integrity: sha512-ltIpx+kM7g/MLRZfkbL7EsCEjfzCcScLpkg37eXEtx5kmrAKBkTJwd1GIAjDSL8wTpM6Hzn5YO4pSb91BEwu1g==}
@@ -1720,6 +1729,16 @@ packages:
       typescript:
         optional: true
 
+  msw@2.3.4:
+    resolution: {integrity: sha512-sHMlwrajgmZSA2l1o7qRSe+azm/I+x9lvVVcOxAzi4vCtH8uVPJk1K5BQYDkzGl+tt0RvM9huEXXdeGrgcc79g==}
+    engines: {node: '>=18'}
+    hasBin: true
+    peerDependencies:
+      typescript: '>= 4.7.x'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   mute-stream@1.0.0:
     resolution: {integrity: sha512-avsJQhyd+680gKXyG/sQc0nXaC6rBkPOfyHYcFb9+hdkqQkR9bdnkJ0AMZhke0oesPqIO+mFFJ+IdBc7mst4IA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
@@ -1984,6 +2003,13 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
+
+  react-switchboard@file:../react-switchboard/react-switchboard-0.0.15.tgz:
+    resolution: {integrity: sha512-x6RH/zKIRV6HnulS/6wYnp6W0tM1OiIwjqJ+BS2RB2H8Uh0RycZ9yq92+efOWNJ+mvH0XVFpKIo8ozzRWSJufQ==, tarball: file:../react-switchboard/react-switchboard-0.0.15.tgz}
+    version: 0.0.15
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
 
   react-use-keypress@1.3.1:
     resolution: {integrity: sha512-fo+LQrxviMcZt7efCFPc6CX9/oNEPD+MJ/qSs4nK3/lyRNtquhG9f1J8GQq2VFfIYUVDUdPKz8fGIwErO1Pcuw==}
@@ -2692,6 +2718,11 @@ snapshots:
     dependencies:
       statuses: 2.0.1
 
+  '@bundled-es-modules/tough-cookie@0.1.6':
+    dependencies:
+      '@types/tough-cookie': 4.0.5
+      tough-cookie: 4.1.4
+
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
 
@@ -3032,6 +3063,8 @@ snapshots:
       csstype: 3.1.3
 
   '@types/statuses@2.0.5': {}
+
+  '@types/tough-cookie@4.0.5': {}
 
   '@types/wrap-ansi@3.0.0': {}
 
@@ -4260,6 +4293,28 @@ snapshots:
     optionalDependencies:
       typescript: 5.5.4
 
+  msw@2.3.4(typescript@5.5.4):
+    dependencies:
+      '@bundled-es-modules/cookie': 2.0.0
+      '@bundled-es-modules/statuses': 1.0.1
+      '@bundled-es-modules/tough-cookie': 0.1.6
+      '@inquirer/confirm': 3.1.17
+      '@mswjs/interceptors': 0.29.1
+      '@open-draft/until': 2.1.0
+      '@types/cookie': 0.6.0
+      '@types/statuses': 2.0.5
+      chalk: 4.1.2
+      graphql: 16.9.0
+      headers-polyfill: 4.0.3
+      is-node-process: 1.2.0
+      outvariant: 1.4.3
+      path-to-regexp: 6.2.2
+      strict-event-emitter: 0.5.1
+      type-fest: 4.23.0
+      yargs: 17.7.2
+    optionalDependencies:
+      typescript: 5.5.4
+
   mute-stream@1.0.0: {}
 
   mz@2.7.0:
@@ -4489,6 +4544,16 @@ snapshots:
     dependencies:
       '@remix-run/router': 1.18.0
       react: 18.3.1
+
+  react-switchboard@file:../react-switchboard/react-switchboard-0.0.15.tgz(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4):
+    dependencies:
+      msw: 2.3.4(typescript@5.5.4)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-error-boundary: 4.0.13(react@18.3.1)
+      react-use-keypress: 1.3.1(react@18.3.1)
+    transitivePeerDependencies:
+      - typescript
 
   react-use-keypress@1.3.1(react@18.3.1):
     dependencies:

@@ -1,14 +1,11 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import Button from "./components/Button";
 import cx from "clsx";
 import CloseButton from "./components/CloseButton";
 import OpenButton from "./components/OpenButton";
-import useKeypress from "react-use-keypress";
-import useOutsideClick from "./hooks/useOutsideClick";
 import Checkbox from "./components/Checkbox";
 import Select from "./components/Select";
 import Field from "./components/Field";
-import { buildUrl } from "./utils/url-utils";
 import {
   CustomResponse,
   HttpSettings,
@@ -16,10 +13,8 @@ import {
   DevToolsDefaults,
   DevToolsConfigBase,
 } from "./types/types";
-import { writeToClipboard } from "./utils/clipboard-utils";
-import { useDevToolsState } from "./hooks/useDevToolsState";
+import { useSwitchboard } from "react-switchboard";
 import Input from "./components/Input";
-import { useWorker } from "./hooks/useWorker";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./demo-app/ErrorFallback";
 import HttpSettingForm from "./components/CustomResponseForm";
@@ -71,115 +66,27 @@ export default function DevTools<TCustomSettings>({
   className,
   ...rest
 }: DevToolsProps<TCustomSettings>) {
-  // Passing an empty ref since merely invoking here to get the array so we can display the list of handlers in DevTools.
-  const requestHandlers = httpSettings.requestHandlers(useRef());
-
-  const defaults = getDefaults();
-  // These settings use the useDevToolsState hook so that the settings persist in localStorage and are optionally initialized via the URL
-  const [openByDefault, setOpenByDefault] = useDevToolsState(
-    "openByDefault",
-    defaults.openByDefault
-  );
-
-  const [isOpen, setIsOpen] = useState(openByDefault);
-
-  const [closeViaOutsideClick, setCloseViaOutsideClick] = useDevToolsState(
-    "closeViaOutsideClick",
-    defaults.closeViaOutsideClick
-  );
-
-  const [closeViaEscapeKey, setCloseViaEscapeKey] = useDevToolsState(
-    "closeViaEscapeKey",
-    defaults.closeViaEscapeKey
-  );
-
-  const [delay, setDelay, delayChanged] = useDevToolsState(
-    "delay",
-    defaults.delay
-  );
-
-  const [position, setPosition] = useDevToolsState<DevToolsPosition>(
-    "position",
-    defaults.position
-  );
-
-  const [customResponses, setCustomResponses] = useDevToolsState<
-    CustomResponse[]
-  >("customResponses", []);
-
-  const devToolsWindowRef = useRef<HTMLDivElement>(null);
-
-  // Returns defaults that fallback to hard-coded defaults if the user doesn't specify a preference.
-  // Note that these defaults only apply if the URL and localStorage don't specify a preference.
-  function getDefaults() {
-    const defaults: DevToolsDefaults = {
-      closeViaOutsideClick: rest.defaults?.closeViaOutsideClick ?? false,
-      closeViaEscapeKey: rest.defaults?.closeViaEscapeKey ?? true,
-      delay: rest.defaults?.delay ?? 0,
-      openByDefault: rest.defaults?.openByDefault ?? true,
-      position: rest.defaults?.position ?? "top-left",
-    };
-    return defaults;
-  }
-
-  useKeypress("Escape", () => {
-    if (closeViaEscapeKey) setIsOpen(false);
-  });
-
-  useKeypress(openKeyboardShortcut ? openKeyboardShortcut.key : [], (e) => {
-    if (openKeyboardShortcut?.alt && !e.altKey) return;
-    if (openKeyboardShortcut?.ctrl && !e.ctrlKey) return;
-    setIsOpen((current) => !current);
-  });
-
-  useOutsideClick(devToolsWindowRef, () => {
-    if (closeViaOutsideClick) setIsOpen(false);
-  });
-
-  const toggleOpen = () => setIsOpen(!isOpen);
-
-  // Only copy settings to the URL that have been changed from the default.
-  // This keeps the URL as short as possible.
-  function getChangedSettings() {
-    const urlConfig: Partial<DevToolsConfigBase> = {};
-    if (defaults.position !== position) urlConfig.position = position;
-    if (defaults.openByDefault !== openByDefault) {
-      urlConfig.openByDefault = openByDefault;
-    }
-    if (defaults.delay != delay) urlConfig.delay = delay;
-    if (customResponses.length > 0) urlConfig.customResponses = customResponses;
-    return urlConfig;
-  }
-
-  async function copyDevToolsSettingsUrlToClipboard() {
-    const urlConfig = getChangedSettings();
-    const url = buildUrl(window.location.href, {
-      ...urlConfig,
-      ...customSettings,
-    });
-    try {
-      await writeToClipboard(url);
-      if (url.length > 2000) {
-        alert(
-          "Warning: The URL copied to your clipboard may not work in all browsers because it's over 2000 characters. To reduce the length, consider redesigning your settings state to store identifiers (such as recordId=1) instead of specifying raw data."
-        );
-      }
-    } catch (err) {
-      () => alert("Failed to copy settings URL to clipboard");
-    }
-  }
-
-  const isReady = useWorker(httpSettings, {
+  const {
+    isOpen,
+    setIsOpen,
+    delayChanged,
     delay,
-    customResponses,
-    ...customSettings,
-  });
-
-  if (!isReady) return <p>Initializing...</p>;
-
-  const hasAppBehaviorChanges =
-    delay !== defaults.delay || customResponses.length > 0;
-
+    setDelay,
+    position,
+    setPosition,
+    // customResponses,
+    // setCustomResponses,
+    // requestHandlers,
+    closeViaEscapeKey,
+    setCloseViaEscapeKey,
+    openByDefault,
+    setOpenByDefault,
+    hasAppBehaviorChanges,
+    closeViaOutsideClick,
+    setCloseViaOutsideClick,
+    copyDevToolsSettingsUrlToClipboard,
+    devToolsWindowRef,
+  } = useSwitchboard({});
   return (
     <>
       {/* Wrap app in ErrorBoundary so DevTools continue to display upon error */}
@@ -207,7 +114,10 @@ export default function DevTools<TCustomSettings>({
         {isOpen ? (
           <>
             <div className="flex flex-row-reverse">
-              <CloseButton aria-label="Close DevTools" onClick={toggleOpen} />
+              <CloseButton
+                aria-label="Close DevTools"
+                onClick={() => setIsOpen(!isOpen)}
+              />
             </div>
             {children}
 
@@ -225,7 +135,7 @@ export default function DevTools<TCustomSettings>({
                 />
               </Field>
 
-              <Field>
+              {/* <Field>
                 <Select
                   width="full"
                   label="Customize Request Handler"
@@ -257,15 +167,15 @@ export default function DevTools<TCustomSettings>({
                       <option key={rh.info.header}>{rh.info.header}</option>
                     ))}
                 </Select>
-              </Field>
+              </Field> */}
 
-              {customResponses.map((setting) => (
+              {/* {customResponses.map((setting) => (
                 <HttpSettingForm
                   key={setting.handler}
                   customResponse={setting}
                   setCustomResponses={setCustomResponses}
                 />
-              ))}
+              ))} */}
             </details>
 
             <details className="mt-4" open>
@@ -362,7 +272,10 @@ export default function DevTools<TCustomSettings>({
             </details>
           </>
         ) : (
-          <OpenButton aria-label="Open DevTools" onClick={toggleOpen} />
+          <OpenButton
+            aria-label="Open DevTools"
+            onClick={() => setIsOpen(!isOpen)}
+          />
         )}
       </section>
     </>
