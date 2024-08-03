@@ -4,6 +4,10 @@ import { RequestHandlerConfig, Todo } from "../../demo-app-types";
 import { getCustomResponseSettings, getDelay, getUser } from "../mock-utils";
 import { z } from "zod";
 
+// Simulate DB via an in-memory array.
+let todosDb: Todo[] = [];
+let todosInitialized = false;
+
 export function getTodoHandlers(
   configRef: React.MutableRefObject<RequestHandlerConfig>
 ): RequestHandler[] {
@@ -18,13 +22,16 @@ export function getTodoHandlers(
 
       await delay(getDelay(configRef, setting?.delay));
 
-      return new Response(
-        setting?.response ?? JSON.stringify(user.response.todos),
-        {
-          status: setting?.status ?? 200,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      if (!todosInitialized) {
+        todosDb = user.response.todos;
+        todosInitialized = true;
+      }
+      const todoResponse = setting?.response ?? JSON.stringify(todosDb);
+
+      return new Response(todoResponse, {
+        status: setting?.status ?? 200,
+        headers: { "Content-Type": "application/json" },
+      });
     }),
 
     http.post("/todo", async ({ request }) => {
@@ -37,7 +44,7 @@ export function getTodoHandlers(
         return new Response(null, {
           status: 401,
         });
-      const defaultResp: Todo = {
+      const newTodo: Todo = {
         // TODO: Read the todos from memory so the reduce call below works.
         // They're in Todos.tsx's state, so how can we access them?
         // const maxTodoId = user.todos.reduce((max, t) => Math.max(max, t.id), 0);
@@ -48,23 +55,34 @@ export function getTodoHandlers(
 
       const setting = getCustomResponseSettings(configRef, "POST /todo");
       await delay(getDelay(configRef, setting?.delay));
-      return new Response(setting?.response ?? JSON.stringify(defaultResp), {
-        status: setting?.status ?? 200,
+
+      const status = setting?.status ?? 200;
+      if (status === 200) todosDb.push(newTodo);
+      console.log("Add");
+      return new Response(setting?.response ?? JSON.stringify(newTodo), {
+        status,
         headers: { "Content-Type": "application/json" },
       });
     }),
 
-    http.put("/todo/:id", async () => {
+    http.put("/todo/:id", async ({ params }) => {
       const setting = getCustomResponseSettings(configRef, "PUT /todo/:id");
       await delay(getDelay(configRef, setting?.delay));
+      todosDb = todosDb.map((t) => {
+        if (t.id === parseInt(params.id as string)) {
+          return { ...t, completed: !t.completed };
+        }
+        return t;
+      });
       return new Response(setting?.response ?? "", {
         status: setting?.status ?? 200,
       });
     }),
 
-    http.delete("/todo/:id", async () => {
+    http.delete("/todo/:id", async ({ params }) => {
       const setting = getCustomResponseSettings(configRef, "DELETE /todo/:id");
       await delay(getDelay(configRef, setting?.delay));
+      todosDb = todosDb.filter((t) => t.id !== parseInt(params.id as string));
 
       return new Response(setting?.response ?? "", {
         status: setting?.status ?? 200,

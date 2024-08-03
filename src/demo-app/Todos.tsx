@@ -24,6 +24,16 @@ export default function Todos() {
 
   const { user, logout } = useUserContext();
 
+  useEffect(function checkForNewTodoEveryFiveSeconds() {
+    const interval = setInterval(async () => {
+      const newTodos = await getTodos();
+      setTodos(newTodos);
+    }, 5000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   useEffect(() => {
     async function fetchTodos() {
       setStatus("loading");
