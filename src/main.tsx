@@ -22,20 +22,18 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <BrowserRouter>
-        <UserContextProvider>
-          <Toaster richColors position="top-right" />
-          {useDevTools ? (
-            <Suspense fallback="Loading with devtools...">
-              <AppWithDevTools />
-            </Suspense>
-          ) : (
-            <App />
-          )}
-        </UserContextProvider>
-      </BrowserRouter>
-    </ErrorBoundary>
-  </React.StrictMode>
+  <ErrorBoundary FallbackComponent={ErrorFallback}>
+    <BrowserRouter>
+      <UserContextProvider>
+        <Toaster richColors position="top-right" />
+        {useDevTools ? (
+          <Suspense fallback="Loading with devtools...">
+            <AppWithDevTools />
+          </Suspense>
+        ) : (
+          <App />
+        )}
+      </UserContextProvider>
+    </BrowserRouter>
+  </ErrorBoundary>
 );
