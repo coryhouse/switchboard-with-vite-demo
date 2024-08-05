@@ -26,7 +26,7 @@ export default function AppWithDevTools() {
   return (
     <Switchboard
       ErrorFallback={ErrorFallback}
-      httpSettings={{
+      mswSettings={{
         requestHandlers,
         startOptions: {
           // Don't log mocked requests to the browser console.
@@ -46,8 +46,8 @@ export default function AppWithDevTools() {
       }}
       // Using a key to reinitialize the app when the userId changes.
       appSlot={<App key={userId} />}
-      openKeyboardShortcut={{ key: "ArrowDown", alt: true }}
     >
+      <h1>hi</h1>
       <Field>
         <Select
           width="full"
