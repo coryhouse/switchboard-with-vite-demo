@@ -47,7 +47,6 @@ export default function AppWithDevTools() {
       // Using a key to reinitialize the app when the userId changes.
       appSlot={<App key={userId} />}
     >
-      <h1>hi</h1>
       <Field>
         <Select
           width="full"
