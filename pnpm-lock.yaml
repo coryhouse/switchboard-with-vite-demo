@@ -24,8 +24,8 @@ importers:
         specifier: ^6.25.1
         version: 6.25.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-switchboard:
-        specifier: 0.0.14
-        version: 0.0.14(msw@2.3.2(typescript@5.5.4))(react@18.3.1)
+        specifier: 0.0.15
+        version: 0.0.15(msw@2.3.2(typescript@5.5.4))(react@18.3.1)
       react-use-keypress:
         specifier: ^1.3.1
         version: 1.3.1(react@18.3.1)
@@ -1988,8 +1988,8 @@ packages:
     peerDependencies:
       react: '>=16.8'
 
-  react-switchboard@0.0.14:
-    resolution: {integrity: sha512-mIMeGW3OFZvbmV7DabjDImMRTopJRr94bAmoxs/q3zG3DhE2jHNXZoiaD2+imj3Vj+EHmofEz5eIpDsOGzrJHQ==}
+  react-switchboard@0.0.15:
+    resolution: {integrity: sha512-p6W5ZKEq72FcwuHG59P+A2ECuvi+bvyLiRpLSc2B3plinV7ra0AnVQjodXD9kypGhhRpb4WvAG8Bp0AIulbrGg==}
     peerDependencies:
       msw: 2.3.4
       react: ^18.0.0
@@ -4504,7 +4504,7 @@ snapshots:
       '@remix-run/router': 1.18.0
       react: 18.3.1
 
-  react-switchboard@0.0.14(msw@2.3.2(typescript@5.5.4))(react@18.3.1):
+  react-switchboard@0.0.15(msw@2.3.2(typescript@5.5.4))(react@18.3.1):
     dependencies:
       clsx: 2.1.1
       msw: 2.3.2(typescript@5.5.4)
