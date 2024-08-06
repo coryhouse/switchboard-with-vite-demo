@@ -8,7 +8,7 @@ export function getTodoHandlers(
   configRef: React.MutableRefObject<RequestHandlerConfig>
 ): RequestHandler[] {
   return [
-    http.get("/todos", async () => {
+    http.get("http://localhost:3000/todos", async () => {
       const setting = getCustomResponseSettings(configRef, "GET /todos");
       const user = getUser(configRef);
       if (!user)
