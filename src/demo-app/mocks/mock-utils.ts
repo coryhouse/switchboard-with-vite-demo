@@ -33,5 +33,7 @@ export function getUser(
   configRef: React.MutableRefObject<RequestHandlerConfig>
 ) {
   const userId = configRef.current?.userId;
-  return mockPersonas.find((u) => u.id === userId);
+  const user = mockPersonas.find((u) => u.id === userId);
+  if (!user) throw new Error("userId not found: " + userId);
+  return user;
 }
