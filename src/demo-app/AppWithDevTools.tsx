@@ -18,16 +18,6 @@ export default function AppWithDevTools() {
         startOptions: {
           // Don't log mocked requests to the browser console.
           quiet: false,
-          // Ignore unhandled requests. Uncomment below to throw errors for unhandled requests instead.
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          // onUnhandledRequest: ({ method, url }) => {
-          // if (
-          //   url.pathname !== "/src/index.css" &&
-          //   !url.pathname.startsWith("chrome-extension:")
-          // ) {
-          //   throw new Error(`Unhandled ${method} request to ${url}`);
-          // }
-          // },
         },
       }}
       // Using a key to reinitialize the app when the userId changes.
