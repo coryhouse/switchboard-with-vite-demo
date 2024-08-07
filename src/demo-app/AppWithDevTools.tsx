@@ -8,7 +8,7 @@ import { SimulateTraffic } from "./SimulateTraffic";
 export default function AppWithDevTools() {
   // Storing only userId in devToolsState to keep localStorage and URL minimal.
   // Storing the entire persona would bloat localStorage and the URL.
-  const [userId, setUserId] = useDevToolsState<number | "">("userId", "");
+  const [userId, setUserId] = useDevToolsState<number | null>("userId", null);
 
   return (
     <Switchboard
