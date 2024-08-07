@@ -29,11 +29,9 @@ export function getUserFromLocalStorage() {
   return user;
 }
 
-export function getUser(
-  configRef: React.MutableRefObject<RequestHandlerConfig>
-) {
-  const userId = configRef.current?.userId;
-  const user = mockPersonas.find((u) => u.id === userId);
+export function getUser() {
+  const userId = localStorage.getItem("userId");
+  const user = mockPersonas.find((u) => u.id === parseInt(userId!));
   if (!user) throw new Error("userId not found: " + userId);
   return user;
 }
