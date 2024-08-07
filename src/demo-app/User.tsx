@@ -17,7 +17,7 @@ export function User({ userId, setUserId }: UserProps) {
         width="full"
         id="user"
         label="Persona"
-        value={userId}
+        value={userId ? userId.toString() : ""}
         onChange={(e) =>
           setUserId(e.target.value ? parseInt(e.target.value) : null)
         }
