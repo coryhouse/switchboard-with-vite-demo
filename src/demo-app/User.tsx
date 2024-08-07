@@ -1,16 +1,12 @@
-import React, { Dispatch, SetStateAction } from "react";
 import { mockPersonas } from "./mocks/data/personas.mocks";
 import useUserSync from "./useUserSync";
 import Field from "../components/Field";
 import Select from "../components/Select";
+import { useDevToolsState } from "react-switchboard";
+export function User() {
+  const [userId, setUserId] = useDevToolsState("userId", "");
 
-type UserProps = {
-  userId: number | "";
-  setUserId: Dispatch<SetStateAction<number | "">>;
-};
-
-export function User({ userId, setUserId }: UserProps) {
-  useUserSync(userId, setUserId);
+  useUserSync(parseInt(userId), setUserId);
 
   return (
     <Field>
@@ -19,9 +15,7 @@ export function User({ userId, setUserId }: UserProps) {
         id="user"
         label="Persona"
         value={userId}
-        onChange={(e) => {
-          setUserId(e.target.value ? parseInt(e.target.value) : "");
-        }}
+        onChange={(e) => setUserId(e.target.value)}
       >
         <option value="">Logged out</option>
         {mockPersonas.map(({ id, description, response }) => (
