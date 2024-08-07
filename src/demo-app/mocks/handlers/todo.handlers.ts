@@ -1,22 +1,24 @@
 import { getRandomNumberBelow } from "../../../utils/number-utils";
-import { RequestHandler, delay, http } from "msw";
-import { RequestHandlerConfig, Todo } from "../../demo-app-types";
-import { getCustomResponseSettings, getDelay, getUser } from "../mock-utils";
+import { RequestHandler, http } from "msw";
+import { Todo } from "../../demo-app-types";
+import {
+  delayResponse,
+  getCustomResponseSettings,
+  getUser,
+} from "../mock-utils";
 import { z } from "zod";
 
-export function getTodoHandlers(
-  configRef: React.MutableRefObject<RequestHandlerConfig>
-): RequestHandler[] {
+export function getTodoHandlers(): RequestHandler[] {
   return [
     http.get("http://localhost:3000/todos", async () => {
-      const setting = getCustomResponseSettings(configRef, "GET /todos");
-      const user = getUser(configRef);
+      const setting = getCustomResponseSettings("GET /todos");
+      const user = getUser();
       if (!user)
         return new Response(null, {
           status: 401,
         });
 
-      await delay(getDelay(configRef, setting?.delay));
+      await delayResponse();
 
       return new Response(
         setting?.response ?? JSON.stringify(user.response.todos),
@@ -32,7 +34,7 @@ export function getTodoHandlers(
         todo: z.string(),
       });
       const { todo } = todoResponseSchema.parse(await request.json());
-      const user = getUser(configRef);
+      const user = getUser();
       if (!user)
         return new Response(null, {
           status: 401,
@@ -46,8 +48,8 @@ export function getTodoHandlers(
         todo,
       };
 
-      const setting = getCustomResponseSettings(configRef, "POST /todo");
-      await delay(getDelay(configRef, setting?.delay));
+      const setting = getCustomResponseSettings("POST /todo");
+      await delayResponse();
       return new Response(setting?.response ?? JSON.stringify(defaultResp), {
         status: setting?.status ?? 200,
         headers: { "Content-Type": "application/json" },
@@ -55,16 +57,16 @@ export function getTodoHandlers(
     }),
 
     http.put("/todo/:id", async () => {
-      const setting = getCustomResponseSettings(configRef, "PUT /todo/:id");
-      await delay(getDelay(configRef, setting?.delay));
+      const setting = getCustomResponseSettings("PUT /todo/:id");
+      await delayResponse();
       return new Response(setting?.response ?? "", {
         status: setting?.status ?? 200,
       });
     }),
 
     http.delete("/todo/:id", async () => {
-      const setting = getCustomResponseSettings(configRef, "DELETE /todo/:id");
-      await delay(getDelay(configRef, setting?.delay));
+      const setting = getCustomResponseSettings("DELETE /todo/:id");
+      await delayResponse();
 
       return new Response(setting?.response ?? "", {
         status: setting?.status ?? 200,

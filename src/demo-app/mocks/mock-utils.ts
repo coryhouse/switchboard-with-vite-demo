@@ -1,3 +1,5 @@
+import { delay } from "msw";
+import { CustomResponse } from "../../types/types";
 import { Handler, RequestHandlerConfig } from "../demo-app-types";
 import { mockPersonas } from "./data/personas.mocks";
 
@@ -12,11 +14,14 @@ export function getDelay(
   return configRef.current?.delay ?? 0;
 }
 
-export function getCustomResponseSettings(
-  configRef: React.MutableRefObject<RequestHandlerConfig>,
-  handler: Handler
-) {
-  return configRef.current?.customResponses.find((r) => r.handler === handler);
+export function getCustomResponseSettings(handler: Handler) {
+  const customResponsesAsString = localStorage.getItem("customResponses");
+  if (!customResponsesAsString) return null;
+  // TODO: Use Zod to validate and type this data.
+  const customResponses = JSON.parse(
+    customResponsesAsString
+  ) as CustomResponse[];
+  return customResponses.find((r) => r.handler === handler);
 }
 
 export function getUserFromLocalStorage() {
@@ -34,4 +39,9 @@ export function getUser() {
   const user = mockPersonas.find((u) => u.id === parseInt(userId!));
   if (!user) throw new Error("userId not found: " + userId);
   return user;
+}
+
+export async function delayResponse() {
+  const waitFor = parseInt(localStorage.getItem("delay") ?? "") || 0;
+  await delay(waitFor);
 }
