@@ -1,4 +1,4 @@
-import { useEffect, useState, SetStateAction, Dispatch } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "./contexts/UserContext";
 import { mockPersonas } from "./mocks/data/personas.mocks";
@@ -8,8 +8,8 @@ import { mockPersonas } from "./mocks/data/personas.mocks";
  * aspect of the app can push a change that the other half must react to.
  * */
 export default function useUserSync(
-  userId: number | "",
-  setUserId: Dispatch<SetStateAction<number | "">>
+  userId: number | null,
+  setUserId: (val: number | null) => void
 ) {
   const { user } = useUserContext();
   const [previousUser, setPreviousUser] = useState(user);
@@ -25,11 +25,11 @@ export default function useUserSync(
   // Setting state inline will trigger a fresh render without running stale
   // effects.
   if (user !== previousUser) {
-    setUserId(user?.id ?? "");
+    setUserId(user?.id ?? null);
     setPreviousUser(user);
   }
 
-  // When the userID changes, simulate logging the user in/out.
+  // When the userId changes, simulate logging the user in/out.
   // This also handles when the app is initialized via the URL.
   useEffect(() => {
     function simulateLogin(userId: number) {
@@ -42,7 +42,7 @@ export default function useUserSync(
 
     function simulateLogout() {
       localStorage.removeItem("userId");
-      setUserId("");
+      setUserId(null);
       navigate("/");
     }
 
