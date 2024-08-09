@@ -1,6 +1,5 @@
-// NOTE: This file merely exists to run the demo app. It's NOT part of the published package.
 import React, { Suspense } from "react";
-import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import App from "./demo-app/App";
 import { ErrorBoundary } from "react-error-boundary";
 import "./index.css";
@@ -17,11 +16,7 @@ const AppWithDevTools = React.lazy(
 // This is set in .env.local.
 const useDevTools = import.meta.env.VITE_USE_DEV_TOOLS === "Y";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-
-root.render(
+createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <BrowserRouter>
