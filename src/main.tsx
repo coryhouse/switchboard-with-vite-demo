@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./demo-app/App";
 import { ErrorBoundary } from "react-error-boundary";
@@ -9,7 +9,7 @@ import { UserContextProvider } from "./demo-app/contexts/UserContext";
 import { Toaster } from "sonner";
 
 // Lazy load so it's not part of the prod bundle.
-const AppWithDevTools = React.lazy(
+const AppWithDevTools = lazy(
   () => import(/* webpackChunkName: "devtools" */ "./demo-app/AppWithDevTools")
 );
 
