@@ -1,5 +1,5 @@
 import App from "./App";
-import { useDevToolsState, Switchboard } from "react-switchboard";
+import Switchboard, { useSwitchboardState } from "react-switchboard";
 import { requestHandlers } from "./mocks/handlers/handlers";
 import ErrorFallback from "./ErrorFallback";
 import { User } from "./User";
@@ -8,7 +8,10 @@ import { SimulateTraffic } from "./SimulateTraffic";
 export default function AppWithDevTools() {
   // Storing only userId in devToolsState to keep localStorage and URL minimal.
   // Storing the entire persona would bloat localStorage and the URL.
-  const [userId, setUserId] = useDevToolsState<number | null>("userId", null);
+  const [userId, setUserId] = useSwitchboardState<number | null>(
+    "userId",
+    null
+  );
 
   return (
     <Switchboard
