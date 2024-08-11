@@ -8,8 +8,6 @@ import { User } from "./devtools/User";
 import "react-switchboard/dist/index.css";
 
 export default function AppWithDevTools() {
-  // Storing only userId in devToolsState to keep localStorage and URL minimal.
-  // Storing the entire persona would bloat localStorage and the URL.
   const [userId, setUserId] = useSwitchboardState<number | null>(
     "sb-userId",
     null
