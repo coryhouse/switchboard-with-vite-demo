@@ -9,7 +9,7 @@ import {
 import { z } from "zod";
 
 export const todoHandlers = [
-  http.get("http://localhost:3000/todos", async () => {
+  http.get("/todos", async () => {
     const setting = getCustomResponseSettings("GET /todos");
     const user = getUser();
     if (!user)
