@@ -2,6 +2,7 @@ import { delay } from "msw";
 import { Handler } from "../demo-app-types";
 import { mockPersonas } from "./data/personas.mocks";
 import { userIdKey } from "../constants/localStorage.constants";
+import { CustomResponse } from "react-switchboard";
 
 export function getCustomResponseSettings(handler: Handler) {
   const customResponsesAsString = localStorage.getItem("customResponses");
