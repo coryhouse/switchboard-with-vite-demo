@@ -24,20 +24,9 @@ export function getCustomResponseSettings(handler: Handler) {
   return customResponses.find((r) => r.handler === handler);
 }
 
-export function getUserFromLocalStorage() {
-  const userId = localStorage.getItem("userId");
-  if (userId === null) throw new Error("userId not found in localStorage");
-  if (!parseInt(userId))
-    throw new Error("userId in localStorage is not a number");
-  const user = mockPersonas.find((u) => u.id === parseInt(userId));
-  if (!user) throw new Error("User not found in localStorage: " + userId);
-  return user;
-}
-
 export function getUser() {
-  const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem(userIdKey);
   const user = mockPersonas.find((u) => u.id === parseInt(userId!));
-  if (!user) throw new Error("userId not found: " + userId);
   return user;
 }
 
