@@ -19,8 +19,6 @@
     "start": "cross-env VITE_USE_DEV_TOOLS=Y vite --strictPort --port 3000",
     "build": "vite build && tsc",
     "preview": "vite preview",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
     "lint": "eslint src/**/* --ext .ts,.tsx,.js,.jsx",
     "playwright": "pnpm exec playwright test",
