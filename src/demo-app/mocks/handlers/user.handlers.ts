@@ -1,9 +1,9 @@
 import { http } from "msw";
-import { delayResponse, getUserFromLocalStorage } from "../mock-utils";
+import { delayResponse, getUser } from "../mock-utils";
 
 export const userHandlers = [
   http.get("/user", async () => {
-    const user = getUserFromLocalStorage();
+    const user = getUser();
     if (!user)
       return new Response(null, {
         status: 401,
