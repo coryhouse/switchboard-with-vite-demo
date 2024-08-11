@@ -1,6 +1,6 @@
 import test, { expect } from "@playwright/test";
 import { devToolsPositions } from "../src/types/types";
-import { buildUrl } from "../src/utils/url-utils";
+import { buildUrl } from "../src/utils/test-utils";
 
 test.describe("devtools", () => {
   test.describe("position", () => {
