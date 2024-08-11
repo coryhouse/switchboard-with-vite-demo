@@ -1,5 +1,4 @@
-import { customResponseDefaults } from "../DevTools";
-import { CustomResponse } from "react-switchboard";
+import { CustomResponse, customResponseDefaults } from "react-switchboard";
 import DeleteButton from "./DeleteButton";
 import Input from "./Input";
 
