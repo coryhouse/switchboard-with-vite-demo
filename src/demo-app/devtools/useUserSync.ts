@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "./contexts/UserContext";
-import { mockPersonas } from "./mocks/data/personas.mocks";
+import { useUserContext } from "../contexts/UserContext";
+import { mockPersonas } from "../mocks/data/personas.mocks";
+import { userIdKey } from "../constants/localStorage.constants";
 
 /**
  * This hook keeps the app user in sync with the DevTool user, since either
@@ -36,12 +37,12 @@ export default function useUserSync(
       setUserId(userId);
       const user = mockPersonas.find(({ id }) => id === userId);
       if (!user) throw new Error("Can't find user: " + userId);
-      localStorage.setItem("userId", JSON.stringify(userId));
+      localStorage.setItem(userIdKey, JSON.stringify(userId));
       navigate("/todos");
     }
 
     function simulateLogout() {
-      localStorage.removeItem("userId");
+      localStorage.removeItem(userIdKey);
       setUserId(null);
       navigate("/");
     }
