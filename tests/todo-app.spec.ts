@@ -1,6 +1,6 @@
 import test, { expect, Page } from "@playwright/test";
 import * as personas from "../src/demo-app/mocks/data/personas.mocks";
-import { buildUrl } from "../src/utils/url-utils";
+import { buildUrl } from "./test-utils";
 
 test.describe("log in / log out", () => {
   test("logs the user in successfully via the form, and logs the user out via the logout link", async ({
