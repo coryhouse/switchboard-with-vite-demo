@@ -5,7 +5,7 @@ import { userIdKey } from "../constants/localStorage.constants";
 import { CustomResponse } from "react-switchboard";
 
 export function getCustomResponseSettings(handler: Handler) {
-  const customResponsesAsString = localStorage.getItem("customResponses");
+  const customResponsesAsString = localStorage.getItem("sb-customResponses");
   if (!customResponsesAsString) return null;
   // TODO: Use Zod to validate and type this data.
   const customResponses = JSON.parse(
