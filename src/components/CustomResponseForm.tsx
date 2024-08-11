@@ -16,7 +16,7 @@ export default function CustomResponseForm({
 
   // TODO: Support all response properties: https://mswjs.io/docs/api/response#properties
   return (
-    <fieldset className="mt-4 border p-2">
+    <fieldset className="p-2 mt-4 border">
       <legend>
         {handler}{" "}
         <DeleteButton
