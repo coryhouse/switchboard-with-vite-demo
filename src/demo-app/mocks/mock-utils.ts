@@ -20,7 +20,8 @@ export function getUser() {
   return user;
 }
 
+// TODO: Move helper to Switchboard?
 export async function delayResponse() {
-  const waitFor = parseInt(localStorage.getItem("delay") ?? "") || 0;
+  const waitFor = parseInt(localStorage.getItem("sb-delay") ?? "") || 0;
   await delay(waitFor);
 }
