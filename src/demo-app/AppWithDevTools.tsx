@@ -2,8 +2,8 @@ import App from "./App";
 import Switchboard, { useSwitchboardState } from "react-switchboard";
 import { requestHandlers } from "./mocks/handlers/handlers";
 import ErrorFallback from "./ErrorFallback";
-import { User } from "./User";
-import { SimulateTraffic } from "./SimulateTraffic";
+import { User } from "./devtools/User";
+import { SimulateTraffic } from "./devtools/SimulateTraffic";
 
 export default function AppWithDevTools() {
   // Storing only userId in devToolsState to keep localStorage and URL minimal.
