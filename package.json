@@ -22,7 +22,9 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
-    "lint": "eslint src/**/* --ext .ts,.tsx,.js,.jsx"
+    "lint": "eslint src/**/* --ext .ts,.tsx,.js,.jsx",
+    "playwright": "pnpm exec playwright test",
+    "knip": "knip"
   },
   "dependencies": {
     "clsx": "^2.1.1",
