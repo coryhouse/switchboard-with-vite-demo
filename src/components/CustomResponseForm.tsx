@@ -11,7 +11,7 @@ type CustomResponseFormProps = {
 export default function CustomResponseForm({
   customResponse,
   setCustomResponses,
-}: CustomResponseFormProps) {
+}: Readonly<CustomResponseFormProps>) {
   const { handler, delay, status, response } = customResponse;
 
   // TODO: Support all response properties: https://mswjs.io/docs/api/response#properties
