@@ -1,11 +1,6 @@
 import { z } from "zod";
-import { SwitchboardConfig } from "react-switchboard";
 
-export type NewTodo = {
-  todo: string;
-};
-
-export const todoSchema = z.object({
+const todoSchema = z.object({
   id: z.number(),
   todo: z.string(),
   completed: z.boolean(),
@@ -31,7 +26,7 @@ export interface User {
 }
 
 // TODO: Eliminate the need for manually maintaining this type by composing a required endpointName with each msw RequestHandler. Or perhaps generate this by parsing the RequestHandler declaration before startup.
-export const handlers = [
+const handlers = [
   "POST /login",
   "GET /user",
   "GET /todos",
@@ -48,9 +43,4 @@ export type Handler = (typeof handlers)[number];
 export interface Persona extends User {
   /** Array of todos */
   todos: Todo[];
-}
-
-export interface DevToolsConfig extends SwitchboardConfig {
-  /** Current user's Id */
-  userId: number | "";
 }
