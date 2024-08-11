@@ -56,14 +56,13 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "jsdom": "^24.1.1",
     "knip": "^5.27.2",
-    "msw": "^2.3.2",
+    "msw": "^2.3.4",
     "postcss": "^8.4.39",
     "react-error-boundary": "^4.0.13",
     "rollup": "^4.19.0",
     "sass": "^1.77.8",
     "typescript": "^5.5.3",
-    "vite": "^5.3.4",
-    "vitest": "^2.0.3"
+    "vite": "^5.3.4"
   },
   "peerDependencies": {
     "react": ">16",
