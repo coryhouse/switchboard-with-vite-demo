@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DevToolsConfigBase, RequestHandlerConfigBase } from "../types/types";
+import { SwitchboardConfig } from "react-switchboard";
 
 export type NewTodo = {
   todo: string;
@@ -50,13 +50,7 @@ export interface Persona extends User {
   todos: Todo[];
 }
 
-/** Custom RequestHandler configuration settings that extend the base config */
-export interface RequestHandlerConfig extends RequestHandlerConfigBase {
-  /** Current User's Id */
-  userId: number | "";
-}
-
-export interface DevToolsConfig extends DevToolsConfigBase {
+export interface DevToolsConfig extends SwitchboardConfig {
   /** Current user's Id */
   userId: number | "";
 }
