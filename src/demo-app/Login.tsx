@@ -5,6 +5,7 @@ import Input from "../components/Input";
 import { useNavigate } from "react-router-dom";
 import { login } from "./apis/user-apis";
 import { useUserContext } from "./contexts/UserContext";
+import { userIdKey } from "./constants/localStorage.constants";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ export default function Login() {
     setUser(user);
     // A real app would likely add an auth token to a cookie or localStorage.
     // Just storing the userId in localStorage to keep the demo simple.
-    localStorage.setItem("userId", JSON.stringify(user.id));
+    localStorage.setItem(userIdKey, JSON.stringify(user.id));
     navigate("/todos");
   }
 
