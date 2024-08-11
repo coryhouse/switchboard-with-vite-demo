@@ -3,6 +3,7 @@ import Switchboard, { useSwitchboardState } from "react-switchboard";
 import { requestHandlers } from "./mocks/handlers/handlers";
 import ErrorFallback from "./ErrorFallback";
 import { User } from "./devtools/User";
+// TODO: Finish implementing this demo.
 // import { SimulateTraffic } from "./devtools/SimulateTraffic";
 import "react-switchboard/dist/index.css";
 
