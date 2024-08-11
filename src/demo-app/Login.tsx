@@ -56,7 +56,7 @@ export default function Login() {
         </Field>
 
         <Field>
-          <Button type="submit" className="bg-blue-600 text-white">
+          <Button type="submit" className="text-white bg-blue-600">
             Log In
           </Button>
         </Field>
