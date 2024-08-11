@@ -1,9 +1,9 @@
-import Button from "../components/Button";
-import { addTodo, deleteTodo } from "./apis/todo-apis";
-import Input from "../components/Input";
+import Button from "../../components/Button";
+import { addTodo, deleteTodo } from "../apis/todo-apis";
+import Input from "../../components/Input";
 import { useState } from "react";
-import Field from "../components/Field";
-import Select from "../components/Select";
+import Field from "../../components/Field";
+import Select from "../../components/Select";
 
 type SimulateAction = "add" | "edit" | "delete";
 
