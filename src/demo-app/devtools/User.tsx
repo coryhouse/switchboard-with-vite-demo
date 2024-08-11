@@ -1,7 +1,7 @@
-import { mockPersonas } from "./mocks/data/personas.mocks";
+import { mockPersonas } from "../mocks/data/personas.mocks";
 import useUserSync from "./useUserSync";
-import Field from "../components/Field";
-import Select from "../components/Select";
+import Field from "../../components/Field";
+import Select from "../../components/Select";
 
 type UserProps = {
   userId: number | null;
