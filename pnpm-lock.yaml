@@ -24,8 +24,11 @@ importers:
         specifier: ^6.25.1
         version: 6.25.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-switchboard:
-        specifier: /Users/coryhouse/Projects/react-switchboard/react-switchboard-0.0.28.tgz
-        version: file:../react-switchboard/react-switchboard-0.0.28.tgz(msw@2.3.2(typescript@5.5.4))(react@18.3.1)
+        specifier: 0.0.16
+        version: 0.0.16(react@18.3.1)(typescript@5.5.4)
+      react-use-keypress:
+        specifier: ^1.3.1
+        version: 1.3.1(react@18.3.1)
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -94,8 +97,8 @@ importers:
         specifier: ^5.27.2
         version: 5.27.2(@types/node@20.14.11)(typescript@5.5.4)
       msw:
-        specifier: ^2.3.2
-        version: 2.3.2(typescript@5.5.4)
+        specifier: ^2.3.4
+        version: 2.3.5(typescript@5.5.4)
       postcss:
         specifier: ^8.4.39
         version: 8.4.39
@@ -114,9 +117,6 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.11)(sass@1.77.8)
-      vitest:
-        specifier: ^2.0.3
-        version: 2.0.4(@types/node@20.14.11)(@vitest/ui@2.0.4)(jsdom@24.1.1)(sass@1.77.8)
 
 packages:
 
@@ -243,6 +243,9 @@ packages:
 
   '@bundled-es-modules/statuses@1.0.1':
     resolution: {integrity: sha512-yn7BklA5acgcBr+7w064fGV+SGIFySjCKpqjcWgBAIfrAkY+4GQTJJHQMeT3V/sgz23VTEVV8TtOmkvJAhFVfg==}
+
+  '@bundled-es-modules/tough-cookie@0.1.6':
+    resolution: {integrity: sha512-dvMHbL464C0zI+Yqxbz6kZ5TOEp7GLW+pry/RWndAR8MJQAXZ2rPmIs8tziTZjeIyhSNZgZbCePtfSbdWqStJw==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -450,10 +453,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
-
-  '@mswjs/cookies@1.1.1':
-    resolution: {integrity: sha512-W68qOHEjx1iD+4VjQudlx26CPIoxmIAtK4ZCexU0/UJBG6jYhcuyzKJx+Iw8uhBIGd9eba64XgWVgo20it1qwA==}
-    engines: {node: '>=18'}
 
   '@mswjs/interceptors@0.29.1':
     resolution: {integrity: sha512-3rDakgJZ77+RiQUuSK69t1F0m8BQKA8Vh5DCS5V0DWvNY67zob2JhhQrhCO0AKLGINTRSFd1tBaHcJTkhefoSw==}
@@ -665,6 +664,9 @@ packages:
 
   '@types/statuses@2.0.5':
     resolution: {integrity: sha512-jmIUGWrAiwu3dZpxntxieC+1n/5c3mjrImkmOSQ2NC5uP6cYO4aAZDdSmRcI5C1oiTmqlZGHC+/NmJrKogbP5A==}
+
+  '@types/tough-cookie@4.0.5':
+    resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
 
   '@types/wrap-ansi@3.0.0':
     resolution: {integrity: sha512-ltIpx+kM7g/MLRZfkbL7EsCEjfzCcScLpkg37eXEtx5kmrAKBkTJwd1GIAjDSL8wTpM6Hzn5YO4pSb91BEwu1g==}
@@ -1727,8 +1729,8 @@ packages:
   ms@2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
 
-  msw@2.3.2:
-    resolution: {integrity: sha512-vDn6d6a50vxPE+HnaKQfpmZ4SVXlOjF97yD5FJcUT3v2/uZ65qvTYNL25yOmnrfCNWZ4wtAS7EbtXxygMug2Tw==}
+  msw@2.3.5:
+    resolution: {integrity: sha512-+GUI4gX5YC5Bv33epBrD+BGdmDvBg2XGruiWnI3GbIbRmMMBeZ5gs3mJ51OWSGHgJKztZ8AtZeYMMNMVrje2/Q==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -2014,11 +2016,9 @@ packages:
     peerDependencies:
       react: '>=16.8'
 
-  react-switchboard@file:../react-switchboard/react-switchboard-0.0.28.tgz:
-    resolution: {integrity: sha512-y4nK6OCEUS8vjGNtd5QRT1sxJrliPWk9xTKEWXxKXUqlBSA4vKOutEO0/cwzrq+ih5TFu9Y/2ojF1GCkd0zWgA==, tarball: file:../react-switchboard/react-switchboard-0.0.28.tgz}
-    version: 0.0.28
+  react-switchboard@0.0.16:
+    resolution: {integrity: sha512-yiA/cJ5+/AZiuc9bQVJkZdFRRCm/dbLccLLNwq2mCp7mnk1enOn6udztJsAY2nPW7r8+I3OleDy0I2NbAqjKEg==}
     peerDependencies:
-      msw: 2.3.4
       react: ^18.0.0
 
   react-use-keypress@1.3.1:
@@ -2263,11 +2263,6 @@ packages:
 
   tailwindcss@3.4.6:
     resolution: {integrity: sha512-1uRHzPB+Vzu57ocybfZ4jh5Q3SdlH7XW23J5sQoM9LhE9eIOlzxer/3XPSsycvih3rboRsvt0QCmzSrqyOYUIA==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
-
-  tailwindcss@3.4.7:
-    resolution: {integrity: sha512-rxWZbe87YJb4OcSopb7up2Ba4U82BoiSGUdoDr3Ydrg9ckxFS/YWsvhN323GMcddgU65QRy7JndC7ahhInhvlQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -2743,6 +2738,11 @@ snapshots:
     dependencies:
       statuses: 2.0.1
 
+  '@bundled-es-modules/tough-cookie@0.1.6':
+    dependencies:
+      '@types/tough-cookie': 4.0.5
+      tough-cookie: 4.1.4
+
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
 
@@ -2899,8 +2899,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
-
-  '@mswjs/cookies@1.1.1': {}
 
   '@mswjs/interceptors@0.29.1':
     dependencies:
@@ -3082,6 +3080,8 @@ snapshots:
       csstype: 3.1.3
 
   '@types/statuses@2.0.5': {}
+
+  '@types/tough-cookie@4.0.5': {}
 
   '@types/wrap-ansi@3.0.0': {}
 
@@ -4331,12 +4331,12 @@ snapshots:
 
   ms@2.1.2: {}
 
-  msw@2.3.2(typescript@5.5.4):
+  msw@2.3.5(typescript@5.5.4):
     dependencies:
       '@bundled-es-modules/cookie': 2.0.0
       '@bundled-es-modules/statuses': 1.0.1
+      '@bundled-es-modules/tough-cookie': 0.1.6
       '@inquirer/confirm': 3.1.17
-      '@mswjs/cookies': 1.1.1
       '@mswjs/interceptors': 0.29.1
       '@open-draft/until': 2.1.0
       '@types/cookie': 0.6.0
@@ -4589,16 +4589,15 @@ snapshots:
       '@remix-run/router': 1.18.0
       react: 18.3.1
 
-  react-switchboard@file:../react-switchboard/react-switchboard-0.0.28.tgz(msw@2.3.2(typescript@5.5.4))(react@18.3.1):
+  react-switchboard@0.0.16(react@18.3.1)(typescript@5.5.4):
     dependencies:
       clsx: 2.1.1
-      msw: 2.3.2(typescript@5.5.4)
+      msw: 2.3.5(typescript@5.5.4)
       react: 18.3.1
       react-error-boundary: 4.0.13(react@18.3.1)
       react-use-keypress: 1.3.1(react@18.3.1)
-      tailwindcss: 3.4.7
     transitivePeerDependencies:
-      - ts-node
+      - typescript
 
   react-use-keypress@1.3.1(react@18.3.1):
     dependencies:
@@ -4880,33 +4879,6 @@ snapshots:
   symbol-tree@3.2.4: {}
 
   tailwindcss@3.4.6:
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      arg: 5.0.2
-      chokidar: 3.6.0
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.3.2
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      jiti: 1.21.6
-      lilconfig: 2.1.0
-      micromatch: 4.0.7
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.0.1
-      postcss: 8.4.39
-      postcss-import: 15.1.0(postcss@8.4.39)
-      postcss-js: 4.0.1(postcss@8.4.39)
-      postcss-load-config: 4.0.2(postcss@8.4.39)
-      postcss-nested: 6.2.0(postcss@8.4.39)
-      postcss-selector-parser: 6.1.1
-      resolve: 1.22.8
-      sucrase: 3.35.0
-    transitivePeerDependencies:
-      - ts-node
-
-  tailwindcss@3.4.7:
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
