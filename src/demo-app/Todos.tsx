@@ -97,9 +97,12 @@ export default function Todos() {
             <Input
               id="todo"
               label="What do you need to do?"
+              aria-disabled={status === "adding"}
               type="text"
               value={todo}
-              onChange={(e) => setTodo(e.target.value)}
+              onChange={(e) => {
+                if (status !== "adding") setTodo(e.target.value);
+              }}
             />
             <Button
               type="submit"
@@ -107,7 +110,7 @@ export default function Todos() {
                 "bg-slate-300": status === "adding",
               })}
             >
-              Add{status === "adding" && "ing..."}
+              Add
             </Button>
           </form>
           {todos.length > 0 && (
