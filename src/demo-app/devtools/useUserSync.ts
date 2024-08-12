@@ -8,7 +8,7 @@ import { userIdKey } from "../constants/localStorage.constants";
  * This hook keeps the app user in sync with the DevTool user, since either
  * aspect of the app can push a change that the other half must react to.
  * */
-export default function useUserSync(
+export default function useSyncSwitchboardWithUserContext(
   userId: number | null,
   setUserId: (val: number | null) => void
 ) {
