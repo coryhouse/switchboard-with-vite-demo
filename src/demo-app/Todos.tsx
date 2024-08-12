@@ -41,16 +41,17 @@ export default function Todos() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    try {
-      setStatus("adding");
-      const savedTodo = await addTodo(todo);
-      setTodos((currentTodos) => [...currentTodos, savedTodo]);
-      setTodo("");
-    } catch (err) {
-      setError(err as Error);
-    } finally {
-      setStatus("idle");
-    }
+    setStatus("adding");
+    toast.promise(addTodo(todo), {
+      loading: "Adding...",
+      success: (savedTodo) => {
+        setTodos((currentTodos) => [...currentTodos, savedTodo]);
+        setTodo("");
+        return "Added";
+      },
+      error: "Adding the todo failed.",
+      finally: () => setStatus("idle"),
+    });
   }
 
   async function toggleComplete(todo: Todo) {
