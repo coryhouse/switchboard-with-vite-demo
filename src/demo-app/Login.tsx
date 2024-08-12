@@ -1,28 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Field from "../components/Field";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { useNavigate } from "react-router-dom";
 import { login } from "./apis/user-apis";
 import { useUserContext } from "./contexts/UserContext";
-import { userIdKey } from "./constants/localStorage.constants";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { setUser } = useUserContext();
+  const { user, setUser } = useUserContext();
   const navigate = useNavigate();
+
+  useEffect(
+    function redirectIfAlreadyLoggedIn() {
+      if (user) navigate("/todos");
+    },
+    [navigate, user]
+  );
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     const user = await login(email, password);
     if (!user) return setError("Invalid email or password.");
+    // A real app would likely store an auth token in a cookie at this point. Just storing the userId in memory to keep the demo simple.
     setUser(user);
-    // A real app would likely add an auth token to a cookie or localStorage.
-    // Just storing the userId in localStorage to keep the demo simple.
-    localStorage.setItem(userIdKey, JSON.stringify(user.id));
-    navigate("/todos");
   }
 
   return (
