@@ -66,7 +66,6 @@ export const todoHandlers = [
   http.delete("/todo/:id", async () => {
     const setting = getCustomResponseSettings("DELETE /todo/:id");
     await delayResponse();
-
     return new Response(setting?.response ?? "", {
       status: setting?.status ?? 200,
     });
