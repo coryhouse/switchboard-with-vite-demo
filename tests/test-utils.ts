@@ -8,7 +8,7 @@ export function buildUrl<TDevToolsConfig>(
 ) {
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries(config)) {
-    params.append(key, JSON.stringify(value));
+    params.append("sb-" + key, JSON.stringify(value));
   }
   return baseUrl + "?" + params.toString();
 }
