@@ -1,5 +1,5 @@
 import { http } from "msw";
-import { delayResponse, getCustomResponseSettings } from "../mock-utils";
+import { getCustomResponseSettings } from "../mock-utils";
 import { mockPersonas } from "../data/personas.mocks";
 import { z } from "zod";
 
@@ -10,10 +10,8 @@ const loginResponseSchema = z.object({
 
 export const loginHandlers = [
   http.post("/login", async ({ request }) => {
-    const setting = getCustomResponseSettings("POST /login");
+    const setting = await getCustomResponseSettings("POST /login");
     const { email, password } = loginResponseSchema.parse(await request.json());
-
-    await delayResponse();
 
     const user = mockPersonas.find(
       ({ response: r }) => r.email === email && r.password === password
@@ -24,7 +22,7 @@ export const loginHandlers = [
       });
 
     // TODO: Set cookie or JWT and pass it into all calls to show a more realistic approach
-    return new Response(JSON.stringify(user.response), {
+    return new Response(JSON.stringify(setting?.response ?? user.response), {
       status: setting?.status ?? 200,
       headers: { "Content-Type": "application/json" },
     });
