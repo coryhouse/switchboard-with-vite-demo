@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/UserContext";
 import { mockPersonas } from "../mocks/data/personas.mocks";
@@ -9,15 +9,15 @@ import { userIdKey } from "../constants/localStorage.constants";
  * aspect of the app can push a change that the other half must react to.
  * */
 export default function useSyncSwitchboardWithUserContext(
-  userId: number | null,
-  setUserId: (val: number | null) => void
+  switchboardUserId: number | null,
+  setSwitchboardUserId: (val: number | null) => void
 ) {
-  const { user } = useUserContext();
-  const [previousUser, setPreviousUser] = useState(user);
+  const { user: appUser, setUser: setAppUser } = useUserContext();
+  const previousAppUser = useRef(appUser);
   const navigate = useNavigate();
 
   // If the user passed in via context changes, then someone just logged in
-  // manually on the login form instead of using the DevTools. So use the user
+  // manually on the login form instead of using the DevTools. So, use the user
   // passed in to update the userId in the DevTools state so that the DevTools
   // user dropdown matches the user in UserContext.
   //
@@ -25,16 +25,16 @@ export default function useSyncSwitchboardWithUserContext(
   // effect below to run while the states are out of sync with each other.
   // Setting state inline will trigger a fresh render without running stale
   // effects.
-  if (user !== previousUser) {
-    setUserId(user?.id ?? null);
-    setPreviousUser(user);
+  if (appUser !== previousAppUser.current) {
+    setSwitchboardUserId(appUser?.id ?? null);
+    previousAppUser.current = appUser;
   }
 
   // When the userId changes, simulate logging the user in/out.
   // This also handles when the app is initialized via the URL.
   useEffect(() => {
     function simulateLogin(userId: number) {
-      setUserId(userId);
+      setSwitchboardUserId(userId);
       const user = mockPersonas.find(({ id }) => id === userId);
       if (!user) throw new Error("Can't find user: " + userId);
       localStorage.setItem(userIdKey, JSON.stringify(userId));
@@ -43,10 +43,10 @@ export default function useSyncSwitchboardWithUserContext(
 
     function simulateLogout() {
       localStorage.removeItem(userIdKey);
-      setUserId(null);
-      navigate("/");
+      setSwitchboardUserId(null);
+      setAppUser(null);
     }
 
-    userId ? simulateLogin(userId) : simulateLogout();
-  }, [userId, setUserId, navigate]);
+    switchboardUserId ? simulateLogin(switchboardUserId) : simulateLogout();
+  }, [switchboardUserId, setSwitchboardUserId, navigate, setAppUser]);
 }
