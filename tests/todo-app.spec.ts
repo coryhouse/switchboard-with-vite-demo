@@ -116,11 +116,11 @@ async function isInSection(page: Page, headingText: string, text: string) {
 }
 
 async function addTodo(page: Page, todo: string) {
-  const todoInput = page.getByLabel("What do you need to do?");
+  const todoInput = page.getByLabel("Task");
   await expect(todoInput).toBeVisible();
   await expect(todoInput).toHaveValue("");
   await todoInput.fill(todo);
-  await page.getByRole("button", { name: "Add" }).click();
+  await page.getByRole("button", { name: "Add", exact: true }).click();
 
   // Should show a loading toast while adding
   // await expect(page.getByText("Adding...")).toBeVisible();
@@ -129,7 +129,7 @@ async function addTodo(page: Page, todo: string) {
   isInSection(page, "Stuff to do", todo);
 
   // Input should be cleared after submission
-  await expect(page.getByText("What do you need to do?")).toHaveValue("");
+  await expect(page.getByText("Task")).toHaveValue("");
 }
 
 async function toggleComplete(page: Page, todo: string) {

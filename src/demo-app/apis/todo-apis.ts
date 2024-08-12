@@ -6,6 +6,7 @@ import { Todo } from "../demo-app-types";
 // and returns a mock response instead.
 import ky, { KyResponse } from "ky";
 
+// Timeout requests after 2 seconds
 const timeout = 2000;
 
 export async function getTodos(): Promise<Todo[]> {
