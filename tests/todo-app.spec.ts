@@ -122,7 +122,7 @@ async function addTodo(page: Page, todo: string) {
   await todoInput.fill(todo);
   await page.getByRole("button", { name: "Add" }).click();
 
-  // Should show a loading indicator while adding
+  // Should show a loading toast while adding
   await expect(page.getByRole("button", { name: "Adding..." })).toBeVisible();
 
   // New todo should display
