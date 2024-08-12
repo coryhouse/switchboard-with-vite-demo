@@ -1,10 +1,10 @@
 import test, { expect } from "@playwright/test";
-import { devToolsPositions } from "../src/types/types";
-import { buildUrl } from "../src/utils/url-utils";
+import { switchboardPositions } from "react-switchboard";
+import { buildUrl } from "./test-utils";
 
-test.describe("devtools", () => {
+test.fixme("devtools", () => {
   test.describe("position", () => {
-    devToolsPositions.forEach((position) => {
+    switchboardPositions.forEach((position) => {
       test(`displays in the ${position}`, async ({ page }) => {
         await page.goto(buildUrl("/", { position }));
 

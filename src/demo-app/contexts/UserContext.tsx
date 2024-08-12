@@ -1,6 +1,7 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "../demo-app-types";
+import { userIdKey } from "../constants/localStorage.constants";
 
 const UserContext = createContext<UserContextValue | null>(null);
 
@@ -14,21 +15,22 @@ type UserContextProviderProps = {
   children: React.ReactNode;
 };
 
-export function UserContextProvider({ children }: UserContextProviderProps) {
+export function UserContextProvider({
+  children,
+}: Readonly<UserContextProviderProps>) {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
-  function logout() {
-    setUser(null);
-    localStorage.removeItem("userId");
-    navigate("/");
-  }
+  const value = useMemo(() => {
+    function logout() {
+      setUser(null);
+      localStorage.removeItem(userIdKey);
+      navigate("/");
+    }
+    return { user, setUser, logout };
+  }, [navigate, user]);
 
-  return (
-    <UserContext.Provider value={{ user, setUser, logout }}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 
 export function useUserContext() {

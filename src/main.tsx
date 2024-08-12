@@ -1,6 +1,5 @@
-// NOTE: This file merely exists to run the demo app. It's NOT part of the published package.
-import React, { Suspense } from "react";
-import ReactDOM from "react-dom/client";
+import React, { lazy, Suspense } from "react";
+import { createRoot } from "react-dom/client";
 import App from "./demo-app/App";
 import { ErrorBoundary } from "react-error-boundary";
 import "./index.css";
@@ -10,18 +9,14 @@ import { UserContextProvider } from "./demo-app/contexts/UserContext";
 import { Toaster } from "sonner";
 
 // Lazy load so it's not part of the prod bundle.
-const AppWithDevTools = React.lazy(
+const AppWithDevTools = lazy(
   () => import(/* webpackChunkName: "devtools" */ "./demo-app/AppWithDevTools")
 );
 
 // This is set in .env.local.
 const useDevTools = import.meta.env.VITE_USE_DEV_TOOLS === "Y";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-
-root.render(
+createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <BrowserRouter>

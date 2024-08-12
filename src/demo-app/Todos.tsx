@@ -41,16 +41,17 @@ export default function Todos() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    try {
-      setStatus("adding");
-      const savedTodo = await addTodo(todo);
-      setTodos((currentTodos) => [...currentTodos, savedTodo]);
-      setTodo("");
-    } catch (err) {
-      setError(err as Error);
-    } finally {
-      setStatus("idle");
-    }
+    setStatus("adding");
+    toast.promise(addTodo(todo), {
+      loading: "Adding...",
+      success: (savedTodo) => {
+        setTodos((currentTodos) => [...currentTodos, savedTodo]);
+        setTodo("");
+        return "Added";
+      },
+      error: "Adding the todo failed.",
+      finally: () => setStatus("idle"),
+    });
   }
 
   async function toggleComplete(todo: Todo) {
@@ -77,14 +78,14 @@ export default function Todos() {
   if (error) throw error;
 
   return (
-    <main className="grid place-content-center mt-4">
+    <main className="grid mt-4 place-content-center">
       {!user || status === "loading" ? (
         <Spinner />
       ) : (
         <>
           <div className="flex items-center pb-4">
-            <h1 className="text-3xl inline-block">Hi {user.name} 👋</h1>{" "}
-            <a href="#" className="text-blue-600 pl-4" onClick={logout}>
+            <h1 className="inline-block text-3xl">Hi {user.name} 👋</h1>
+            <a href="#" className="pl-4 text-blue-600" onClick={logout}>
               Logout
             </a>
           </div>
@@ -96,10 +97,13 @@ export default function Todos() {
           <form onSubmit={onSubmit}>
             <Input
               id="todo"
+              aria-disabled={status === "adding"}
               label="Task"
               type="text"
               value={todo}
-              onChange={(e) => setTodo(e.target.value)}
+              onChange={(e) => {
+                if (status !== "adding") setTodo(e.target.value);
+              }}
             />
             <Button
               type="submit"
@@ -107,12 +111,12 @@ export default function Todos() {
                 "bg-slate-300": status === "adding",
               })}
             >
-              Add{status === "adding" && "ing..."}
+              Add
             </Button>
           </form>
           {todos.length > 0 && (
             <section>
-              <h2 className="text-2xl pt-4 sr-only">Stuff to do</h2>
+              <h2 className="pt-4 text-2xl sr-only">Stuff to do</h2>
               <ul>
                 {todos.map((t) => (
                   <li key={t.id} className="flex items-center">
