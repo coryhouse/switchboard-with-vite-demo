@@ -1,5 +1,5 @@
 import { mockPersonas } from "../mocks/data/personas.mocks";
-import useUserSync from "./useUserSync";
+import useSyncSwitchboardWithUserContext from "./useUserSync";
 import Field from "../../components/Field";
 import Select from "../../components/Select";
 
@@ -9,7 +9,7 @@ type UserProps = {
 };
 
 export function User({ userId, setUserId }: UserProps) {
-  useUserSync(userId, setUserId);
+  useSyncSwitchboardWithUserContext(userId, setUserId);
 
   return (
     <Field>
