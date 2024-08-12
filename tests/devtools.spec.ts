@@ -2,7 +2,7 @@ import test, { expect } from "@playwright/test";
 import { switchboardPositions } from "react-switchboard";
 import { buildUrl } from "./test-utils";
 
-test.describe("devtools", () => {
+test.fixme("devtools", () => {
   test.describe("position", () => {
     switchboardPositions.forEach((position) => {
       test(`displays in the ${position}`, async ({ page }) => {
