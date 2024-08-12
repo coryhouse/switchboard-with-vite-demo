@@ -77,14 +77,14 @@ export default function Todos() {
   if (error) throw error;
 
   return (
-    <main className="grid place-content-center mt-4">
+    <main className="grid mt-4 place-content-center">
       {!user || status === "loading" ? (
         <Spinner />
       ) : (
         <>
           <div className="flex items-center pb-4">
-            <h1 className="text-3xl inline-block">Hi {user.name} 👋</h1>{" "}
-            <a href="#" className="text-blue-600 pl-4" onClick={logout}>
+            <h1 className="inline-block text-3xl">Hi {user.name} 👋</h1>
+            <a href="#" className="pl-4 text-blue-600" onClick={logout}>
               Logout
             </a>
           </div>
@@ -112,7 +112,7 @@ export default function Todos() {
           </form>
           {todos.length > 0 && (
             <section>
-              <h2 className="text-2xl pt-4 sr-only">Stuff to do</h2>
+              <h2 className="pt-4 text-2xl sr-only">Stuff to do</h2>
               <ul>
                 {todos.map((t) => (
                   <li key={t.id} className="flex items-center">
