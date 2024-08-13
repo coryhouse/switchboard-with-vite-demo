@@ -1,3 +1,4 @@
+import { SwitchboardConfig } from "react-switchboard";
 import { z } from "zod";
 
 const todoSchema = z.object({
@@ -43,4 +44,9 @@ export type Handler = (typeof handlers)[number];
 export interface Persona extends User {
   /** Array of todos */
   todos: Todo[];
+}
+
+export interface DevToolsConfig extends SwitchboardConfig {
+  /** User ID to load */
+  userId?: number;
 }
