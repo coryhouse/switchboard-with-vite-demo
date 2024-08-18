@@ -23,7 +23,7 @@ createRoot(document.getElementById("root")!).render(
         <UserContextProvider>
           <Toaster richColors position="top-right" />
           {useDevTools ? (
-            <Suspense fallback="Loading with devtools...">
+            <Suspense fallback="Loading Switchboard...">
               <AppWithDevTools />
             </Suspense>
           ) : (
