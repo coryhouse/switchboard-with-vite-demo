@@ -13,16 +13,13 @@ const AppWithDevTools = lazy(
   () => import(/* webpackChunkName: "devtools" */ "./demo-app/AppWithDevTools")
 );
 
-// This is set in .env.local.
-const useDevTools = import.meta.env.VITE_USE_DEV_TOOLS === "Y";
-
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <BrowserRouter>
         <UserContextProvider>
           <Toaster richColors position="top-right" />
-          {useDevTools ? (
+          {import.meta.env.VITE_ENABLE_SWITCHBOARD === "Y" ? (
             <Suspense fallback="Loading Switchboard...">
               <AppWithDevTools />
             </Suspense>
