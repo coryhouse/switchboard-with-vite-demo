@@ -16,7 +16,7 @@
     }
   },
   "scripts": {
-    "start": "cross-env VITE_USE_DEV_TOOLS=Y vite --strictPort --port 3000",
+    "dev": "cross-env VITE_ENABLE_SWITCHBOARD=Y vite --strictPort --port 3000",
     "build": "vite build && tsc",
     "preview": "vite preview",
     "coverage": "vitest run --coverage",
