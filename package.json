@@ -17,7 +17,10 @@
   },
   "scripts": {
     "dev": "cross-env VITE_ENABLE_SWITCHBOARD=Y vite --strictPort --port 3000",
-    "build": "vite build && tsc",
+    "build": "concurrently npm:build:*",
+    "build:vite": "vite build",
+    "build:test": "pnpm exec playwright test",
+    "build:tsc": "tsc",
     "preview": "vite preview",
     "coverage": "vitest run --coverage",
     "lint": "eslint src/**/* --ext .ts,.tsx,.js,.jsx",
@@ -26,6 +29,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "concurrently": "^8.2.2",
     "ky": "^1.4.0",
     "react": ">16",
     "react-dom": ">16",
