@@ -58,7 +58,7 @@ export default function Login() {
           />
         </Field>
         <p className="text-gray-400 mt-4">
-          To login, select a persona from Switchboard.
+          To login, select a Persona in Switchboard.
         </p>
         <p className="text-gray-400 mt-4">
           Or, log in manually: cory@reactjsconsulting/123
