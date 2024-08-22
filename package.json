@@ -21,7 +21,7 @@
     "preview": "vite preview",
     "coverage": "vitest run --coverage",
     "lint": "eslint src/**/* --ext .ts,.tsx,.js,.jsx",
-    "playwright": "pnpm exec playwright test --ui",
+    "playwright": "pnpm exec playwright test",
     "knip": "knip"
   },
   "dependencies": {
@@ -30,7 +30,7 @@
     "react": ">16",
     "react-dom": ">16",
     "react-router-dom": "^6.25.1",
-    "react-switchboard": "0.0.25",
+    "react-switchboard": "0.0.27",
     "react-use-keypress": "^1.3.1",
     "sonner": "^1.5.0",
     "tailwindcss": "^3.4.6",

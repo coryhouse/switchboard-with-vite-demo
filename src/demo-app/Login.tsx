@@ -57,7 +57,12 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Field>
-
+        <p className="text-gray-400 mt-4">
+          To login, select a persona from Switchboard.
+        </p>
+        <p className="text-gray-400 mt-4">
+          Or, log in manually: cory@reactjsconsulting/123
+        </p>
         <Field>
           <Button type="submit" className="text-white bg-blue-600">
             Log In
