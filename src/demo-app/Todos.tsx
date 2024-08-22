@@ -41,6 +41,10 @@ export default function Todos() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!todo) {
+      toast.error("Please enter a todo.");
+      return;
+    }
     setStatus("adding");
     toast.promise(addTodo(todo), {
       loading: "Adding...",
