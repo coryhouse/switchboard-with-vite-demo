@@ -11,7 +11,7 @@ test.describe("log in / log out", () => {
     const { email, password, id } = personas.noTodos.response;
 
     // The DevTools persona selector should initially reflect that the user is logged out.
-    await expect(page.getByText("Persona")).toHaveValue("");
+    await expect(page.getByLabel("Persona")).toHaveValue("");
 
     await page.getByText("Email").fill(email);
     await page.getByText("Password").fill(password);
@@ -19,14 +19,14 @@ test.describe("log in / log out", () => {
     await expect(page.getByRole("heading", { name: /Hi Cory/ })).toBeVisible();
 
     // The DevTools persona selector should now reflect that the user is logged in.
-    await expect(page.getByText("Persona")).toHaveValue(id.toString());
+    await expect(page.getByLabel("Persona")).toHaveValue(id.toString());
 
     await page.getByRole("link", { name: "Logout" }).click({ force: true });
     // Now should be back on login page.
     await expect(page.getByRole("heading", { name: "Log In" })).toBeVisible();
 
     // And the DevTools persona selector should reflect that the user is logged out.
-    await expect(page.getByText("Persona")).toHaveValue("");
+    await expect(page.getByLabel("Persona")).toHaveValue("");
   });
 });
 
